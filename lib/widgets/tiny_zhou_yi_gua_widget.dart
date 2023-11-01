@@ -7,6 +7,7 @@ class TinyZhouYiGuaWidget extends StatefulWidget {
   double width = 56;
   double guaInterval = 2;
   double yaoInterval = 4;
+  bool displayYinYang = false;
   late final String guaBinaryContent;
   late final String guaName;
   late final String? guaExtraName;
@@ -19,6 +20,7 @@ class TinyZhouYiGuaWidget extends StatefulWidget {
     required this.width,
     this.yaoInterval = 4,
     this.guaInterval = 1,
+    this.displayYinYang = false,
   this.changedYaoIndexList = const []}) : super(key: key);
 
   @override
@@ -37,7 +39,7 @@ class _TinyZhouYiGuaWidgetState extends State<TinyZhouYiGuaWidget> {
       margin: const EdgeInsets.symmetric(vertical: 4,horizontal: 6),
       alignment: Alignment.center,
       height: tinyHeight * 6 + widget.yaoInterval * 5 + widget.guaInterval + 36 + 8,
-      padding: EdgeInsets.only(top: 4),
+      // padding: EdgeInsets.only(top: 4),
       // color: Colors.redAccent,
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -87,7 +89,7 @@ class _TinyZhouYiGuaWidgetState extends State<TinyZhouYiGuaWidget> {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           // color: yaoYinYang?Colors.white:Colors.black,
-          color: isChangedYao?Colors.redAccent:Colors.black,
+          color: widget.displayYinYang?(yaoYinYang?Colors.white:Colors.black):(isChangedYao?Colors.redAccent:Colors.black),
           borderRadius: BorderRadius.circular(64),
           boxShadow: [
             BoxShadow(

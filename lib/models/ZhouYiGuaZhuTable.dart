@@ -8,15 +8,15 @@ class ZhouYiGuaZhuTable extends Table {
   BoolColumn get isSingle => boolean()();
   TextColumn get guaBinary => text().withLength(min: 6, max: 6).references(ZhouYiTable, Symbol("binary"))();
   IntColumn get bookId => integer().references(ZhouyiZhuBooksTable, Symbol("id"))();
-  TextColumn get guaZhu => text()();
-  TextColumn get xiangZhu => text()();
-  TextColumn get tuanZhu => text()();
+  TextColumn get guaZhu => text().nullable()();
+  TextColumn get xiangZhu => text().nullable()();
+  TextColumn get tuanZhu => text().nullable()();
 
   @override
   Set<Column> get primaryKey => {id};
 
   @override
-  String get tableName => 'zhouyi_gua_zhu';
+  String get tableName => 't_zy_gua_zhu';
 
 
   // @override

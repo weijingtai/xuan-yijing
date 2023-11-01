@@ -14,7 +14,12 @@ class ZhouYiTable extends Table {
   TextColumn get baguaOuterNickname => text()();
   TextColumn get xiang => text()();
   TextColumn get tuan => text()();
+  TextColumn get gua => text()();
 
   @override
   Set<Column> get primaryKey => {binary};
+
+
+  @override
+  String get tableName => 't_zy';
 }

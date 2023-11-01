@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:my_flutter/databases/MyDatabase.dart';
+import 'package:my_flutter/pages/dev.dart';
 import 'package:my_flutter/pages/gua_details_page.dart';
 import 'package:my_flutter/pages/si_zhu_ba_zi/si_zhu_ba_zi_page.dart';
 import 'package:my_flutter/pages/zhou_yi_gua_details_page.dart';
@@ -10,6 +13,8 @@ import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:responsive_framework/utils/scroll_behavior.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Get.put<MyDatabase>(MyDatabase());
   runApp(const MyApp());
 }
 
@@ -37,6 +42,8 @@ class MyApp extends StatelessWidget {
         onGenerateRoute: (RouteSettings settings) {
           return Routes.fadeThrough(settings, (context) {
             switch (settings.name) {
+              case Routes.dev:
+                return Dev();
               case Routes.home:
                 return const Scaffold(
                   body: Center(
@@ -49,51 +56,6 @@ class MyApp extends StatelessWidget {
                     child: Text("post"),
                   ),);
               case Routes.zhouyi_details:
-                Map<String,dynamic> args = {
-                  "name": "屯",
-                  "content": "屯：元，亨，利，贞，勿用，有攸往，利建侯。",
-                  "tuan": {
-                    "content": "《彖》曰：屯，刚柔始交而难生，动乎险中，大亨贞。雷雨之动满盈，天造草昧，宜建侯而不宁。",
-                    "name": "屯·彖"
-                  },
-                  "xiang": {
-                    "content": "《象》曰：云，雷，屯；君子以经纶。",
-                    "name": "屯·象"
-                  },
-                  "yao_list": [
-                    {
-                      "name": "屯·初九",
-                      "yao": "『初九』：磐桓；利居贞，利建侯。",
-                      "yao_xiang": "《象》曰：虽磐桓，志行正也。以贵下贱，大得民也。"
-                    },
-                    {
-                      "name": "屯·六二",
-                      "yao": "『六二』：屯如邅如，乘马班如。匪寇婚媾，女子贞不字，十年乃字。",
-                      "yao_xiang": "《象》曰：『六二』之难，乘刚也。十年乃字，反常也。"
-                    },
-                    {
-                      "name": "屯·六三",
-                      "yao": "『六三』：既鹿无虞，惟入于林中，君子几不如舍，往吝。",
-                      "yao_xiang": "《象》曰：既鹿无虞，以纵禽也。君子舍之，往吝穷也。"
-                    },
-                    {
-                      "name": "屯·六四",
-                      "yao": "『六四』：乘马班如，求婚媾，无不利。",
-                      "yao_xiang": "《象》曰：求而往，明也。"
-                    },
-                    {
-                      "name": "屯·九五",
-                      "yao": "『九五』：屯其膏，小贞吉，大贞凶。",
-                      "yao_xiang": "《象》曰：屯其膏，施未光也。"
-                    },
-                    {
-                      "name": "屯·上六",
-                      "yao": "『上六』：乘马班如，泣血涟如。",
-                      "yao_xiang": "《象》曰：泣血涟如，何可长也。"
-                    }
-                  ]
-                };
-                // return ZhouYiGuaDetailsPage(args);
                 return ZhouYiGuaDetailsPage(settings.arguments as Map<String, dynamic>,);
               case Routes.zhouyi:
                 return ZhouYiGuaListPage();

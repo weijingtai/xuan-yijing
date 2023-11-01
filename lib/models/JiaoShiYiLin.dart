@@ -13,4 +13,8 @@ class JiaoShiYiLinTable extends Table {
 
   @override
   Set<Column> get primaryKey => {id};
+
+  @override String? get tableName => 't_zy_jiao_lin';
+
+
 }

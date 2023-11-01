@@ -20,6 +20,7 @@ class ZhouYi extends DataClass implements Insertable<ZhouYi> {
   final String baguaOuterNickname;
   final String xiang;
   final String tuan;
+  final String gua;
   ZhouYi(
       {required this.binary,
       required this.seq,
@@ -32,7 +33,8 @@ class ZhouYi extends DataClass implements Insertable<ZhouYi> {
       required this.baguaOuterName,
       required this.baguaOuterNickname,
       required this.xiang,
-      required this.tuan});
+      required this.tuan,
+      required this.gua});
   factory ZhouYi.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String? prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -61,6 +63,8 @@ class ZhouYi extends DataClass implements Insertable<ZhouYi> {
           .mapFromDatabaseResponse(data['${effectivePrefix}xiang'])!,
       tuan: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}tuan'])!,
+      gua: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}gua'])!,
     );
   }
   @override
@@ -78,6 +82,7 @@ class ZhouYi extends DataClass implements Insertable<ZhouYi> {
     map['bagua_outer_nickname'] = Variable<String>(baguaOuterNickname);
     map['xiang'] = Variable<String>(xiang);
     map['tuan'] = Variable<String>(tuan);
+    map['gua'] = Variable<String>(gua);
     return map;
   }
 
@@ -95,6 +100,7 @@ class ZhouYi extends DataClass implements Insertable<ZhouYi> {
       baguaOuterNickname: Value(baguaOuterNickname),
       xiang: Value(xiang),
       tuan: Value(tuan),
+      gua: Value(gua),
     );
   }
 
@@ -116,6 +122,7 @@ class ZhouYi extends DataClass implements Insertable<ZhouYi> {
           serializer.fromJson<String>(json['baguaOuterNickname']),
       xiang: serializer.fromJson<String>(json['xiang']),
       tuan: serializer.fromJson<String>(json['tuan']),
+      gua: serializer.fromJson<String>(json['gua']),
     );
   }
   @override
@@ -134,6 +141,7 @@ class ZhouYi extends DataClass implements Insertable<ZhouYi> {
       'baguaOuterNickname': serializer.toJson<String>(baguaOuterNickname),
       'xiang': serializer.toJson<String>(xiang),
       'tuan': serializer.toJson<String>(tuan),
+      'gua': serializer.toJson<String>(gua),
     };
   }
 
@@ -149,7 +157,8 @@ class ZhouYi extends DataClass implements Insertable<ZhouYi> {
           String? baguaOuterName,
           String? baguaOuterNickname,
           String? xiang,
-          String? tuan}) =>
+          String? tuan,
+          String? gua}) =>
       ZhouYi(
         binary: binary ?? this.binary,
         seq: seq ?? this.seq,
@@ -163,6 +172,7 @@ class ZhouYi extends DataClass implements Insertable<ZhouYi> {
         baguaOuterNickname: baguaOuterNickname ?? this.baguaOuterNickname,
         xiang: xiang ?? this.xiang,
         tuan: tuan ?? this.tuan,
+        gua: gua ?? this.gua,
       );
   @override
   String toString() {
@@ -178,7 +188,8 @@ class ZhouYi extends DataClass implements Insertable<ZhouYi> {
           ..write('baguaOuterName: $baguaOuterName, ')
           ..write('baguaOuterNickname: $baguaOuterNickname, ')
           ..write('xiang: $xiang, ')
-          ..write('tuan: $tuan')
+          ..write('tuan: $tuan, ')
+          ..write('gua: $gua')
           ..write(')'))
         .toString();
   }
@@ -196,7 +207,8 @@ class ZhouYi extends DataClass implements Insertable<ZhouYi> {
       baguaOuterName,
       baguaOuterNickname,
       xiang,
-      tuan);
+      tuan,
+      gua);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -212,7 +224,8 @@ class ZhouYi extends DataClass implements Insertable<ZhouYi> {
           other.baguaOuterName == this.baguaOuterName &&
           other.baguaOuterNickname == this.baguaOuterNickname &&
           other.xiang == this.xiang &&
-          other.tuan == this.tuan);
+          other.tuan == this.tuan &&
+          other.gua == this.gua);
 }
 
 class ZhouYiTableCompanion extends UpdateCompanion<ZhouYi> {
@@ -228,6 +241,7 @@ class ZhouYiTableCompanion extends UpdateCompanion<ZhouYi> {
   final Value<String> baguaOuterNickname;
   final Value<String> xiang;
   final Value<String> tuan;
+  final Value<String> gua;
   const ZhouYiTableCompanion({
     this.binary = const Value.absent(),
     this.seq = const Value.absent(),
@@ -241,6 +255,7 @@ class ZhouYiTableCompanion extends UpdateCompanion<ZhouYi> {
     this.baguaOuterNickname = const Value.absent(),
     this.xiang = const Value.absent(),
     this.tuan = const Value.absent(),
+    this.gua = const Value.absent(),
   });
   ZhouYiTableCompanion.insert({
     required String binary,
@@ -255,6 +270,7 @@ class ZhouYiTableCompanion extends UpdateCompanion<ZhouYi> {
     required String baguaOuterNickname,
     required String xiang,
     required String tuan,
+    required String gua,
   })  : binary = Value(binary),
         seq = Value(seq),
         name = Value(name),
@@ -266,7 +282,8 @@ class ZhouYiTableCompanion extends UpdateCompanion<ZhouYi> {
         baguaOuterName = Value(baguaOuterName),
         baguaOuterNickname = Value(baguaOuterNickname),
         xiang = Value(xiang),
-        tuan = Value(tuan);
+        tuan = Value(tuan),
+        gua = Value(gua);
   static Insertable<ZhouYi> custom({
     Expression<String>? binary,
     Expression<int>? seq,
@@ -280,6 +297,7 @@ class ZhouYiTableCompanion extends UpdateCompanion<ZhouYi> {
     Expression<String>? baguaOuterNickname,
     Expression<String>? xiang,
     Expression<String>? tuan,
+    Expression<String>? gua,
   }) {
     return RawValuesInsertable({
       if (binary != null) 'binary': binary,
@@ -296,6 +314,7 @@ class ZhouYiTableCompanion extends UpdateCompanion<ZhouYi> {
         'bagua_outer_nickname': baguaOuterNickname,
       if (xiang != null) 'xiang': xiang,
       if (tuan != null) 'tuan': tuan,
+      if (gua != null) 'gua': gua,
     });
   }
 
@@ -311,7 +330,8 @@ class ZhouYiTableCompanion extends UpdateCompanion<ZhouYi> {
       Value<String>? baguaOuterName,
       Value<String>? baguaOuterNickname,
       Value<String>? xiang,
-      Value<String>? tuan}) {
+      Value<String>? tuan,
+      Value<String>? gua}) {
     return ZhouYiTableCompanion(
       binary: binary ?? this.binary,
       seq: seq ?? this.seq,
@@ -325,6 +345,7 @@ class ZhouYiTableCompanion extends UpdateCompanion<ZhouYi> {
       baguaOuterNickname: baguaOuterNickname ?? this.baguaOuterNickname,
       xiang: xiang ?? this.xiang,
       tuan: tuan ?? this.tuan,
+      gua: gua ?? this.gua,
     );
   }
 
@@ -367,6 +388,9 @@ class ZhouYiTableCompanion extends UpdateCompanion<ZhouYi> {
     if (tuan.present) {
       map['tuan'] = Variable<String>(tuan.value);
     }
+    if (gua.present) {
+      map['gua'] = Variable<String>(gua.value);
+    }
     return map;
   }
 
@@ -384,7 +408,8 @@ class ZhouYiTableCompanion extends UpdateCompanion<ZhouYi> {
           ..write('baguaOuterName: $baguaOuterName, ')
           ..write('baguaOuterNickname: $baguaOuterNickname, ')
           ..write('xiang: $xiang, ')
-          ..write('tuan: $tuan')
+          ..write('tuan: $tuan, ')
+          ..write('gua: $gua')
           ..write(')'))
         .toString();
   }
@@ -460,6 +485,11 @@ class $ZhouYiTableTable extends ZhouYiTable
   late final GeneratedColumn<String?> tuan = GeneratedColumn<String?>(
       'tuan', aliasedName, false,
       type: const StringType(), requiredDuringInsert: true);
+  final VerificationMeta _guaMeta = const VerificationMeta('gua');
+  @override
+  late final GeneratedColumn<String?> gua = GeneratedColumn<String?>(
+      'gua', aliasedName, false,
+      type: const StringType(), requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns => [
         binary,
@@ -473,12 +503,13 @@ class $ZhouYiTableTable extends ZhouYiTable
         baguaOuterName,
         baguaOuterNickname,
         xiang,
-        tuan
+        tuan,
+        gua
       ];
   @override
-  String get aliasedName => _alias ?? 'zhou_yi_table';
+  String get aliasedName => _alias ?? 't_zy';
   @override
-  String get actualTableName => 'zhou_yi_table';
+  String get actualTableName => 't_zy';
   @override
   VerificationContext validateIntegrity(Insertable<ZhouYi> instance,
       {bool isInserting = false}) {
@@ -568,6 +599,12 @@ class $ZhouYiTableTable extends ZhouYiTable
     } else if (isInserting) {
       context.missing(_tuanMeta);
     }
+    if (data.containsKey('gua')) {
+      context.handle(
+          _guaMeta, gua.isAcceptableOrUnknown(data['gua']!, _guaMeta));
+    } else if (isInserting) {
+      context.missing(_guaMeta);
+    }
     return context;
   }
 
@@ -590,17 +627,17 @@ class ZhouYiGuaZhu extends DataClass implements Insertable<ZhouYiGuaZhu> {
   final bool isSingle;
   final String guaBinary;
   final int bookId;
-  final String guaZhu;
-  final String xiangZhu;
-  final String tuanZhu;
+  final String? guaZhu;
+  final String? xiangZhu;
+  final String? tuanZhu;
   ZhouYiGuaZhu(
       {required this.id,
       required this.isSingle,
       required this.guaBinary,
       required this.bookId,
-      required this.guaZhu,
-      required this.xiangZhu,
-      required this.tuanZhu});
+      this.guaZhu,
+      this.xiangZhu,
+      this.tuanZhu});
   factory ZhouYiGuaZhu.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String? prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -614,11 +651,11 @@ class ZhouYiGuaZhu extends DataClass implements Insertable<ZhouYiGuaZhu> {
       bookId: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}book_id'])!,
       guaZhu: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}gua_zhu'])!,
+          .mapFromDatabaseResponse(data['${effectivePrefix}gua_zhu']),
       xiangZhu: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}xiang_zhu'])!,
+          .mapFromDatabaseResponse(data['${effectivePrefix}xiang_zhu']),
       tuanZhu: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}tuan_zhu'])!,
+          .mapFromDatabaseResponse(data['${effectivePrefix}tuan_zhu']),
     );
   }
   @override
@@ -628,9 +665,15 @@ class ZhouYiGuaZhu extends DataClass implements Insertable<ZhouYiGuaZhu> {
     map['is_single'] = Variable<bool>(isSingle);
     map['gua_binary'] = Variable<String>(guaBinary);
     map['book_id'] = Variable<int>(bookId);
-    map['gua_zhu'] = Variable<String>(guaZhu);
-    map['xiang_zhu'] = Variable<String>(xiangZhu);
-    map['tuan_zhu'] = Variable<String>(tuanZhu);
+    if (!nullToAbsent || guaZhu != null) {
+      map['gua_zhu'] = Variable<String?>(guaZhu);
+    }
+    if (!nullToAbsent || xiangZhu != null) {
+      map['xiang_zhu'] = Variable<String?>(xiangZhu);
+    }
+    if (!nullToAbsent || tuanZhu != null) {
+      map['tuan_zhu'] = Variable<String?>(tuanZhu);
+    }
     return map;
   }
 
@@ -640,9 +683,14 @@ class ZhouYiGuaZhu extends DataClass implements Insertable<ZhouYiGuaZhu> {
       isSingle: Value(isSingle),
       guaBinary: Value(guaBinary),
       bookId: Value(bookId),
-      guaZhu: Value(guaZhu),
-      xiangZhu: Value(xiangZhu),
-      tuanZhu: Value(tuanZhu),
+      guaZhu:
+          guaZhu == null && nullToAbsent ? const Value.absent() : Value(guaZhu),
+      xiangZhu: xiangZhu == null && nullToAbsent
+          ? const Value.absent()
+          : Value(xiangZhu),
+      tuanZhu: tuanZhu == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tuanZhu),
     );
   }
 
@@ -654,9 +702,9 @@ class ZhouYiGuaZhu extends DataClass implements Insertable<ZhouYiGuaZhu> {
       isSingle: serializer.fromJson<bool>(json['isSingle']),
       guaBinary: serializer.fromJson<String>(json['guaBinary']),
       bookId: serializer.fromJson<int>(json['bookId']),
-      guaZhu: serializer.fromJson<String>(json['guaZhu']),
-      xiangZhu: serializer.fromJson<String>(json['xiangZhu']),
-      tuanZhu: serializer.fromJson<String>(json['tuanZhu']),
+      guaZhu: serializer.fromJson<String?>(json['guaZhu']),
+      xiangZhu: serializer.fromJson<String?>(json['xiangZhu']),
+      tuanZhu: serializer.fromJson<String?>(json['tuanZhu']),
     );
   }
   @override
@@ -667,9 +715,9 @@ class ZhouYiGuaZhu extends DataClass implements Insertable<ZhouYiGuaZhu> {
       'isSingle': serializer.toJson<bool>(isSingle),
       'guaBinary': serializer.toJson<String>(guaBinary),
       'bookId': serializer.toJson<int>(bookId),
-      'guaZhu': serializer.toJson<String>(guaZhu),
-      'xiangZhu': serializer.toJson<String>(xiangZhu),
-      'tuanZhu': serializer.toJson<String>(tuanZhu),
+      'guaZhu': serializer.toJson<String?>(guaZhu),
+      'xiangZhu': serializer.toJson<String?>(xiangZhu),
+      'tuanZhu': serializer.toJson<String?>(tuanZhu),
     };
   }
 
@@ -725,9 +773,9 @@ class ZhouYiGuaZhuTableCompanion extends UpdateCompanion<ZhouYiGuaZhu> {
   final Value<bool> isSingle;
   final Value<String> guaBinary;
   final Value<int> bookId;
-  final Value<String> guaZhu;
-  final Value<String> xiangZhu;
-  final Value<String> tuanZhu;
+  final Value<String?> guaZhu;
+  final Value<String?> xiangZhu;
+  final Value<String?> tuanZhu;
   const ZhouYiGuaZhuTableCompanion({
     this.id = const Value.absent(),
     this.isSingle = const Value.absent(),
@@ -742,23 +790,20 @@ class ZhouYiGuaZhuTableCompanion extends UpdateCompanion<ZhouYiGuaZhu> {
     required bool isSingle,
     required String guaBinary,
     required int bookId,
-    required String guaZhu,
-    required String xiangZhu,
-    required String tuanZhu,
+    this.guaZhu = const Value.absent(),
+    this.xiangZhu = const Value.absent(),
+    this.tuanZhu = const Value.absent(),
   })  : isSingle = Value(isSingle),
         guaBinary = Value(guaBinary),
-        bookId = Value(bookId),
-        guaZhu = Value(guaZhu),
-        xiangZhu = Value(xiangZhu),
-        tuanZhu = Value(tuanZhu);
+        bookId = Value(bookId);
   static Insertable<ZhouYiGuaZhu> custom({
     Expression<int>? id,
     Expression<bool>? isSingle,
     Expression<String>? guaBinary,
     Expression<int>? bookId,
-    Expression<String>? guaZhu,
-    Expression<String>? xiangZhu,
-    Expression<String>? tuanZhu,
+    Expression<String?>? guaZhu,
+    Expression<String?>? xiangZhu,
+    Expression<String?>? tuanZhu,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -776,9 +821,9 @@ class ZhouYiGuaZhuTableCompanion extends UpdateCompanion<ZhouYiGuaZhu> {
       Value<bool>? isSingle,
       Value<String>? guaBinary,
       Value<int>? bookId,
-      Value<String>? guaZhu,
-      Value<String>? xiangZhu,
-      Value<String>? tuanZhu}) {
+      Value<String?>? guaZhu,
+      Value<String?>? xiangZhu,
+      Value<String?>? tuanZhu}) {
     return ZhouYiGuaZhuTableCompanion(
       id: id ?? this.id,
       isSingle: isSingle ?? this.isSingle,
@@ -806,13 +851,13 @@ class ZhouYiGuaZhuTableCompanion extends UpdateCompanion<ZhouYiGuaZhu> {
       map['book_id'] = Variable<int>(bookId.value);
     }
     if (guaZhu.present) {
-      map['gua_zhu'] = Variable<String>(guaZhu.value);
+      map['gua_zhu'] = Variable<String?>(guaZhu.value);
     }
     if (xiangZhu.present) {
-      map['xiang_zhu'] = Variable<String>(xiangZhu.value);
+      map['xiang_zhu'] = Variable<String?>(xiangZhu.value);
     }
     if (tuanZhu.present) {
-      map['tuan_zhu'] = Variable<String>(tuanZhu.value);
+      map['tuan_zhu'] = Variable<String?>(tuanZhu.value);
     }
     return map;
   }
@@ -868,25 +913,25 @@ class $ZhouYiGuaZhuTableTable extends ZhouYiGuaZhuTable
   final VerificationMeta _guaZhuMeta = const VerificationMeta('guaZhu');
   @override
   late final GeneratedColumn<String?> guaZhu = GeneratedColumn<String?>(
-      'gua_zhu', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
+      'gua_zhu', aliasedName, true,
+      type: const StringType(), requiredDuringInsert: false);
   final VerificationMeta _xiangZhuMeta = const VerificationMeta('xiangZhu');
   @override
   late final GeneratedColumn<String?> xiangZhu = GeneratedColumn<String?>(
-      'xiang_zhu', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
+      'xiang_zhu', aliasedName, true,
+      type: const StringType(), requiredDuringInsert: false);
   final VerificationMeta _tuanZhuMeta = const VerificationMeta('tuanZhu');
   @override
   late final GeneratedColumn<String?> tuanZhu = GeneratedColumn<String?>(
-      'tuan_zhu', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
+      'tuan_zhu', aliasedName, true,
+      type: const StringType(), requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns =>
       [id, isSingle, guaBinary, bookId, guaZhu, xiangZhu, tuanZhu];
   @override
-  String get aliasedName => _alias ?? 'zhouyi_gua_zhu';
+  String get aliasedName => _alias ?? 't_zy_gua_zhu';
   @override
-  String get actualTableName => 'zhouyi_gua_zhu';
+  String get actualTableName => 't_zy_gua_zhu';
   @override
   VerificationContext validateIntegrity(Insertable<ZhouYiGuaZhu> instance,
       {bool isInserting = false}) {
@@ -916,20 +961,14 @@ class $ZhouYiGuaZhuTableTable extends ZhouYiGuaZhuTable
     if (data.containsKey('gua_zhu')) {
       context.handle(_guaZhuMeta,
           guaZhu.isAcceptableOrUnknown(data['gua_zhu']!, _guaZhuMeta));
-    } else if (isInserting) {
-      context.missing(_guaZhuMeta);
     }
     if (data.containsKey('xiang_zhu')) {
       context.handle(_xiangZhuMeta,
           xiangZhu.isAcceptableOrUnknown(data['xiang_zhu']!, _xiangZhuMeta));
-    } else if (isInserting) {
-      context.missing(_xiangZhuMeta);
     }
     if (data.containsKey('tuan_zhu')) {
       context.handle(_tuanZhuMeta,
           tuanZhu.isAcceptableOrUnknown(data['tuan_zhu']!, _tuanZhuMeta));
-    } else if (isInserting) {
-      context.missing(_tuanZhuMeta);
     }
     return context;
   }
@@ -953,13 +992,13 @@ class ZhouYiYaoZhu extends DataClass implements Insertable<ZhouYiYaoZhu> {
   final String guaBinary;
   final int yaoId;
   final int bookId;
-  final String yaoZhu;
+  final String? yaoZhu;
   ZhouYiYaoZhu(
       {required this.id,
       required this.guaBinary,
       required this.yaoId,
       required this.bookId,
-      required this.yaoZhu});
+      this.yaoZhu});
   factory ZhouYiYaoZhu.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String? prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -973,7 +1012,7 @@ class ZhouYiYaoZhu extends DataClass implements Insertable<ZhouYiYaoZhu> {
       bookId: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}book_id'])!,
       yaoZhu: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}yao_zhu'])!,
+          .mapFromDatabaseResponse(data['${effectivePrefix}yao_zhu']),
     );
   }
   @override
@@ -983,7 +1022,9 @@ class ZhouYiYaoZhu extends DataClass implements Insertable<ZhouYiYaoZhu> {
     map['gua_binary'] = Variable<String>(guaBinary);
     map['yao_id'] = Variable<int>(yaoId);
     map['book_id'] = Variable<int>(bookId);
-    map['yao_zhu'] = Variable<String>(yaoZhu);
+    if (!nullToAbsent || yaoZhu != null) {
+      map['yao_zhu'] = Variable<String?>(yaoZhu);
+    }
     return map;
   }
 
@@ -993,7 +1034,8 @@ class ZhouYiYaoZhu extends DataClass implements Insertable<ZhouYiYaoZhu> {
       guaBinary: Value(guaBinary),
       yaoId: Value(yaoId),
       bookId: Value(bookId),
-      yaoZhu: Value(yaoZhu),
+      yaoZhu:
+          yaoZhu == null && nullToAbsent ? const Value.absent() : Value(yaoZhu),
     );
   }
 
@@ -1005,7 +1047,7 @@ class ZhouYiYaoZhu extends DataClass implements Insertable<ZhouYiYaoZhu> {
       guaBinary: serializer.fromJson<String>(json['guaBinary']),
       yaoId: serializer.fromJson<int>(json['yaoId']),
       bookId: serializer.fromJson<int>(json['bookId']),
-      yaoZhu: serializer.fromJson<String>(json['yaoZhu']),
+      yaoZhu: serializer.fromJson<String?>(json['yaoZhu']),
     );
   }
   @override
@@ -1016,7 +1058,7 @@ class ZhouYiYaoZhu extends DataClass implements Insertable<ZhouYiYaoZhu> {
       'guaBinary': serializer.toJson<String>(guaBinary),
       'yaoId': serializer.toJson<int>(yaoId),
       'bookId': serializer.toJson<int>(bookId),
-      'yaoZhu': serializer.toJson<String>(yaoZhu),
+      'yaoZhu': serializer.toJson<String?>(yaoZhu),
     };
   }
 
@@ -1063,7 +1105,7 @@ class ZhouYiYaoZhuTableCompanion extends UpdateCompanion<ZhouYiYaoZhu> {
   final Value<String> guaBinary;
   final Value<int> yaoId;
   final Value<int> bookId;
-  final Value<String> yaoZhu;
+  final Value<String?> yaoZhu;
   const ZhouYiYaoZhuTableCompanion({
     this.id = const Value.absent(),
     this.guaBinary = const Value.absent(),
@@ -1076,17 +1118,16 @@ class ZhouYiYaoZhuTableCompanion extends UpdateCompanion<ZhouYiYaoZhu> {
     required String guaBinary,
     required int yaoId,
     required int bookId,
-    required String yaoZhu,
+    this.yaoZhu = const Value.absent(),
   })  : guaBinary = Value(guaBinary),
         yaoId = Value(yaoId),
-        bookId = Value(bookId),
-        yaoZhu = Value(yaoZhu);
+        bookId = Value(bookId);
   static Insertable<ZhouYiYaoZhu> custom({
     Expression<int>? id,
     Expression<String>? guaBinary,
     Expression<int>? yaoId,
     Expression<int>? bookId,
-    Expression<String>? yaoZhu,
+    Expression<String?>? yaoZhu,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -1102,7 +1143,7 @@ class ZhouYiYaoZhuTableCompanion extends UpdateCompanion<ZhouYiYaoZhu> {
       Value<String>? guaBinary,
       Value<int>? yaoId,
       Value<int>? bookId,
-      Value<String>? yaoZhu}) {
+      Value<String?>? yaoZhu}) {
     return ZhouYiYaoZhuTableCompanion(
       id: id ?? this.id,
       guaBinary: guaBinary ?? this.guaBinary,
@@ -1128,7 +1169,7 @@ class ZhouYiYaoZhuTableCompanion extends UpdateCompanion<ZhouYiYaoZhu> {
       map['book_id'] = Variable<int>(bookId.value);
     }
     if (yaoZhu.present) {
-      map['yao_zhu'] = Variable<String>(yaoZhu.value);
+      map['yao_zhu'] = Variable<String?>(yaoZhu.value);
     }
     return map;
   }
@@ -1177,14 +1218,14 @@ class $ZhouYiYaoZhuTableTable extends ZhouYiYaoZhuTable
   final VerificationMeta _yaoZhuMeta = const VerificationMeta('yaoZhu');
   @override
   late final GeneratedColumn<String?> yaoZhu = GeneratedColumn<String?>(
-      'yao_zhu', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
+      'yao_zhu', aliasedName, true,
+      type: const StringType(), requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns => [id, guaBinary, yaoId, bookId, yaoZhu];
   @override
-  String get aliasedName => _alias ?? 'zhou_yi_yao_zhu_table';
+  String get aliasedName => _alias ?? 't_zy_yao_zhu';
   @override
-  String get actualTableName => 'zhou_yi_yao_zhu_table';
+  String get actualTableName => 't_zy_yao_zhu';
   @override
   VerificationContext validateIntegrity(Insertable<ZhouYiYaoZhu> instance,
       {bool isInserting = false}) {
@@ -1214,8 +1255,6 @@ class $ZhouYiYaoZhuTableTable extends ZhouYiYaoZhuTable
     if (data.containsKey('yao_zhu')) {
       context.handle(_yaoZhuMeta,
           yaoZhu.isAcceptableOrUnknown(data['yao_zhu']!, _yaoZhuMeta));
-    } else if (isInserting) {
-      context.missing(_yaoZhuMeta);
     }
     return context;
   }
@@ -1236,30 +1275,26 @@ class $ZhouYiYaoZhuTableTable extends ZhouYiYaoZhuTable
 
 class ZhouYiGuaYao extends DataClass implements Insertable<ZhouYiGuaYao> {
   final int id;
-  final int seq;
   final String guaBinary;
   final int seqInGua;
   final String yaoName;
   final String guaYaoName;
-  final String yaoXiang;
-  final String yaoContent;
+  final String xiang;
+  final String yao;
   ZhouYiGuaYao(
       {required this.id,
-      required this.seq,
       required this.guaBinary,
       required this.seqInGua,
       required this.yaoName,
       required this.guaYaoName,
-      required this.yaoXiang,
-      required this.yaoContent});
+      required this.xiang,
+      required this.yao});
   factory ZhouYiGuaYao.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String? prefix}) {
     final effectivePrefix = prefix ?? '';
     return ZhouYiGuaYao(
       id: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
-      seq: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}seq'])!,
       guaBinary: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}gua_binary'])!,
       seqInGua: const IntType()
@@ -1268,36 +1303,34 @@ class ZhouYiGuaYao extends DataClass implements Insertable<ZhouYiGuaYao> {
           .mapFromDatabaseResponse(data['${effectivePrefix}yao_name'])!,
       guaYaoName: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}gua_yao_name'])!,
-      yaoXiang: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}yao_xiang'])!,
-      yaoContent: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}yao_content'])!,
+      xiang: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}xiang'])!,
+      yao: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}yao'])!,
     );
   }
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['seq'] = Variable<int>(seq);
     map['gua_binary'] = Variable<String>(guaBinary);
     map['seq_in_gua'] = Variable<int>(seqInGua);
     map['yao_name'] = Variable<String>(yaoName);
     map['gua_yao_name'] = Variable<String>(guaYaoName);
-    map['yao_xiang'] = Variable<String>(yaoXiang);
-    map['yao_content'] = Variable<String>(yaoContent);
+    map['xiang'] = Variable<String>(xiang);
+    map['yao'] = Variable<String>(yao);
     return map;
   }
 
   ZhouYiGuaYaoTableCompanion toCompanion(bool nullToAbsent) {
     return ZhouYiGuaYaoTableCompanion(
       id: Value(id),
-      seq: Value(seq),
       guaBinary: Value(guaBinary),
       seqInGua: Value(seqInGua),
       yaoName: Value(yaoName),
       guaYaoName: Value(guaYaoName),
-      yaoXiang: Value(yaoXiang),
-      yaoContent: Value(yaoContent),
+      xiang: Value(xiang),
+      yao: Value(yao),
     );
   }
 
@@ -1306,13 +1339,12 @@ class ZhouYiGuaYao extends DataClass implements Insertable<ZhouYiGuaYao> {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return ZhouYiGuaYao(
       id: serializer.fromJson<int>(json['id']),
-      seq: serializer.fromJson<int>(json['seq']),
       guaBinary: serializer.fromJson<String>(json['guaBinary']),
       seqInGua: serializer.fromJson<int>(json['seqInGua']),
       yaoName: serializer.fromJson<String>(json['yaoName']),
       guaYaoName: serializer.fromJson<String>(json['guaYaoName']),
-      yaoXiang: serializer.fromJson<String>(json['yaoXiang']),
-      yaoContent: serializer.fromJson<String>(json['yaoContent']),
+      xiang: serializer.fromJson<String>(json['xiang']),
+      yao: serializer.fromJson<String>(json['yao']),
     );
   }
   @override
@@ -1320,142 +1352,129 @@ class ZhouYiGuaYao extends DataClass implements Insertable<ZhouYiGuaYao> {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'seq': serializer.toJson<int>(seq),
       'guaBinary': serializer.toJson<String>(guaBinary),
       'seqInGua': serializer.toJson<int>(seqInGua),
       'yaoName': serializer.toJson<String>(yaoName),
       'guaYaoName': serializer.toJson<String>(guaYaoName),
-      'yaoXiang': serializer.toJson<String>(yaoXiang),
-      'yaoContent': serializer.toJson<String>(yaoContent),
+      'xiang': serializer.toJson<String>(xiang),
+      'yao': serializer.toJson<String>(yao),
     };
   }
 
   ZhouYiGuaYao copyWith(
           {int? id,
-          int? seq,
           String? guaBinary,
           int? seqInGua,
           String? yaoName,
           String? guaYaoName,
-          String? yaoXiang,
-          String? yaoContent}) =>
+          String? xiang,
+          String? yao}) =>
       ZhouYiGuaYao(
         id: id ?? this.id,
-        seq: seq ?? this.seq,
         guaBinary: guaBinary ?? this.guaBinary,
         seqInGua: seqInGua ?? this.seqInGua,
         yaoName: yaoName ?? this.yaoName,
         guaYaoName: guaYaoName ?? this.guaYaoName,
-        yaoXiang: yaoXiang ?? this.yaoXiang,
-        yaoContent: yaoContent ?? this.yaoContent,
+        xiang: xiang ?? this.xiang,
+        yao: yao ?? this.yao,
       );
   @override
   String toString() {
     return (StringBuffer('ZhouYiGuaYao(')
           ..write('id: $id, ')
-          ..write('seq: $seq, ')
           ..write('guaBinary: $guaBinary, ')
           ..write('seqInGua: $seqInGua, ')
           ..write('yaoName: $yaoName, ')
           ..write('guaYaoName: $guaYaoName, ')
-          ..write('yaoXiang: $yaoXiang, ')
-          ..write('yaoContent: $yaoContent')
+          ..write('xiang: $xiang, ')
+          ..write('yao: $yao')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(
-      id, seq, guaBinary, seqInGua, yaoName, guaYaoName, yaoXiang, yaoContent);
+  int get hashCode =>
+      Object.hash(id, guaBinary, seqInGua, yaoName, guaYaoName, xiang, yao);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is ZhouYiGuaYao &&
           other.id == this.id &&
-          other.seq == this.seq &&
           other.guaBinary == this.guaBinary &&
           other.seqInGua == this.seqInGua &&
           other.yaoName == this.yaoName &&
           other.guaYaoName == this.guaYaoName &&
-          other.yaoXiang == this.yaoXiang &&
-          other.yaoContent == this.yaoContent);
+          other.xiang == this.xiang &&
+          other.yao == this.yao);
 }
 
 class ZhouYiGuaYaoTableCompanion extends UpdateCompanion<ZhouYiGuaYao> {
   final Value<int> id;
-  final Value<int> seq;
   final Value<String> guaBinary;
   final Value<int> seqInGua;
   final Value<String> yaoName;
   final Value<String> guaYaoName;
-  final Value<String> yaoXiang;
-  final Value<String> yaoContent;
+  final Value<String> xiang;
+  final Value<String> yao;
   const ZhouYiGuaYaoTableCompanion({
     this.id = const Value.absent(),
-    this.seq = const Value.absent(),
     this.guaBinary = const Value.absent(),
     this.seqInGua = const Value.absent(),
     this.yaoName = const Value.absent(),
     this.guaYaoName = const Value.absent(),
-    this.yaoXiang = const Value.absent(),
-    this.yaoContent = const Value.absent(),
+    this.xiang = const Value.absent(),
+    this.yao = const Value.absent(),
   });
   ZhouYiGuaYaoTableCompanion.insert({
     this.id = const Value.absent(),
-    required int seq,
     required String guaBinary,
     required int seqInGua,
     required String yaoName,
     required String guaYaoName,
-    required String yaoXiang,
-    required String yaoContent,
-  })  : seq = Value(seq),
-        guaBinary = Value(guaBinary),
+    required String xiang,
+    required String yao,
+  })  : guaBinary = Value(guaBinary),
         seqInGua = Value(seqInGua),
         yaoName = Value(yaoName),
         guaYaoName = Value(guaYaoName),
-        yaoXiang = Value(yaoXiang),
-        yaoContent = Value(yaoContent);
+        xiang = Value(xiang),
+        yao = Value(yao);
   static Insertable<ZhouYiGuaYao> custom({
     Expression<int>? id,
-    Expression<int>? seq,
     Expression<String>? guaBinary,
     Expression<int>? seqInGua,
     Expression<String>? yaoName,
     Expression<String>? guaYaoName,
-    Expression<String>? yaoXiang,
-    Expression<String>? yaoContent,
+    Expression<String>? xiang,
+    Expression<String>? yao,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (seq != null) 'seq': seq,
       if (guaBinary != null) 'gua_binary': guaBinary,
       if (seqInGua != null) 'seq_in_gua': seqInGua,
       if (yaoName != null) 'yao_name': yaoName,
       if (guaYaoName != null) 'gua_yao_name': guaYaoName,
-      if (yaoXiang != null) 'yao_xiang': yaoXiang,
-      if (yaoContent != null) 'yao_content': yaoContent,
+      if (xiang != null) 'xiang': xiang,
+      if (yao != null) 'yao': yao,
     });
   }
 
   ZhouYiGuaYaoTableCompanion copyWith(
       {Value<int>? id,
-      Value<int>? seq,
       Value<String>? guaBinary,
       Value<int>? seqInGua,
       Value<String>? yaoName,
       Value<String>? guaYaoName,
-      Value<String>? yaoXiang,
-      Value<String>? yaoContent}) {
+      Value<String>? xiang,
+      Value<String>? yao}) {
     return ZhouYiGuaYaoTableCompanion(
       id: id ?? this.id,
-      seq: seq ?? this.seq,
       guaBinary: guaBinary ?? this.guaBinary,
       seqInGua: seqInGua ?? this.seqInGua,
       yaoName: yaoName ?? this.yaoName,
       guaYaoName: guaYaoName ?? this.guaYaoName,
-      yaoXiang: yaoXiang ?? this.yaoXiang,
-      yaoContent: yaoContent ?? this.yaoContent,
+      xiang: xiang ?? this.xiang,
+      yao: yao ?? this.yao,
     );
   }
 
@@ -1464,9 +1483,6 @@ class ZhouYiGuaYaoTableCompanion extends UpdateCompanion<ZhouYiGuaYao> {
     final map = <String, Expression>{};
     if (id.present) {
       map['id'] = Variable<int>(id.value);
-    }
-    if (seq.present) {
-      map['seq'] = Variable<int>(seq.value);
     }
     if (guaBinary.present) {
       map['gua_binary'] = Variable<String>(guaBinary.value);
@@ -1480,11 +1496,11 @@ class ZhouYiGuaYaoTableCompanion extends UpdateCompanion<ZhouYiGuaYao> {
     if (guaYaoName.present) {
       map['gua_yao_name'] = Variable<String>(guaYaoName.value);
     }
-    if (yaoXiang.present) {
-      map['yao_xiang'] = Variable<String>(yaoXiang.value);
+    if (xiang.present) {
+      map['xiang'] = Variable<String>(xiang.value);
     }
-    if (yaoContent.present) {
-      map['yao_content'] = Variable<String>(yaoContent.value);
+    if (yao.present) {
+      map['yao'] = Variable<String>(yao.value);
     }
     return map;
   }
@@ -1493,13 +1509,12 @@ class ZhouYiGuaYaoTableCompanion extends UpdateCompanion<ZhouYiGuaYao> {
   String toString() {
     return (StringBuffer('ZhouYiGuaYaoTableCompanion(')
           ..write('id: $id, ')
-          ..write('seq: $seq, ')
           ..write('guaBinary: $guaBinary, ')
           ..write('seqInGua: $seqInGua, ')
           ..write('yaoName: $yaoName, ')
           ..write('guaYaoName: $guaYaoName, ')
-          ..write('yaoXiang: $yaoXiang, ')
-          ..write('yaoContent: $yaoContent')
+          ..write('xiang: $xiang, ')
+          ..write('yao: $yao')
           ..write(')'))
         .toString();
   }
@@ -1518,11 +1533,6 @@ class $ZhouYiGuaYaoTableTable extends ZhouYiGuaYaoTable
       type: const IntType(),
       requiredDuringInsert: false,
       defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
-  final VerificationMeta _seqMeta = const VerificationMeta('seq');
-  @override
-  late final GeneratedColumn<int?> seq = GeneratedColumn<int?>(
-      'seq', aliasedName, false,
-      type: const IntType(), requiredDuringInsert: true);
   final VerificationMeta _guaBinaryMeta = const VerificationMeta('guaBinary');
   @override
   late final GeneratedColumn<String?> guaBinary = GeneratedColumn<String?>(
@@ -1552,23 +1562,23 @@ class $ZhouYiGuaYaoTableTable extends ZhouYiGuaYaoTable
           GeneratedColumn.checkTextLength(minTextLength: 4, maxTextLength: 4),
       type: const StringType(),
       requiredDuringInsert: true);
-  final VerificationMeta _yaoXiangMeta = const VerificationMeta('yaoXiang');
+  final VerificationMeta _xiangMeta = const VerificationMeta('xiang');
   @override
-  late final GeneratedColumn<String?> yaoXiang = GeneratedColumn<String?>(
-      'yao_xiang', aliasedName, false,
+  late final GeneratedColumn<String?> xiang = GeneratedColumn<String?>(
+      'xiang', aliasedName, false,
       type: const StringType(), requiredDuringInsert: true);
-  final VerificationMeta _yaoContentMeta = const VerificationMeta('yaoContent');
+  final VerificationMeta _yaoMeta = const VerificationMeta('yao');
   @override
-  late final GeneratedColumn<String?> yaoContent = GeneratedColumn<String?>(
-      'yao_content', aliasedName, false,
+  late final GeneratedColumn<String?> yao = GeneratedColumn<String?>(
+      'yao', aliasedName, false,
       type: const StringType(), requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns =>
-      [id, seq, guaBinary, seqInGua, yaoName, guaYaoName, yaoXiang, yaoContent];
+      [id, guaBinary, seqInGua, yaoName, guaYaoName, xiang, yao];
   @override
-  String get aliasedName => _alias ?? 'zhouyi_gua_yao';
+  String get aliasedName => _alias ?? 't_zy_yao';
   @override
-  String get actualTableName => 'zhouyi_gua_yao';
+  String get actualTableName => 't_zy_yao';
   @override
   VerificationContext validateIntegrity(Insertable<ZhouYiGuaYao> instance,
       {bool isInserting = false}) {
@@ -1576,12 +1586,6 @@ class $ZhouYiGuaYaoTableTable extends ZhouYiGuaYaoTable
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('seq')) {
-      context.handle(
-          _seqMeta, seq.isAcceptableOrUnknown(data['seq']!, _seqMeta));
-    } else if (isInserting) {
-      context.missing(_seqMeta);
     }
     if (data.containsKey('gua_binary')) {
       context.handle(_guaBinaryMeta,
@@ -1609,19 +1613,17 @@ class $ZhouYiGuaYaoTableTable extends ZhouYiGuaYaoTable
     } else if (isInserting) {
       context.missing(_guaYaoNameMeta);
     }
-    if (data.containsKey('yao_xiang')) {
-      context.handle(_yaoXiangMeta,
-          yaoXiang.isAcceptableOrUnknown(data['yao_xiang']!, _yaoXiangMeta));
-    } else if (isInserting) {
-      context.missing(_yaoXiangMeta);
-    }
-    if (data.containsKey('yao_content')) {
+    if (data.containsKey('xiang')) {
       context.handle(
-          _yaoContentMeta,
-          yaoContent.isAcceptableOrUnknown(
-              data['yao_content']!, _yaoContentMeta));
+          _xiangMeta, xiang.isAcceptableOrUnknown(data['xiang']!, _xiangMeta));
     } else if (isInserting) {
-      context.missing(_yaoContentMeta);
+      context.missing(_xiangMeta);
+    }
+    if (data.containsKey('yao')) {
+      context.handle(
+          _yaoMeta, yao.isAcceptableOrUnknown(data['yao']!, _yaoMeta));
+    } else if (isInserting) {
+      context.missing(_yaoMeta);
     }
     return context;
   }
@@ -1642,14 +1644,14 @@ class $ZhouYiGuaYaoTableTable extends ZhouYiGuaYaoTable
 
 class ZhouyiZhuBooks extends DataClass implements Insertable<ZhouyiZhuBooks> {
   final int id;
-  final String bookName;
-  final String bookAuth;
-  final String bookAge;
+  final String bookname;
+  final String bookauth;
+  final String bookage;
   ZhouyiZhuBooks(
       {required this.id,
-      required this.bookName,
-      required this.bookAuth,
-      required this.bookAge});
+      required this.bookname,
+      required this.bookauth,
+      required this.bookage});
   factory ZhouyiZhuBooks.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
       {String? prefix}) {
@@ -1657,30 +1659,30 @@ class ZhouyiZhuBooks extends DataClass implements Insertable<ZhouyiZhuBooks> {
     return ZhouyiZhuBooks(
       id: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
-      bookName: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}book_name'])!,
-      bookAuth: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}book_auth'])!,
-      bookAge: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}book_age'])!,
+      bookname: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}bookname'])!,
+      bookauth: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}bookauth'])!,
+      bookage: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}bookage'])!,
     );
   }
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['book_name'] = Variable<String>(bookName);
-    map['book_auth'] = Variable<String>(bookAuth);
-    map['book_age'] = Variable<String>(bookAge);
+    map['bookname'] = Variable<String>(bookname);
+    map['bookauth'] = Variable<String>(bookauth);
+    map['bookage'] = Variable<String>(bookage);
     return map;
   }
 
   ZhouyiZhuBooksTableCompanion toCompanion(bool nullToAbsent) {
     return ZhouyiZhuBooksTableCompanion(
       id: Value(id),
-      bookName: Value(bookName),
-      bookAuth: Value(bookAuth),
-      bookAge: Value(bookAge),
+      bookname: Value(bookname),
+      bookauth: Value(bookauth),
+      bookage: Value(bookage),
     );
   }
 
@@ -1689,9 +1691,9 @@ class ZhouyiZhuBooks extends DataClass implements Insertable<ZhouyiZhuBooks> {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return ZhouyiZhuBooks(
       id: serializer.fromJson<int>(json['id']),
-      bookName: serializer.fromJson<String>(json['bookName']),
-      bookAuth: serializer.fromJson<String>(json['bookAuth']),
-      bookAge: serializer.fromJson<String>(json['bookAge']),
+      bookname: serializer.fromJson<String>(json['bookname']),
+      bookauth: serializer.fromJson<String>(json['bookauth']),
+      bookage: serializer.fromJson<String>(json['bookage']),
     );
   }
   @override
@@ -1699,86 +1701,86 @@ class ZhouyiZhuBooks extends DataClass implements Insertable<ZhouyiZhuBooks> {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'bookName': serializer.toJson<String>(bookName),
-      'bookAuth': serializer.toJson<String>(bookAuth),
-      'bookAge': serializer.toJson<String>(bookAge),
+      'bookname': serializer.toJson<String>(bookname),
+      'bookauth': serializer.toJson<String>(bookauth),
+      'bookage': serializer.toJson<String>(bookage),
     };
   }
 
   ZhouyiZhuBooks copyWith(
-          {int? id, String? bookName, String? bookAuth, String? bookAge}) =>
+          {int? id, String? bookname, String? bookauth, String? bookage}) =>
       ZhouyiZhuBooks(
         id: id ?? this.id,
-        bookName: bookName ?? this.bookName,
-        bookAuth: bookAuth ?? this.bookAuth,
-        bookAge: bookAge ?? this.bookAge,
+        bookname: bookname ?? this.bookname,
+        bookauth: bookauth ?? this.bookauth,
+        bookage: bookage ?? this.bookage,
       );
   @override
   String toString() {
     return (StringBuffer('ZhouyiZhuBooks(')
           ..write('id: $id, ')
-          ..write('bookName: $bookName, ')
-          ..write('bookAuth: $bookAuth, ')
-          ..write('bookAge: $bookAge')
+          ..write('bookname: $bookname, ')
+          ..write('bookauth: $bookauth, ')
+          ..write('bookage: $bookage')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, bookName, bookAuth, bookAge);
+  int get hashCode => Object.hash(id, bookname, bookauth, bookage);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is ZhouyiZhuBooks &&
           other.id == this.id &&
-          other.bookName == this.bookName &&
-          other.bookAuth == this.bookAuth &&
-          other.bookAge == this.bookAge);
+          other.bookname == this.bookname &&
+          other.bookauth == this.bookauth &&
+          other.bookage == this.bookage);
 }
 
 class ZhouyiZhuBooksTableCompanion extends UpdateCompanion<ZhouyiZhuBooks> {
   final Value<int> id;
-  final Value<String> bookName;
-  final Value<String> bookAuth;
-  final Value<String> bookAge;
+  final Value<String> bookname;
+  final Value<String> bookauth;
+  final Value<String> bookage;
   const ZhouyiZhuBooksTableCompanion({
     this.id = const Value.absent(),
-    this.bookName = const Value.absent(),
-    this.bookAuth = const Value.absent(),
-    this.bookAge = const Value.absent(),
+    this.bookname = const Value.absent(),
+    this.bookauth = const Value.absent(),
+    this.bookage = const Value.absent(),
   });
   ZhouyiZhuBooksTableCompanion.insert({
     this.id = const Value.absent(),
-    required String bookName,
-    required String bookAuth,
-    required String bookAge,
-  })  : bookName = Value(bookName),
-        bookAuth = Value(bookAuth),
-        bookAge = Value(bookAge);
+    required String bookname,
+    required String bookauth,
+    required String bookage,
+  })  : bookname = Value(bookname),
+        bookauth = Value(bookauth),
+        bookage = Value(bookage);
   static Insertable<ZhouyiZhuBooks> custom({
     Expression<int>? id,
-    Expression<String>? bookName,
-    Expression<String>? bookAuth,
-    Expression<String>? bookAge,
+    Expression<String>? bookname,
+    Expression<String>? bookauth,
+    Expression<String>? bookage,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (bookName != null) 'book_name': bookName,
-      if (bookAuth != null) 'book_auth': bookAuth,
-      if (bookAge != null) 'book_age': bookAge,
+      if (bookname != null) 'bookname': bookname,
+      if (bookauth != null) 'bookauth': bookauth,
+      if (bookage != null) 'bookage': bookage,
     });
   }
 
   ZhouyiZhuBooksTableCompanion copyWith(
       {Value<int>? id,
-      Value<String>? bookName,
-      Value<String>? bookAuth,
-      Value<String>? bookAge}) {
+      Value<String>? bookname,
+      Value<String>? bookauth,
+      Value<String>? bookage}) {
     return ZhouyiZhuBooksTableCompanion(
       id: id ?? this.id,
-      bookName: bookName ?? this.bookName,
-      bookAuth: bookAuth ?? this.bookAuth,
-      bookAge: bookAge ?? this.bookAge,
+      bookname: bookname ?? this.bookname,
+      bookauth: bookauth ?? this.bookauth,
+      bookage: bookage ?? this.bookage,
     );
   }
 
@@ -1788,14 +1790,14 @@ class ZhouyiZhuBooksTableCompanion extends UpdateCompanion<ZhouyiZhuBooks> {
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
-    if (bookName.present) {
-      map['book_name'] = Variable<String>(bookName.value);
+    if (bookname.present) {
+      map['bookname'] = Variable<String>(bookname.value);
     }
-    if (bookAuth.present) {
-      map['book_auth'] = Variable<String>(bookAuth.value);
+    if (bookauth.present) {
+      map['bookauth'] = Variable<String>(bookauth.value);
     }
-    if (bookAge.present) {
-      map['book_age'] = Variable<String>(bookAge.value);
+    if (bookage.present) {
+      map['bookage'] = Variable<String>(bookage.value);
     }
     return map;
   }
@@ -1804,9 +1806,9 @@ class ZhouyiZhuBooksTableCompanion extends UpdateCompanion<ZhouyiZhuBooks> {
   String toString() {
     return (StringBuffer('ZhouyiZhuBooksTableCompanion(')
           ..write('id: $id, ')
-          ..write('bookName: $bookName, ')
-          ..write('bookAuth: $bookAuth, ')
-          ..write('bookAge: $bookAge')
+          ..write('bookname: $bookname, ')
+          ..write('bookauth: $bookauth, ')
+          ..write('bookage: $bookage')
           ..write(')'))
         .toString();
   }
@@ -1825,33 +1827,33 @@ class $ZhouyiZhuBooksTableTable extends ZhouyiZhuBooksTable
       type: const IntType(),
       requiredDuringInsert: false,
       defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
-  final VerificationMeta _bookNameMeta = const VerificationMeta('bookName');
+  final VerificationMeta _booknameMeta = const VerificationMeta('bookname');
   @override
-  late final GeneratedColumn<String?> bookName = GeneratedColumn<String?>(
-      'book_name', aliasedName, false,
+  late final GeneratedColumn<String?> bookname = GeneratedColumn<String?>(
+      'bookname', aliasedName, false,
       additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 16),
       type: const StringType(),
       requiredDuringInsert: true);
-  final VerificationMeta _bookAuthMeta = const VerificationMeta('bookAuth');
+  final VerificationMeta _bookauthMeta = const VerificationMeta('bookauth');
   @override
-  late final GeneratedColumn<String?> bookAuth = GeneratedColumn<String?>(
-      'book_auth', aliasedName, false,
+  late final GeneratedColumn<String?> bookauth = GeneratedColumn<String?>(
+      'bookauth', aliasedName, false,
       additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 16),
       type: const StringType(),
       requiredDuringInsert: true);
-  final VerificationMeta _bookAgeMeta = const VerificationMeta('bookAge');
+  final VerificationMeta _bookageMeta = const VerificationMeta('bookage');
   @override
-  late final GeneratedColumn<String?> bookAge = GeneratedColumn<String?>(
-      'book_age', aliasedName, false,
+  late final GeneratedColumn<String?> bookage = GeneratedColumn<String?>(
+      'bookage', aliasedName, false,
       additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 16),
       type: const StringType(),
       requiredDuringInsert: true);
   @override
-  List<GeneratedColumn> get $columns => [id, bookName, bookAuth, bookAge];
+  List<GeneratedColumn> get $columns => [id, bookname, bookauth, bookage];
   @override
-  String get aliasedName => _alias ?? 'zhouyi_zhu_book';
+  String get aliasedName => _alias ?? 't_zy_zhu_book';
   @override
-  String get actualTableName => 'zhouyi_zhu_book';
+  String get actualTableName => 't_zy_zhu_book';
   @override
   VerificationContext validateIntegrity(Insertable<ZhouyiZhuBooks> instance,
       {bool isInserting = false}) {
@@ -1860,23 +1862,23 @@ class $ZhouyiZhuBooksTableTable extends ZhouyiZhuBooksTable
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    if (data.containsKey('book_name')) {
-      context.handle(_bookNameMeta,
-          bookName.isAcceptableOrUnknown(data['book_name']!, _bookNameMeta));
+    if (data.containsKey('bookname')) {
+      context.handle(_booknameMeta,
+          bookname.isAcceptableOrUnknown(data['bookname']!, _booknameMeta));
     } else if (isInserting) {
-      context.missing(_bookNameMeta);
+      context.missing(_booknameMeta);
     }
-    if (data.containsKey('book_auth')) {
-      context.handle(_bookAuthMeta,
-          bookAuth.isAcceptableOrUnknown(data['book_auth']!, _bookAuthMeta));
+    if (data.containsKey('bookauth')) {
+      context.handle(_bookauthMeta,
+          bookauth.isAcceptableOrUnknown(data['bookauth']!, _bookauthMeta));
     } else if (isInserting) {
-      context.missing(_bookAuthMeta);
+      context.missing(_bookauthMeta);
     }
-    if (data.containsKey('book_age')) {
-      context.handle(_bookAgeMeta,
-          bookAge.isAcceptableOrUnknown(data['book_age']!, _bookAgeMeta));
+    if (data.containsKey('bookage')) {
+      context.handle(_bookageMeta,
+          bookage.isAcceptableOrUnknown(data['bookage']!, _bookageMeta));
     } else if (isInserting) {
-      context.missing(_bookAgeMeta);
+      context.missing(_bookageMeta);
     }
     return context;
   }
@@ -2160,9 +2162,9 @@ class $JiaoShiYiLinTableTable extends JiaoShiYiLinTable
   List<GeneratedColumn> get $columns =>
       [id, guaBinary, zhiSeq, zhiName, zhiBinary, zhiContent];
   @override
-  String get aliasedName => _alias ?? 'jiao_shi_yi_lin_table';
+  String get aliasedName => _alias ?? 't_zy_jiao_lin';
   @override
-  String get actualTableName => 'jiao_shi_yi_lin_table';
+  String get actualTableName => 't_zy_jiao_lin';
   @override
   VerificationContext validateIntegrity(Insertable<JiaoShiYiLin> instance,
       {bool isInserting = false}) {

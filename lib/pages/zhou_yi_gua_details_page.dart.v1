@@ -2,7 +2,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:card_loading/card_loading.dart';
 import "package:logger/logger.dart";
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,12 +23,22 @@ import '../widgets/small_zhou_yi_gua_widget.dart';
 import '../widgets/zhou_yi_gua_widget.dart';
 
 class ZhouYiGuaDetailsPage extends StatefulWidget {
+  // late String guaName;
+  // late String content;
+  // late String tuan;
+  // late String xiang;
   late ZhouYi zhouYi;
   double cardWidth;
 
   // late List<dynamic> yao_list;
   ZhouYiGuaDetailsPage(Map<String, dynamic> args, {Key? key,this.cardWidth = 256}) : super(key: key){
     zhouYi = args["zhouYi"];
+    // guaName = args["name"];
+    // content = args["content"];
+    // tuan = args["tuan"]['content'];
+    // xiang = args["xiang"]['content'];
+    // yao_list = args["yao_list"] as List<dynamic>;
+
   }
 
   @override
@@ -37,6 +46,9 @@ class ZhouYiGuaDetailsPage extends StatefulWidget {
 }
 
 class _ZhouYiGuaDetailsPageState extends State<ZhouYiGuaDetailsPage> with TickerProviderStateMixin {
+  final Duration _selectedAnimationDuration = const Duration(milliseconds: 300);
+  final List<String> liuShou = ["青龙","白虎","朱雀","玄武","勾陈","螣蛇"];
+  final List<String> liuQin = ["父母","子孙","兄弟","妻财","官鬼"];
 
   Logger logger = Logger();
 
@@ -61,6 +73,7 @@ class _ZhouYiGuaDetailsPageState extends State<ZhouYiGuaDetailsPage> with Ticker
     _selectedYaoXiangIndex.dispose();
     _forceDisplayIndex.dispose();
     _scrollController.dispose();
+    _selectedIndexNotifier.dispose();
     super.dispose();
   }
 
@@ -71,10 +84,26 @@ class _ZhouYiGuaDetailsPageState extends State<ZhouYiGuaDetailsPage> with Ticker
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
     return Scaffold(
-      backgroundColor: Color.fromRGBO(255, 251, 240, 1),
       body: Stack(
         children: [
-          buildRealBody(),
+          FutureBuilder(
+            future: loadJsonDB(),
+            builder: (BuildContext context, AsyncSnapshot<Map<String,dynamic>> snapshot) {
+              // showToast("snapshot.hasData: ${snapshot.hasData}");
+              if (!snapshot.hasData) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (snapshot.hasError){
+                return Center(
+                  child: Text("Error: ${snapshot.error}"),
+                );
+              }
+              return buildRealBody(snapshot.data!);
+            },
+
+          ),
           ValueListenableBuilder(
               valueListenable: displayZhuNotifier,
               builder: (ctx,displayZhu,child){
@@ -109,7 +138,7 @@ class _ZhouYiGuaDetailsPageState extends State<ZhouYiGuaDetailsPage> with Ticker
       )
     );
   }
-  AdaptiveLayout buildRealBody(){
+  AdaptiveLayout buildRealBody(Map<String,dynamic> db){
 
     String binaryContent = widget.zhouYi.binary;
 
@@ -123,7 +152,7 @@ class _ZhouYiGuaDetailsPageState extends State<ZhouYiGuaDetailsPage> with Ticker
               builder: (_) => CustomScrollView(
                   slivers: [
                     SliverToBoxAdapter(
-                      child: zhouYiGua(binaryContent,widget.zhouYi.name, GuaSizeType.large,widget.zhouYi.fullname),
+                      child: zhouYiGua(binaryContent,widget.zhouYi.fullname,"本", GuaSizeType.large),
                     ),
                     SliverToBoxAdapter(
                       child: zhuPart(),
@@ -135,12 +164,15 @@ class _ZhouYiGuaDetailsPageState extends State<ZhouYiGuaDetailsPage> with Ticker
               key: const Key('Body2 Medium'),
               builder: (_) => InkWell(
                 onTap: (){
+                  if (selectedIndex != -1){
+                    selectedIndex = -1;
+                  }
                   },
                 child: Listener(
                   onPointerHover: (event){
                     // showToast("main hover",position: ToastPosition.bottom);
                   },
-                  child:zhouYiGua(binaryContent,widget.zhouYi.name,GuaSizeType.large,widget.zhouYi.fullname),
+                  child:zhouYiGua(binaryContent,widget.zhouYi.name,"本", GuaSizeType.large),
                 ),
               )
           ),
@@ -160,8 +192,48 @@ class _ZhouYiGuaDetailsPageState extends State<ZhouYiGuaDetailsPage> with Ticker
       // width.
     );
   }
+  Widget zhuPart(){
+    // Future.wait([
+    //   Get.find<MyDatabase>().findAllGuaZhu(widget.zhouYi.binary),
+    //   Get.find<MyDatabase>().findAllYaoZhu(widget.zhouYi.binary),
+    //   Get.find<MyDatabase>().findAllZhuBooks(),
+    // ]).then((result){
+    //   List<ZhouYiGuaZhu> allSingeGuaZhu = [];
+    //   List<ZhouYiGuaZhu> guaZhuList = result[0] as List<ZhouYiGuaZhu>;
+    //   List<ZhouyiZhuBooks> booksList = result[2] as List<ZhouyiZhuBooks>;
+    //   // key is "bookId"
+    //   // value Tuple.item1 is ZhouYiGuaZhu, "卦，象，彖"
+    //   // value Tuple.item2 is List<ZhouYiGuaZhu>, "初，二，三，四，五，上"
+    //   Map<int,Tuple2<ZhouYiGuaZhu?,List<ZhouYiYaoZhu>>> mapper = {};
+    //   for (ZhouYiGuaZhu guaZhu in guaZhuList){
+    //     if (guaZhu.isSingle) {
+    //       allSingeGuaZhu.add(guaZhu);
+    //     }else{
+    //       mapper[guaZhu.bookId] = Tuple2(guaZhu,[]);
+    //     }
+    //     // logger.d("guaZhu: ${guaZhu.toJson()}");
+    //   }
+    //   List<ZhouYiYaoZhu> guaYaoZhuList = result[1] as List<ZhouYiYaoZhu>;
+    //   for (ZhouYiYaoZhu yaoZhu in guaYaoZhuList){
+    //     var tuple2 = mapper[yaoZhu.bookId];
+    //     if (tuple2 == null) {
+    //       logger.e("yaoZhu.bookId: ${yaoZhu.bookId} not found");
+    //       mapper[yaoZhu.bookId] = Tuple2(null, <ZhouYiYaoZhu>[]);
+    //     }
+    //     mapper[yaoZhu.bookId]!.item2.add(yaoZhu);
+    //   }
+    //
+    //   // convert mapper to Map<ZhouyiZhuBooks,Tuple2<ZhouYiGuaZhu?,List<ZhouYiYaoZhu>>>
+    //   List<MapEntry<ZhouyiZhuBooks,Tuple2<ZhouYiGuaZhu?,List<ZhouYiYaoZhu>>>> res = mapper.map((key, value) => MapEntry(
+    //       booksList.firstWhere((e) => e.id == key),
+    //       value
+    //   )).entries.toList();
+    //
+    //   // sort by bookId
+    //   res.sort((a,b) => a.key.id.compareTo(b.key.id));
+    //
+    // });
 
-  Widget zhuPart() {
     return FutureBuilder(
       future: Future.wait([
         Get.find<MyDatabase>().findAllGuaZhu(widget.zhouYi.binary),
@@ -169,24 +241,25 @@ class _ZhouYiGuaDetailsPageState extends State<ZhouYiGuaDetailsPage> with Ticker
         Get.find<MyDatabase>().findAllZhuBooks(),
       ]),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        if (snapshot.hasData) {
-          final guaZhuList = snapshot.data[0] as List<ZhouYiGuaZhu>;
-          final guaYaoZhuList = snapshot.data[1] as List<ZhouYiYaoZhu>;
-          final booksList = snapshot.data[2] as List<ZhouyiZhuBooks>;
-
-          final mapper = <int, Tuple2<ZhouYiGuaZhu?, List<ZhouYiYaoZhu>>>{};
-          final allSingeGuaZhu = <ZhouYiGuaZhu>[];
-
-          for (final guaZhu in guaZhuList) {
+        if (snapshot.hasData){
+          List<ZhouYiGuaZhu> allSingeGuaZhu = [];
+          List<ZhouYiGuaZhu> guaZhuList = snapshot.data[0] as List<ZhouYiGuaZhu>;
+          List<ZhouYiYaoZhu> guaYaoZhuList =  snapshot.data[1] as List<ZhouYiYaoZhu>;
+          List<ZhouyiZhuBooks> booksList = snapshot.data[2] as List<ZhouyiZhuBooks>;
+          // key is "bookId"
+          // value Tuple.item1 is ZhouYiGuaZhu, "卦，象，彖"
+          // value Tuple.item2 is List<ZhouYiGuaZhu>, "初，二，三，四，五，上"
+          Map<int,Tuple2<ZhouYiGuaZhu?,List<ZhouYiYaoZhu>>> mapper = {};
+          for (ZhouYiGuaZhu guaZhu in guaZhuList){
             if (guaZhu.isSingle) {
               allSingeGuaZhu.add(guaZhu);
-            } else {
-              mapper[guaZhu.bookId] = Tuple2(guaZhu, []);
+            }else{
+              mapper[guaZhu.bookId] = Tuple2(guaZhu,[]);
             }
+            // logger.d("guaZhu: ${guaZhu.toJson()}");
           }
-
-          for (final yaoZhu in guaYaoZhuList) {
-            final tuple2 = mapper[yaoZhu.bookId];
+          for (ZhouYiYaoZhu yaoZhu in guaYaoZhuList){
+            var tuple2 = mapper[yaoZhu.bookId];
             if (tuple2 == null) {
               logger.e("yaoZhu.bookId: ${yaoZhu.bookId} not found");
               mapper[yaoZhu.bookId] = Tuple2(null, <ZhouYiYaoZhu>[]);
@@ -194,25 +267,24 @@ class _ZhouYiGuaDetailsPageState extends State<ZhouYiGuaDetailsPage> with Ticker
             mapper[yaoZhu.bookId]!.item2.add(yaoZhu);
           }
 
-          final res = mapper.entries
-              .map((entry) => MapEntry(
-              booksList.firstWhere((book) => book.id == entry.key),
-              entry.value))
-              .toList()
-            ..sort((a, b) => a.key.id.compareTo(b.key.id));
+          // convert mapper to Map<ZhouyiZhuBooks,Tuple2<ZhouYiGuaZhu?,List<ZhouYiYaoZhu>>>
+          List<MapEntry<ZhouyiZhuBooks,Tuple2<ZhouYiGuaZhu?,List<ZhouYiYaoZhu>>>> res = mapper.map((key, value) => MapEntry(
+              booksList.firstWhere((e) => e.id == key),
+              value
+          )).entries.toList();
+          // sort by bookId
+          res.sort((a,b) => a.key.id.compareTo(b.key.id));
 
           return Container(
-            color: Color.fromRGBO(242, 236, 222, 1),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: res.map((entry) => eachZhuCard(entry.key, entry.value.item1, entry.value.item2)).toList(),
-              ),
-            ),
+                children: res.map((e) => eachZhuCard(e.key, e.value.item1, e.value.item2)).toList(),
+              )
+            )
           );
         }
-
         return Container(
           child: Center(
             child: CircularProgressIndicator(),
@@ -224,93 +296,80 @@ class _ZhouYiGuaDetailsPageState extends State<ZhouYiGuaDetailsPage> with Ticker
 
   Widget eachZhuCard(ZhouyiZhuBooks book, ZhouYiGuaZhu? guaZhu, List<ZhouYiYaoZhu> yaoZhuList){
     return Container(
-      height: widget.cardWidth,
-      alignment: Alignment.center,
-      // color: Colors.green.shade50,
-        color: Color.fromRGBO(242, 236, 222, 1), // 缟色
-      padding: EdgeInsets.only(bottom: 12),
-      child: Column(
-        children: [
-          Container(
-              height:24,
-              alignment: Alignment.center,
-              child: Text("（${book.bookage}·${book.bookauth}）《${book.bookname}》")
-          ),
-          Expanded(
-            child: ListView.builder(
-              controller: _scrollController,
-              itemCount: 9,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index){
-                String? content;
-                switch (index) {
-                  case 0:
+        height: widget.cardWidth,
+        alignment: Alignment.center,
+        color: Colors.green.shade50,
+        padding: EdgeInsets.only(bottom: 24),
+        child: Column(
+          children: [
+            Container(height:24,alignment: Alignment.center,child: Text("（${book.bookage}·${book.bookauth}）《${book.bookname}》")),
+            Container(
+                height: widget.cardWidth-24-24,
+                child:ListView.builder(
+                  controller: _scrollController,
+                  itemCount: 9,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index){
+                  String? content;
+                  if (index == 0){
                     content = guaZhu?.guaZhu;
-                    break;
-                  case 1:
+                  }else if (index == 1) {
                     content = guaZhu?.tuanZhu;
-                    break;
-                  case 2:
+                  }else if (index == 2) {
                     content = guaZhu?.xiangZhu;
-                    break;
-                  default:
-                    content = yaoZhuList[index - 3].yaoZhu;
-                    break;
-                }
-                return InkWell(
-                  onTap: () {
-                    // showToast("tap");
-                    yaoZhuScrollTo(index);
-                  },
-                  onDoubleTap: () {
-                    // showToast("double tap");
-                    popupYaoZhu(book, content!);
-                  },
-                  child: Card(
-                    // color: Color.fromRGBO(224, 240, 233, 1), // 素色
-                    child: Container(
-                      width: widget.cardWidth,
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          // 卦、彖、象的标题
-                          Container(
-                            height: 200,
-                            width: widget.cardWidth,
+                  }else{
+                    content = yaoZhuList[index-3].yaoZhu;
+                  }
+                  return InkWell(
+                    onTap: (){
+                      showToast("tap");
+                      yaoZhuScrollTo(index);
+                    },
+                    child: Card(
+                        child: Container(
+                          // height: 128,
+                          width: widget.cardWidth,
+                          child: Stack(
                             alignment: Alignment.center,
-                            child: Text(
-                              "${["卦","彖","象","初","二","三","四","五","上"][index]}",
-                              style: TextStyle(fontSize: 72, color: Colors.black12),
-                            ),
-                          ),
-                          // 卦、彖、象、初、二、三、四、五、上的卡片内容
-                          Container(
-                            height: 200,
-                            width: widget.cardWidth,
-                            margin: EdgeInsets.symmetric(horizontal: 8),
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.only(left: 4,right: 0,top: 8,bottom: 8),
-                            child: content == null || content.isEmpty ? Container() : SelectableText.rich(
-                              TextSpan(text: content),
-                              contextMenuBuilder: content == null?null:(arg1,arg2) => contentSelected(arg1,arg2, content!),
-                              onTap: (){
-                                popupYaoZhu(book, content!);
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+                            children: [
+                              Container(
+                                height: 200,
+                                width: widget.cardWidth,
+                                alignment: Alignment.center,
+                                child: Text("${["卦","彖","象","初","二","三","四","五","上"][index]}",style: TextStyle(fontSize: 72,color: Colors.black12),),
+                              ),
+                              Container(
+                                height: 200,
+                                width: widget.cardWidth,
+                                margin: EdgeInsets.symmetric(horizontal: 8),
+                                alignment: Alignment.center,
+                                // color: Colors.blue[(1+index) * 100],
+                                padding: EdgeInsets.only(left: 4,right: 0,top: 8,bottom: 8),
+                                // child: Text(["象","彖","初","二","三","四","五","上"][index]),
+                                child: SelectableText.rich(
+                                    TextSpan(text: (content == null || content.isEmpty)?"": content),
+                                    contextMenuBuilder: content == null ?null:(arg1,arg2) =>contentSelected(arg1,arg2,content!),
+                                    onTap:(){
+                                      // content = e.value[index]["zhu"];
+                                      if (content == null || content.isEmpty){
+                                        return;
+                                      }
+                                      popupYaoZhu(book, content);
 
+                                    }),
+                              )
+                            ],
+                          ),
+                        )
+                    )
+                  );
+                },)
+            ),
+          ],
+        )
+    );
+
+  }
   Widget buildLargeCard(ZhouyiZhuBooks book,String content){
     // get current screen size
     // using min size of width or height
@@ -324,16 +383,15 @@ class _ZhouYiGuaDetailsPageState extends State<ZhouYiGuaDetailsPage> with Ticker
            // onDoubleTap: ()=>Navigator.pop(context),
              child: Column(
                  children:[
-                   SizedBox(height: 16,),
-                   Text("（${book.bookage}·${book.bookauth}）《${book.bookname}》",style: TextStyle(fontSize: 18)),
+                   Text("（${book.bookage}·${book.bookauth}）《${book.bookname}》"),
                    Container(
                      width: MediaQuery.of(context).size.height * 0.6,
                      margin: EdgeInsets.symmetric(horizontal: 8),
                      // color: Colors.blue[(1+index) * 100],
-                     padding: EdgeInsets.only(left: 16,right: 8,top: 16,bottom: 16),
+                     padding: EdgeInsets.only(left: 16,right: 12,top: 16,bottom: 16),
                      // child: Text(["彖","象","初","二","三","四","五","上"][index]),
                      child:SelectableText.rich(
-                       TextSpan(text: content,style: TextStyle(fontSize: 18)),
+                       TextSpan(text: content),
                        // onTap: ()=>Navigator.pop(context),
                        onSelectionChanged: (selection,cause){
                          int selectFromIndex = selection.baseOffset;
@@ -352,10 +410,53 @@ class _ZhouYiGuaDetailsPageState extends State<ZhouYiGuaDetailsPage> with Ticker
     displayZhuNotifier.value = Tuple2(book, content);
   }
 
+  Map<String,dynamic> guaNameZhuJieMap = {};
+
+
+  Map<String,dynamic> guaFullnameBinaryIndexDB = {};
+  Map<String,dynamic> guaBinaryFullnameIndexDB = {};
+  Map<String,dynamic> guaShortnameBinaryIndexDB = {};
+  Map<String,dynamic> yiTongZiWen = {};
+  Map<String,dynamic> jiaoShiYiLin = {};
+
+  List<Map<String, dynamic>> allGua = <Map<String,dynamic>>[];
+
+  // 八宫卦信息
+  // 包含两种key 1. content (以纯卦为key的list, list 是{"name":"<全名>","changes":[<改变的爻>，-1为纯卦本身，没有改变]})
+  // key 2. index {"<卦全名>":"<所属纯卦简称>"}
+  Map<String,dynamic> eightGuaInfo = {};
+
+  Future<Map<String,dynamic>> loadJsonDB() async {
+    var allLoads = await Future.wait([
+      DefaultAssetBundle.of(context).loadString("resources/db/gua_name_index_v1_1.json"),
+      DefaultAssetBundle.of(context).loadString("resources/db/gua_fullname_binary_index.json"),
+      DefaultAssetBundle.of(context).loadString("resources/db/gua_shortname_binary_index.json"),
+      DefaultAssetBundle.of(context).loadString("resources/db/yi_tong_zi_wen_v1_1.json"),
+      DefaultAssetBundle.of(context).loadString("resources/db/焦氏易林.json"),
+      DefaultAssetBundle.of(context).loadString("resources/db/gua_binary_fullname_index.json"),
+      DefaultAssetBundle.of(context).loadString("resources/db/eight_gong_gua_info.json"),
+      DefaultAssetBundle.of(context).loadString("resources/db/all_gua_v1.json"),
+    ]);
+    guaNameZhuJieMap = json.decode(allLoads[0]) as Map<String,dynamic>;
+    guaFullnameBinaryIndexDB = json.decode(allLoads[1]) as Map<String,dynamic>;
+    guaShortnameBinaryIndexDB = json.decode(allLoads[2]) as Map<String,dynamic>;
+    yiTongZiWen = json.decode(allLoads[3]) as Map<String,dynamic>;
+    jiaoShiYiLin = json.decode(allLoads[4]) as Map<String,dynamic>;
+    guaBinaryFullnameIndexDB = json.decode(allLoads[5]) as Map<String,dynamic>;
+    eightGuaInfo = json.decode(allLoads[6]) as Map<String,dynamic>;
+    allGua = (jsonDecode(allLoads[7]) as List).map((e) => e as Map<String, dynamic>).toList();
+    // convert string to json map object
+    // dynamic jsonRes = json.decode(data);
+    return guaNameZhuJieMap;
+  }
 
   DateTime lastPenHoverAt = DateTime.now();
   Duration? lastEnterHoverTimestamp;
-
+  ValueNotifier<int> _selectedIndexNotifier = ValueNotifier(-1);
+  set selectedIndex(int){
+    _selectedIndexNotifier.value = selectedIndex;
+  }
+  int get selectedIndex => _selectedIndexNotifier.value;
   String listenerText = "";
   Color currentColor = Colors.blue;
   Color defaultColor = Colors.blue;
@@ -363,7 +464,7 @@ class _ZhouYiGuaDetailsPageState extends State<ZhouYiGuaDetailsPage> with Ticker
   Timer? penMouseHoverTimer;
   // guaBinaryContent should like "101010" with length 6,
   // and the first number is the bottom yao
-  Widget zhouYiGua(String guaBinaryContent,String shortname,GuaSizeType size,String fullname) {
+  Widget zhouYiGua(String guaBinaryContent,String shortname,String guaType, GuaSizeType size) {
     return Container(
       alignment: Alignment.center,
       padding: EdgeInsets.symmetric(horizontal: 24,vertical: 24),
@@ -375,7 +476,7 @@ class _ZhouYiGuaDetailsPageState extends State<ZhouYiGuaDetailsPage> with Ticker
           children: [
             SizedBox(height: 8,),
             Container(
-                alignment: Alignment.center,
+              alignment: Alignment.center,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -394,32 +495,38 @@ class _ZhouYiGuaDetailsPageState extends State<ZhouYiGuaDetailsPage> with Ticker
                             ),
                           ],
                         ),
-                      )
-                          .animate()
-                          .shimmer(duration: 2000.ms,),
-                      // .animate(onPlay:((ctl) => ctl.repeat(reverse: false)))
+                      ).animate(onPlay:((ctl) => ctl.repeat(reverse: false)))
+                          .shimmer(
+                        duration: 2000.ms,),
                     ),
-                    Hero(
-                        tag: "gua_binary_${shortname}",
-                        child: ZhouYiGuaWidget(guaBinaryContent: guaBinaryContent.split("").reversed.join(""),selectedIndexNotifier: _selectedYaoXiangIndex)
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          child: ZhouYiGuaWidget(guaBinaryContent: guaBinaryContent.split("").reversed.join(""),selectedIndexNotifier: _selectedYaoXiangIndex),
+                        ),
+                      ],
                     ),
                     Container(
                       alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      padding: EdgeInsets.symmetric(horizontal: 8,vertical: 4),
-                      child: SelectableText(
-                        widget.zhouYi.gua.split("：").sublist(1).join(""),
-                        style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),
-                        onTap: (){
-                          if (_forceDisplayIndex.value != 0) {
-                            yaoZhuScrollTo(0);
-                            _forceDisplayIndex.value = 0;
-                          }else{
-                            _forceDisplayIndex.value = -1;
-                          }
-                        },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        padding: EdgeInsets.symmetric(horizontal: 8,vertical: 4),
+                        child: SelectableText(
+                          widget.zhouYi.gua.split("：").sublist(1).join(""),
+                          style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),
+                          onTap: (){
+                            if (_forceDisplayIndex.value != 0) {
+                              yaoZhuScrollTo(0);
+                              _forceDisplayIndex.value = 0;
+                            }else{
+                              _forceDisplayIndex.value = -1;
+                            }
+                          },
+                        ),
                       ),
                     ),
                     Container(
@@ -530,72 +637,44 @@ class _ZhouYiGuaDetailsPageState extends State<ZhouYiGuaDetailsPage> with Ticker
                           }
 
                         }
-                    )
+                        )
                   ],
                 )
             ),
-            SizedBox(height: 12,),
+            SizedBox(height: 24,),
             Container(
-              height: 128,
+              height: 160,
               alignment: Alignment.bottomCenter,
               child: cuoZhongFuZaWidget(guaBinaryContent),
             ),
-            SizedBox(height: 12,),
-            baGongShiGuaWidget(fullname),
-            SizedBox(height: 12,),
-            sixteenChangeWidget(fullname),
-            SizedBox(height: 12,),
+            // baGongShiGuaWidget(guaFullname),
             FutureBuilder(
               future: Get.find<MyDatabase>().findAllSubZhi(guaBinaryContent),
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                 if (snapshot.hasData) {
                   return Container(
-                    height: 80,
+                    height: 100,
                     alignment: Alignment.bottomCenter,
                     child: jiaoShiYiLingWidget(snapshot.data),
                   );
                 }else{
                   return Container(
-                    height: 80,
+                    height: 100,
                     alignment: Alignment.center,
                     child: CircularProgressIndicator(),
                   );
                 }
               },
-            ),
-            SizedBox(height: 16,),
-            FutureBuilder(
-                future: Get.find<MyDatabase>().findAllSingleGuaZhu(widget.zhouYi.binary),
-                builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                  if (snapshot.hasData && snapshot.data != null && snapshot.data.length >= 1) {
-                    bool isEmpty = snapshot.data[0].guaZhu == null;
-                    return AnimatedContainer(
-                      duration: Duration(milliseconds: 400),
-                      decoration: BoxDecoration(
-                        color: isEmpty?Colors.transparent:Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: isEmpty?Colors.transparent:Colors.black.withOpacity(0.4),width: 1),
-                      ),
-                      padding: isEmpty?EdgeInsets.zero:EdgeInsets.symmetric(horizontal: 8,vertical: 8),
-                      child: isEmpty?Container():Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(snapshot.data[0].guaZhu ?? "",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-                        ],
-                      ),
-                    );
-                  }
-                  return Container();
-                }),
+            )
           ],
         ),
       ),
     );
   }
   // 爻辞， 爻象
-  Widget _buildYaoXiang(List<ZhouYiGuaYao> yaoList){
+  Widget _buildYaoXiang(List<ZhouYiGuaYao> yao_list){
     int counter = -1;
-    Iterable<Widget> it =  yaoList.map((e){
+    Iterable<Widget> it =  yao_list.map((e){
       List<String> yao = e.yao.split("：");
       // var yaoName ="${yao.first.replaceAll("『", "").replaceAll("』", "")}：";
       var yaoContent = yao.sublist(1).join("");
@@ -682,6 +761,7 @@ class _ZhouYiGuaDetailsPageState extends State<ZhouYiGuaDetailsPage> with Ticker
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(xiangName,style: TextStyle(fontSize: 14,fontWeight: FontWeight.normal),),
+                    // Text(xiangContent,style: TextStyle(fontSize: 12,fontWeight: FontWeight.normal),),
                     Expanded(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -703,6 +783,79 @@ class _ZhouYiGuaDetailsPageState extends State<ZhouYiGuaDetailsPage> with Ticker
         ),
       ),
     );
+    return ValueListenableBuilder(
+      valueListenable: _selectedYaoXiangIndex,
+      builder: (ctx,i,child){
+        return  Card(
+          elevation: i == index ? 6: 0,
+          color: Colors.white,
+          child: child!,
+        );
+      },
+      child: GestureDetector(
+        onTap: (){
+          showYaoCard(index);
+        },
+        child: Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.symmetric(horizontal: 8,vertical: 4),
+          margin: EdgeInsets.symmetric(vertical: 2),
+          width: 320,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(yaoName,style: TextStyle(fontSize: 14,fontWeight: FontWeight.normal),),
+                    // Text(yaoContent,style: TextStyle(fontSize: 12,fontWeight: FontWeight.normal),),
+                    Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SelectableText(yaoContent,
+                              style: TextStyle(fontSize: 14,fontWeight: FontWeight.normal),
+                              onTap:(){
+                                showYaoCard(index);
+                              },),
+                          ],
+                        ))
+                  ],
+                ),
+              ),
+              Container(
+                child:Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(xiangName,style: TextStyle(fontSize: 14,fontWeight: FontWeight.normal),),
+                    // Text(xiangContent,style: TextStyle(fontSize: 12,fontWeight: FontWeight.normal),),
+                    Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SelectableText(xiangContent,
+                              style: TextStyle(fontSize: 14,fontWeight: FontWeight.normal),
+                              onTap: (){
+                                showYaoCard(index);
+                              },
+                            ),
+                          ],
+                        ))
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+
   }
 
   void showYaoCard(int index){
@@ -718,6 +871,7 @@ class _ZhouYiGuaDetailsPageState extends State<ZhouYiGuaDetailsPage> with Ticker
   void yaoZhuScrollTo(int index){
     _scrollController.animateTo(index *  (widget.cardWidth + 8) , duration: Duration(milliseconds: 400), curve: Curves.easeInOut);
     Vibration.vibrate(duration: 100);
+    // HapticFeedback.vibrate();
   }
   Widget guaXiangWidget(String content,int index){
     String xiangContent =content.replaceFirst("《", "").replaceFirst("》", "");
@@ -751,6 +905,7 @@ class _ZhouYiGuaDetailsPageState extends State<ZhouYiGuaDetailsPage> with Ticker
       ),
     );
   }
+
   Widget guaTuanWidget(String content,int index){
     String xiangContent = content.replaceFirst("《", "").replaceFirst("》", "");
     List<String> xiangList = xiangContent.split("：");
@@ -802,7 +957,6 @@ class _ZhouYiGuaDetailsPageState extends State<ZhouYiGuaDetailsPage> with Ticker
             if (snapshot.hasData){
               return _buildCuoZongFuZa(snapshot.data!,'互');
             }else{
-              return CardLoading(height: 108,width: 72,borderRadius:BorderRadius.circular(12));
               return Container(
                 width: 64,
                 height: 64,
@@ -849,8 +1003,10 @@ class _ZhouYiGuaDetailsPageState extends State<ZhouYiGuaDetailsPage> with Ticker
       ],
     );
   }
+  InfoPopupController? _huPopupController;
+  InfoPopupController? _couPopupController;
+  InfoPopupController? _zongPopupController;
 
-  Map<String,InfoPopupController?> infoPopupControllerMapper = {};
 
   Widget _buildCuoZongFuZa(ZhouYi gua,String guaType){
 
@@ -891,10 +1047,18 @@ class _ZhouYiGuaDetailsPageState extends State<ZhouYiGuaDetailsPage> with Ticker
       indicatorOffset: Offset.zero,
       contentOffset: Offset.zero,
       onControllerCreated: (controller) {
-        infoPopupControllerMapper[guaType] = controller;
+        if (guaType == "互") {
+
+          _huPopupController = controller;
+        } else if (guaType == "错") {
+          _couPopupController = controller;
+        } else if (guaType == "综") {
+          _zongPopupController = controller;
+        }
+        print('Info Popup Controller Created');
       },
       onAreaPressed: (InfoPopupController controller) {
-        // print('Area Pressed');
+        print('Area Pressed');
       },
       infoPopupDismissed: () {
       },
@@ -908,10 +1072,32 @@ class _ZhouYiGuaDetailsPageState extends State<ZhouYiGuaDetailsPage> with Ticker
           padding: EdgeInsets.only(top: 2),
           child: InkWell(
             onTap: (){
-              if (infoPopupControllerMapper.containsKey(guaType)){
-                infoPopupControllerMapper[guaType]!.isShowing ? infoPopupControllerMapper[guaType]!.dismissInfoPopup() : infoPopupControllerMapper[guaType]!.show();
+              if (guaType == "互") {
+                if (_huPopupController != null){
+                  if (_huPopupController!.isShowing) {
+                    _huPopupController!.dismissInfoPopup();
+                  }else{
+                    _huPopupController!.show();
+                  }
+                }
+                _huPopupController?.show();
+              } else if (guaType == "错") {
+                if (_couPopupController != null){
+                  if (_couPopupController!.isShowing) {
+                    _couPopupController!.dismissInfoPopup();
+                  }else{
+                    _couPopupController!.show();
+                  }
+                }
+              } else if (guaType == "综") {
+                if (_zongPopupController != null){
+                  if (_zongPopupController!.isShowing) {
+                    _zongPopupController!.dismissInfoPopup();
+                  }else{
+                    _zongPopupController!.show();
+                  }
+                }
               }
-
 
             },
             onDoubleTap: (){
@@ -1035,236 +1221,120 @@ class _ZhouYiGuaDetailsPageState extends State<ZhouYiGuaDetailsPage> with Ticker
     );
   }
 
-
-//  八宫世卦
+  // 八宫世卦
   Widget baGongShiGuaWidget(String fullname){
+    var pureGuaShortname = eightGuaInfo["index"][fullname];
+    List<dynamic> gongGuaList = eightGuaInfo["content"][pureGuaShortname];
+    // print(json.encode(gongGuaList));
 
-    return FutureBuilder(
-      future:Future.wait([
-        DefaultAssetBundle.of(context).loadString("resources/db/eight_gong_gua_info.json"),
-        DefaultAssetBundle.of(context).loadString("resources/db/gua_fullname_binary_index.json"),
-      ]),
-      builder: (ctx,snap){
-        if (snap.hasData) {
-          Map<String,dynamic> eightGuaInfo = json.decode(snap.data![0]) as Map<String,dynamic>;
-          Map<String,dynamic> guaFullnameBinaryIndexDB = json.decode(snap.data![1]) as Map<String,dynamic>;
-          var pureGuaShortname = eightGuaInfo["index"][fullname];
-          List<dynamic> gongGuaList = eightGuaInfo["content"][pureGuaShortname];
-          // print(json.encode(gongGuaList));
+    var counter = 0;
+    Iterable<Tuple4<String,String,String,List<int>>> allGuaList = gongGuaList.map((e){
+      if (guaFullnameBinaryIndexDB[e["name"]] == null) {
+        print(e["name"]);
+      }
+      var rawBinaryLis = guaFullnameBinaryIndexDB[e["name"]] as String;
+      String binaryList = rawBinaryLis.split("").reversed.join("");
 
-          var counter = 0;
-          Iterable<Tuple4<String,
-              String,
-              String,
-              List<int>>> allGuaList = gongGuaList.map((e) {
-            if (guaFullnameBinaryIndexDB[e["name"]] == null) {
-              print(e["name"]);
-            }
-            var rawBinaryLis = guaFullnameBinaryIndexDB[e["name"]] as String;
-            String binaryList = rawBinaryLis
-                .split("")
-                .reversed
-                .join("");
-
-            String chuaSubtitle = "";
-            switch (counter) {
-              case 0:
-                chuaSubtitle = "$pureGuaShortname宫纯卦";
-                break;
-              case 1:
-                chuaSubtitle = "一世卦";
-                break;
-              case 2:
-                chuaSubtitle = "二世卦";
-                break;
-              case 3:
-                chuaSubtitle = "三世卦";
-                break;
-              case 4:
-                chuaSubtitle = "四世卦";
-                break;
-              case 5:
-                chuaSubtitle = "五世卦";
-                break;
-              case 6:
-                chuaSubtitle = "游魂卦";
-                break;
-              case 7:
-                chuaSubtitle = "归魂卦";
-                break;
-            }
-            counter += 1;
-            return Tuple4<String, String, String, List<int>>(
-                binaryList,
-                e["name"],
-                chuaSubtitle,
-                List<int>.from(e["changes"].map((i) => i))
-            );
-          });
-          var guaWidgetList = allGuaList.map((e) =>
-              Card(
-                  elevation: e.item2 == fullname ? 2 : 0,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4),
-                        color: e.item2 == fullname ? Color.fromRGBO(51, 102, 153, .4) : Color.fromRGBO(23, 124, 176, .1),
-                    ),
-                      padding: EdgeInsets.symmetric(horizontal: 6),
-                      child: TinyZhouYiGuaWidget(guaBinaryContent: e.item1,
-                          guaName: e.item2,
-                          guaExtraName: e.item3,
-                          height: 6,
-                          width: 48,
-                          yaoInterval: 3,
-                          changedYaoIndexList: e.item4))
-              )).toList();
-
-          return Container(
-            width: 512,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: guaWidgetList
-              ),
-            ),
-          );
-        }else{
-          return CardLoading(height: 64,width: 512,);
-        }
-
-      },
+      String chuaSubtitle = "";
+      switch (counter){
+        case 0:
+          chuaSubtitle = "$pureGuaShortname宫纯卦";
+          break;
+        case 1:
+          chuaSubtitle = "一世卦";
+          break;
+        case 2:
+          chuaSubtitle = "二世卦";
+          break;
+        case 3:
+          chuaSubtitle = "三世卦";
+          break;
+        case 4:
+          chuaSubtitle = "四世卦";
+          break;
+        case 5:
+          chuaSubtitle = "五世卦";
+          break;
+        case 6:
+          chuaSubtitle = "游魂卦";
+          break;
+        case 7:
+          chuaSubtitle = "归魂卦";
+          break;
+      }
+      counter += 1;
+      return Tuple4<String,String,String,List<int>>(
+          binaryList,
+          e["name"],
+          chuaSubtitle,
+          List<int>.from(e["changes"].map((i) => i))
+      );
+    });
+    var guaWidgetList = allGuaList.map((e) => Card(
+        elevation: e.item2==fullname?2:0,
+        child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 6),
+            color: e.item2==fullname?Color.fromRGBO(51, 102, 153, .1):Colors.transparent,
+            child: TinyZhouYiGuaWidget(guaBinaryContent: e.item1,guaName: e.item2,guaExtraName:e.item3, height: 6,width: 48,yaoInterval: 3,changedYaoIndexList:e.item4))
+    )).toList();
+    // return Container(
+    //   child: ListView(
+    //     children: guaWidgetList,
+    //   ),
+    // );
+    return Container(
+      width: 512,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children:guaWidgetList
+        ),
+      ),
     );
-
   }
-  Widget sixteenChangeWidget(String fullname){
-
-    return FutureBuilder(
-      future:Future.wait([
-        DefaultAssetBundle.of(context).loadString("resources/db/ba_gong_sixteen_change_info.json"),
-        DefaultAssetBundle.of(context).loadString("resources/db/gua_fullname_binary_index.json"),
-      ]),
-      builder: (ctx,snap){
-        if (snap.hasData) {
-          Map<String,dynamic> eightGuaInfo = json.decode(snap.data![0]) as Map<String,dynamic>;
-          Map<String,dynamic> guaFullnameBinaryIndexDB = json.decode(snap.data![1]) as Map<String,dynamic>;
-          print("-------------${eightGuaInfo["index"][fullname]}");
-          var pureGuaShortname = eightGuaInfo["index"][fullname];
-          List<dynamic> gongGuaList = eightGuaInfo["content"][pureGuaShortname[1]];
-          // print(json.encode(gongGuaList));
-
-          var counter = 0;
-          Iterable<Tuple4<String,
-              String,
-              String,
-              List<int>>> allGuaList = gongGuaList.map((e) {
-            var rawBinaryLis = guaFullnameBinaryIndexDB[e["name"]] as String;
-            String binaryList = rawBinaryLis
-                .split("")
-                .reversed
-                .join("");
-
-            String chuaSubtitle = "";
-            switch (counter) {
-              case 0:
-                chuaSubtitle = "${pureGuaShortname[1]}宫纯卦";
-                break;
-              case 1:
-                chuaSubtitle = "一世卦";
-                break;
-              case 2:
-                chuaSubtitle = "二世卦";
-                break;
-              case 3:
-                chuaSubtitle = "三世卦";
-                break;
-              case 4:
-                chuaSubtitle = "四世卦";
-                break;
-              case 5:
-                chuaSubtitle = "五世卦";
-                break;
-              case 6:
-                chuaSubtitle = "游魂卦";
-                break;
-              case 7:
-                chuaSubtitle = "外戒卦";
-                break;
-              case 8:
-                chuaSubtitle = "内戒卦";
-                break;
-              case 9:
-                chuaSubtitle = "归魂卦";
-                break;
-              case 10:
-                chuaSubtitle = "绝命卦";
-                break;
-              case 11:
-                chuaSubtitle = "血脉卦";
-                break;
-              case 12:
-                chuaSubtitle = "肌肉卦";
-                break;
-              case 13:
-                chuaSubtitle = "骸骨卦";
-                break;
-              case 14:
-                chuaSubtitle = "棺椁卦";
-                break;
-              case 15:
-                chuaSubtitle = "坟墓卦";
-                break;
-              case 16:
-                chuaSubtitle = "还原";
-                break;
-            }
-            counter += 1;
-            return Tuple4<String, String, String, List<int>>(
-                binaryList,
-                e["name"],
-                chuaSubtitle,
-                List<int>.from(e["changes"].map((i) => i))
-            );
-          });
-          var guaWidgetList = allGuaList.map((e) =>
-              Card(
-                  elevation: e.item2 == fullname ? 2 : 0,
-                  child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 6),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4),
-                          color: e.item2 == fullname ? Color.fromRGBO(74, 66, 102, .4) : Color.fromRGBO(6, 82, 121, .1),
-                      ),
-                      child: TinyZhouYiGuaWidget(guaBinaryContent: e.item1,
-                          guaName: e.item2,
-                          guaExtraName: e.item3,
-                          height: 6,
-                          width: 48,
-                          yaoInterval: 3,
-                          changedYaoIndexList: e.item4))
-              )).toList();
-
-          return Container(
-            width: 512,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: guaWidgetList
+  @deprecated
+  Widget zhouYiYao(bool yaoYinYang, double width, double height,int index){
+    return Container(
+        alignment: Alignment.center,
+        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+        // width: isSelected?scaleFactor * width:width,
+        child:InkWell(
+            onTap: (){
+              if (selectedIndex == index){
+                selectedIndex = -1;
+                return;
+              }
+              selectedIndex = index;
+              showToast(
+                "$index-$selectedIndex",
+                duration: Duration(seconds: 2),
+                position: ToastPosition.bottom,
+                backgroundColor: Colors.black.withOpacity(0.8),
+                radius: 3.0,
+                textStyle: TextStyle(fontSize: 30.0),
+              );
+            },
+            child: Container(
+              height:double.infinity,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: yaoYinYang?Colors.white:Colors.black,
+                borderRadius: BorderRadius.circular(64),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    offset: Offset(0, 1),
+                    blurRadius: 2,
+                  ),
+                ],
               ),
-            ),
-          );
-        }else{
-          return CardLoading(height: 64,width: 512,);
-        }
-
-      },
+            )
+        )
     );
-
+    // return yao(yaoYinYang, width, height,index,1.2);
   }
-
   List<GlobalKey> _TooltipKeyList = [];
   Widget jiaoShiYiLingWidget(List<JiaoShiYiLin> jiaoLinList){
     // var gua_zhi_map = jiaoShiYiLin[guaShortName];
@@ -1312,10 +1382,143 @@ class _ZhouYiGuaDetailsPageState extends State<ZhouYiGuaDetailsPage> with Ticker
     );
   }
 
+  // 'true' is yang and 'false' is yin
+  @deprecated
+  Widget sixYao(bool yaoYinYang, double width, double height,int index,{double scaleFactor = 1.2,double fontSize = 16,bool hiddenText = false,int changedIndex = -1}){
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        hiddenText?Container():Container(
+          child: AnimatedDefaultTextStyle(
+            duration: _selectedAnimationDuration,
+            style: TextStyle(
+              fontSize: fontSize,
+              color: selectedIndex == index ?Colors.black87:Colors.black54,
+            ),
+            child: Text(
+              liuShou[index],
+            ),
+          ),
+        ),
+        yao(yaoYinYang, width, height,index,scaleFactor,changedIndex: changedIndex),
+        hiddenText?Container():Container(
+          child: AnimatedDefaultTextStyle(
+            duration: _selectedAnimationDuration,
+            style: TextStyle(
+              fontSize: fontSize,
+              color: selectedIndex == index ?Colors.black87:Colors.black54,
+            ),
+            child: Text(
+              index == 5?liuQin[0] :liuQin[index],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  // 只绘制 阴阳爻,没有六爻中，六亲六兽世应等信息；以及梅花易数中变爻的信息
+  @deprecated
+  Widget yao(bool yaoYinYang, double width, double height,int index,double scaleFactor,{int changedIndex = -1}) {
+    Color mainColor = changedIndex == index ? Colors.red.shade800:Colors.black87;
+    Color selectedMainColor = Colors.red.shade800;
+    Color shadowColor = mainColor.withOpacity(0.5);
+    Color selectedShadowColor = selectedMainColor.withOpacity(0.5);
+    bool isSelected = selectedIndex == index;
+    return AnimatedContainer(
+      alignment: Alignment.center,
+        duration: _selectedAnimationDuration,
+        // margin: isSelected?const EdgeInsets.all(12):EdgeInsets.all(4),
+        margin: isSelected?const EdgeInsets.all(6):EdgeInsets.all(2),
+        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+        width: isSelected?scaleFactor * width:width,
+      child:InkWell(
+        onTap: (){
+          if (selectedIndex == index){
+            selectedIndex = -1;
+            return;
+          }
+          selectedIndex = index;
+          showToast(
+            "$index-$selectedIndex",
+            duration: Duration(seconds: 2),
+            position: ToastPosition.bottom,
+            backgroundColor: Colors.black.withOpacity(0.8),
+            radius: 3.0,
+            textStyle: TextStyle(fontSize: 30.0),
+          );
+        },
+        child: yaoYinYang
+            ?AnimatedContainer(
+            duration: _selectedAnimationDuration,
+            height:isSelected?scaleFactor * height:height,
+            width: isSelected?scaleFactor * width:width,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(56),
+              color: isSelected? selectedMainColor: mainColor,
+              boxShadow: [
+                BoxShadow(
+                  color: isSelected?selectedShadowColor:shadowColor,
+                  spreadRadius: isSelected? 6: 1,
+                  blurRadius: isSelected? 10:5,
+                  offset: const Offset(0, 2), // changes position of shadow
+                ),
+              ],
+            ),
+        )
+            :Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              AnimatedContainer(
+                  duration: _selectedAnimationDuration,
+                  height:isSelected?scaleFactor * height:height,
+                  width: isSelected?scaleFactor * (width-16) * 0.46:(width-16) * 0.46,
+                  // width:  (width-16) * 0.46,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(56),
+                    color: isSelected? selectedMainColor: mainColor,
+                    boxShadow: [
+                      BoxShadow(
+                        color: isSelected? selectedShadowColor:shadowColor,
+                        spreadRadius: isSelected? 6: 1,
+                        blurRadius: isSelected? 10:5,
+                        offset: Offset(0, 2), // changes position of shadow
+                      ),
+                    ],
+                  )
+              ),
+              // SizedBox(width:  (width-16) * 0.08,),
+              AnimatedContainer(
+                  duration: _selectedAnimationDuration,
+                  height:isSelected?scaleFactor * height:height,
+                  width: isSelected?scaleFactor * (width-16) * 0.46:(width-16) * 0.46,
+                  // width:  (width-16) * 0.46,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(56),
+                    color: isSelected? selectedMainColor: mainColor,
+                    boxShadow: [
+                      BoxShadow(
+                        color: isSelected? selectedShadowColor:shadowColor,
+                        spreadRadius: isSelected? 6: 1,
+                        blurRadius: isSelected? 10:5,
+                        offset: Offset(0, 2), // changes position of shadow
+                      ),
+                    ],
+                  )
+              )
+            ],
+      )
+      )
+    );
+  }
+
   void baiduSearch(String searchContent){
     launchUrl(Uri.parse("http://www.baidu.com/s?wd=$searchContent"));
   }
   void handianSearch(String searchContent){
+    // launchUrl(Uri.parse("https://www.zdic.net/search/?sclb=zi&q=%E4%B9%BE"));
     launchUrl(Uri.parse("https://www.zdic.net/hans/$searchContent"));
   }
   AdaptiveTextSelectionToolbar contentSelected(BuildContext context,

@@ -78,70 +78,8 @@ class _ZhouYiGuaWidgetState extends State<ZhouYiGuaWidget> with SingleTickerProv
                   .shimmer(
                 duration: 2000.ms,),
             ),
-            //   Container(
-            //   margin: EdgeInsets.only(top: 2),
-            //   child: Text(
-            //       "（本）",
-            //       style:TextStyle(
-            //         fontSize: 18,
-            //         color: Colors.black38,
-            //       )),
-            // ),
             ],
           ))),
-    );
-    return GestureDetector(
-      child: AnimatedContainer(
-        margin: const EdgeInsets.all(16),
-        alignment: Alignment.center,
-        height: 24 * 6 + 10 * 5 + 12 * 2 + 36,
-        // color: Colors.redAccent,
-        duration: Duration(milliseconds: 300),
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: reversedYaoWidgetList.toList()..add(Column(
-              children: [widget.fullGuaName == null ? Container():Container(
-                child: Text(
-                  widget.fullGuaName!,
-                  style:TextStyle(
-                    fontSize: 18,
-                    color: Colors.black54,
-                    shadows: [
-                      Shadow(
-                        color: Colors.grey,
-                        offset: Offset(0, 1),
-                        blurRadius: 2,
-                      ),
-                    ],
-                  ),
-                ).animate(onPlay:((ctl) => ctl.repeat(reverse: false)))
-                    .shimmer(
-                  duration: 2000.ms,),
-              ),Container(
-                margin: EdgeInsets.only(top: 2),
-                child: Text(
-                    "（本）",
-                    style:TextStyle(
-                      fontSize: 18,
-                      color: Colors.black38,
-                    )),
-              ),
-              ],
-            ))),
-      )
-          .animate(controller: _scaleAnimationController,onPlay: ((ctl) => {
-        if (ctl.status == AnimationStatus.forward && _lastScaleAt == null){
-          // showToast("first play");
-          ctl.reset()
-        }
-      }))
-          .scale(alignment: Alignment.center,begin: Offset(1,1),end: Offset(1.6,1.6),duration: widget.duration,curve: Curves.fastOutSlowIn),
-      onTap: (){
-        showToast("scaling");
-        _lastScaleAt = DateTime.now();
-        _scaleAnimationController.forward();
-      },
     );
   }
   Widget build_scalable(BuildContext context) {

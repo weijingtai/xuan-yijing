@@ -12,7 +12,11 @@ class ZhouYiYaoZhuTable extends Table {
   TextColumn get guaBinary => text().references(ZhouYiTable, Symbol('binary'))();
   IntColumn get yaoId => integer().references(ZhouYiGuaYaoTable,  Symbol('id'))();
   IntColumn get bookId => integer().references(ZhouyiZhuBooksTable,  Symbol('id'))();
-  TextColumn get yaoZhu => text()();
+  TextColumn get yaoZhu => text().nullable()();
   @override
   Set<Column> get primaryKey => {id};
+
+
+  @override
+  String get tableName => 't_zy_yao_zhu';
 }

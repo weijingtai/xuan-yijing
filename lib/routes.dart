@@ -6,6 +6,7 @@ class Routes {
   static const String post = "/post";
   static const String zhouyi_details = "/zhouyi/details";
   static const String zhouyi = "/zhouyi";
+  static const String dev = "/dev";
   static const String ziWeiDouShu_pan= "/ziweidoushu/pan";
   static const String siZhuBaZi_pan= "/sizhubazi/pan";
 
