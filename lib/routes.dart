@@ -7,9 +7,9 @@ class Routes {
   static const String zhouyi_details = "/zhouyi/details";
   static const String zhouyi = "/zhouyi";
   static const String dev = "/dev";
-  static const String ziWeiDouShu_pan= "/ziweidoushu/pan";
-  static const String siZhuBaZi_pan= "/sizhubazi/pan";
-
+  static const String ziWeiDouShu_pan = "/ziweidoushu/pan";
+  static const String siZhuBaZi_pan = "/sizhubazi/pan";
+  static const String yijingApiTest = "/yijing-api-test";
 
   static Route<T> fadeThrough<T>(RouteSettings settings, WidgetBuilder page,
       {int duration = 300}) {

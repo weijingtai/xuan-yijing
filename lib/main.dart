@@ -7,6 +7,7 @@ import 'package:my_flutter/pages/si_zhu_ba_zi/si_zhu_ba_zi_page.dart';
 import 'package:my_flutter/pages/zhou_yi_gua_details_page.dart';
 import 'package:my_flutter/pages/zhou_yi_gua_list.dart';
 import 'package:my_flutter/pages/ziweidoushu/zi_wei_dou_shu_pan_page.dart';
+import 'package:my_flutter/pages/yijing_api_test_page.dart';
 import 'package:my_flutter/routes.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -41,15 +42,20 @@ class MyApp extends StatelessWidget {
                 return const Scaffold(
                   body: Center(
                     child: Text("post"),
-                  ),);
+                  ),
+                );
               case Routes.zhouyi_details:
-                return ZhouYiGuaDetailsPage(settings.arguments as Map<String, dynamic>,);
+                return ZhouYiGuaDetailsPage(
+                  settings.arguments as Map<String, dynamic>,
+                );
               case Routes.zhouyi:
                 return ZhouYiGuaListPage();
               case Routes.ziWeiDouShu_pan:
                 return ZiWeiDouShuPanPage();
-                case Routes.siZhuBaZi_pan:
-                  return SiZhuBaZiPage();
+              case Routes.siZhuBaZi_pan:
+                return SiZhuBaZiPage();
+              case Routes.yijingApiTest:
+                return const YijingApiTestPage();
               default:
                 return const SizedBox.shrink();
             }
@@ -59,6 +65,7 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
+
   // This widget is the root of your application.
   @Deprecated("use build, it is Responsive")
   Widget build_default(BuildContext context) {
