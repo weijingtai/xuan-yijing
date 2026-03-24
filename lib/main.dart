@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_flutter/databases/MyDatabase.dart';
-import 'package:my_flutter/pages/dev.dart';
-import 'package:my_flutter/pages/gua_details_page.dart';
-import 'package:my_flutter/pages/si_zhu_ba_zi/si_zhu_ba_zi_page.dart';
-import 'package:my_flutter/pages/zhou_yi_gua_details_page.dart';
-import 'package:my_flutter/pages/zhou_yi_gua_list.dart';
-import 'package:my_flutter/pages/ziweidoushu/zi_wei_dou_shu_pan_page.dart';
-import 'package:my_flutter/pages/yijing_api_test_page.dart';
-import 'package:my_flutter/routes.dart';
+import 'package:yijing/databases/MyDatabase.dart';
+import 'package:yijing/pages/dev.dart';
+import 'package:yijing/pages/gua_details_page.dart';
+import 'package:yijing/pages/si_zhu_ba_zi/si_zhu_ba_zi_page.dart';
+import 'package:yijing/pages/zhou_yi_gua_details_page.dart';
+import 'package:yijing/pages/zhou_yi_gua_list.dart';
+import 'package:yijing/pages/ziweidoushu/zi_wei_dou_shu_pan_page.dart';
+import 'package:yijing/pages/yijing_api_test_page.dart';
+import 'package:yijing/routes.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 

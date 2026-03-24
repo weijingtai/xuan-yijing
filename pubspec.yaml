@@ -1,5 +1,5 @@
-name: my_flutter
-description: A new Flutter project.
+name: yijing
+description: 易经占卜应用 - 基于Flutter开发的周易卦象展示工具
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
