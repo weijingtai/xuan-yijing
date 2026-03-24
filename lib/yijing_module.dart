@@ -13,9 +13,19 @@ export 'models/ZhouYiZhuBooksTable.dart';
 export 'models/JiaoShiYiLin.dart';
 
 // 导出API层
-export 'api/models/gua_data.dart';
+export 'api/models/gua_data.dart' hide GuaData;
 export 'api/yijing_repository.dart';
 export 'api/yijing_api.dart';
+
+// ==================== 接口层 ====================
+export 'interfaces/yijing/i_gua_data.dart';
+export 'interfaces/yijing/i_yao_ci_data.dart';
+export 'interfaces/yijing/i_yijing_service.dart';
+
+// ==================== 服务实现层 ====================
+export 'models/gua_data_impl.dart';
+export 'models/yao_ci_data_impl.dart';
+export 'services/yijing_service_impl.dart';
 
 // ==================== 导航层 ====================
 export 'api/navigation/yijing_routes.dart';
