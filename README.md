@@ -1,25 +1,15 @@
-# my_flutter
-
-## 📢 项目迁移通知
-
-**本项目将迁移至 [xuan-yijing](https://github.com/weijingtai/xuan-yijing)**
-
-新项目将采用更模块化的架构，提供更好的可维护性和扩展性。
-
----
-
-## 项目简介
+# yijing
 
 易经占卜应用 - 基于Flutter开发的周易卦象展示工具
 
-### 功能特性
+## 功能特性
 
 - 🎯 **周易卦象展示** - 64卦完整数据展示
 - 📖 **爻辞/彖辞/象辞** - 详细的卦象解读
 - 📚 **注书参考** - 多种易学注解
 - 🔮 **焦氏易林** - 焦氏易林占卜系统
 
-### 技术栈
+## 技术栈
 
 - **框架**: Flutter 3.0+
 - **数据库**: Drift (SQLite)
@@ -58,13 +48,13 @@ flutter pub run build_runner build
 # 在大项目的pubspec.yaml中
 dependencies:
   yijing_module:
-    path: ../my_flutter
+    path: ../yijing
 ```
 
 ### 方式2: 使用API
 
 ```dart
-import 'package:my_flutter/yijing_api.dart';
+import 'package:yijing/yijing_api.dart';
 
 final api = YijingApi();
 await api.init();
@@ -74,7 +64,7 @@ final gua = await api.getFullGuaData('111111');
 ### 方式3: 使用UI组件
 
 ```dart
-import 'package:my_flutter/yijing_module.dart';
+import 'package:yijing/yijing_module.dart';
 
 ZhouYiGuaWidget(
   zhouYi: zhouYi,
@@ -120,4 +110,3 @@ lib/
 ## 联系方式
 
 - GitHub: [weijingtai](https://github.com/weijingtai)
-- 新项目: [xuan-yijing](https://github.com/weijingtai/xuan-yijing)
