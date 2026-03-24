@@ -1,7 +1,7 @@
 import 'dart:convert';
+import 'dart:ui' show ImageFilter;
 
 import 'package:get/get.dart';
-import 'package:glassmorphism_ui/glassmorphism_ui.dart';
 import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
@@ -322,17 +322,20 @@ class _ZhouYiGuaListPageState extends State<ZhouYiGuaListPage> {
             builder: (ctx,zhouYi,child){
               return zhouYi == null?Container():child!;
             },
-            child:GlassContainer(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.zero,
-                topRight: Radius.zero,
-              ),
-              color: Colors.black87.withOpacity(.2),
-              opacity: 1,
-              blur: 6,
+            child:Container(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
-
+              decoration: BoxDecoration(
+                color: Colors.black87.withOpacity(.2),
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.zero,
+                  topRight: Radius.zero,
+                ),
+              ),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
+                child: Container(),
+              ),
             )
         ),
         ValueListenableBuilder(

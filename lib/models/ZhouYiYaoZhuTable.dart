@@ -1,9 +1,7 @@
-import 'package:moor/moor.dart';
+import 'package:drift/drift.dart';
 
 import 'ZhouYiGuaYaoTable.dart';
 import 'ZhouYiTable.dart';
-
-import 'package:moor/moor.dart';
 
 import 'ZhouYiZhuBooksTable.dart';
 @DataClassName('ZhouYiYaoZhu')
@@ -13,8 +11,8 @@ class ZhouYiYaoZhuTable extends Table {
   IntColumn get yaoId => integer().references(ZhouYiGuaYaoTable,  Symbol('id'))();
   IntColumn get bookId => integer().references(ZhouyiZhuBooksTable,  Symbol('id'))();
   TextColumn get yaoZhu => text().nullable()();
-  @override
-  Set<Column> get primaryKey => {id};
+  // @override
+  // Set<Column> get primaryKey => {id};
 
 
   @override

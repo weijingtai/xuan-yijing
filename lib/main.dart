@@ -9,8 +9,7 @@ import 'package:my_flutter/pages/zhou_yi_gua_list.dart';
 import 'package:my_flutter/pages/ziweidoushu/zi_wei_dou_shu_pan_page.dart';
 import 'package:my_flutter/routes.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:responsive_framework/responsive_wrapper.dart';
-import 'package:responsive_framework/utils/scroll_behavior.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,19 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return OKToast(
       child: MaterialApp(
-        builder: (context, child) => ResponsiveWrapper.builder(
-            BouncingScrollWrapper.builder(context, child!),
-            // maxWidth: 1200,
-            // minWidth: 450,
-            defaultScale: true,
-            breakpoints: [
-              const ResponsiveBreakpoint.resize(450, name: MOBILE),
-              const ResponsiveBreakpoint.autoScale(800, name: TABLET),
-              const ResponsiveBreakpoint.autoScale(1000, name: TABLET),
-              const ResponsiveBreakpoint.resize(1200, name: DESKTOP),
-              const ResponsiveBreakpoint.autoScale(2460, name: "4K"),
-            ],
-            background: Container(color: const Color(0xFFF5F5F5))),
+        builder: (context, child) => child!,
         initialRoute: Routes.zhouyi,
         onGenerateRoute: (RouteSettings settings) {
           return Routes.fadeThrough(settings, (context) {
@@ -156,7 +143,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Text(
               '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context).textTheme.displayMedium,
             ),
           ],
         ),

@@ -1,6 +1,7 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ui' show ImageFilter;
 
 import 'package:card_loading/card_loading.dart';
 import "package:logger/logger.dart";
@@ -9,7 +10,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
-import 'package:glassmorphism_ui/glassmorphism_ui.dart';
 import 'package:info_popup/info_popup.dart';
 import 'package:my_flutter/widgets/tiny_zhou_yi_gua_widget.dart';
 import 'package:oktoast/oktoast.dart';
@@ -86,18 +86,21 @@ class _ZhouYiGuaDetailsPageState extends State<ZhouYiGuaDetailsPage> with Ticker
                 child: AnimatedOpacity(
                   opacity: displayZhuNotifier.value == null ? 0 : 1,
                   duration: Duration(milliseconds: 200),
-                  child: GlassContainer(
+                  child: Container(
                     height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
-                    opacity: .2,
-                    color: Colors.black.withOpacity(.2),
-                    blur: 4,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        buildLargeCard(displayZhu.item1,displayZhu.item2),
-                      ],
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.2),
+                    ),
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          buildLargeCard(displayZhu.item1,displayZhu.item2),
+                        ],
+                      ),
                     ),
                   ),
                 )
@@ -859,18 +862,22 @@ class _ZhouYiGuaDetailsPageState extends State<ZhouYiGuaDetailsPage> with Ticker
 
     return InfoPopupWidget(
       // contentTitle: huGuaContent,
-      customContent:GlassContainer(
-        color: Colors.black.withOpacity(0.6),
-        blur: 0.8,
-        opacity: 0.4,
-        child: Container(
-          padding: EdgeInsets.all(8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(guaContent,style: TextStyle(fontSize: 16,fontWeight: FontWeight.normal,color: Colors.white),),
-            ],
+      customContent: () => Container(
+        decoration: BoxDecoration(
+          color: Colors.black.withOpacity(0.24),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 0.8, sigmaY: 0.8),
+          child: Container(
+            padding: EdgeInsets.all(8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(guaContent,style: TextStyle(fontSize: 16,fontWeight: FontWeight.normal,color: Colors.white),),
+              ],
+            ),
           ),
         ),
       ),
@@ -1278,23 +1285,24 @@ class _ZhouYiGuaDetailsPageState extends State<ZhouYiGuaDetailsPage> with Ticker
       _TooltipKeyList.add(currentToolTipKey);
 
       listView.add(
-        GlassContainer(
+        Container(
           height: 64,
           width: 48,
-          opacity: 0.2,
-          color: i == 0 ?Colors.lightBlue.withOpacity(0.4):Colors.lightBlue.withOpacity(0.2),
-          blur: 4,
-          borderRadius: BorderRadius.circular(8),
-          shadowColor: Colors.white.withOpacity(0.2),
-          // onTap: (){
-          //   final dynamic _toolTip = currentToolTipKey.currentState;
-          //   _toolTip.ensureTooltipVisible();
-          // },
-          child: Tooltip(
-              key: currentToolTipKey,
-              message: content,
-              triggerMode: TooltipTriggerMode.tap,
-              child: TinyZhouYiGuaWidget(guaBinaryContent: binary,guaName: guaName,guaExtraName:null, height: 3,width: 24,yaoInterval: 2)),
+          decoration: BoxDecoration(
+            color: i == 0 ? Colors.lightBlue.withOpacity(0.4) : Colors.lightBlue.withOpacity(0.2),
+            borderRadius: BorderRadius.circular(8),
+            boxShadow: [
+              BoxShadow(color: Colors.white.withOpacity(0.2), blurRadius: 4),
+            ],
+          ),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
+            child: Tooltip(
+                key: currentToolTipKey,
+                message: content,
+                triggerMode: TooltipTriggerMode.tap,
+                child: TinyZhouYiGuaWidget(guaBinaryContent: binary,guaName: guaName,guaExtraName:null, height: 3,width: 24,yaoInterval: 2)),
+          ),
         )
         );
     }

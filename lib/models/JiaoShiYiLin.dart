@@ -1,4 +1,4 @@
-import 'package:moor/moor.dart';
+import 'package:drift/drift.dart';
 
 import 'ZhouYiTable.dart';
 
@@ -11,8 +11,8 @@ class JiaoShiYiLinTable extends Table {
   TextColumn get zhiBinary => text()();
   TextColumn get zhiContent => text()();
 
-  @override
-  Set<Column> get primaryKey => {id};
+  // @override
+  // Set<Column> get primaryKey => {id};
 
   @override String? get tableName => 't_zy_jiao_lin';
 

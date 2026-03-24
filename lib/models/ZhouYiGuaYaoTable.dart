@@ -1,4 +1,4 @@
-import 'package:moor/moor.dart';
+import 'package:drift/drift.dart';
 
 
 @DataClassName('ZhouYiGuaYao')
@@ -11,8 +11,8 @@ class ZhouYiGuaYaoTable extends Table {
   TextColumn get xiang => text()();
   TextColumn get yao => text()();
 
-  @override
-  Set<Column> get primaryKey => {id};
+  // @override
+  // Set<Column> get primaryKey => {id};
 
 
   @override String? get tableName => 't_zy_yao';

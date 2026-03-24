@@ -1,4 +1,4 @@
-import 'package:moor/moor.dart';
+import 'package:drift/drift.dart';
 
 @DataClassName('ZhouyiZhuBooks')
 class ZhouyiZhuBooksTable extends Table {
@@ -7,8 +7,8 @@ class ZhouyiZhuBooksTable extends Table {
   TextColumn get bookauth => text().withLength(max: 16)();
   TextColumn get bookage => text().withLength(max: 16)();
 
-  @override
-  Set<Column> get primaryKey => {id};
+  // @override
+  // Set<Column> get primaryKey => {id};
 
   @override
   String get tableName => 't_zy_zhu_book';

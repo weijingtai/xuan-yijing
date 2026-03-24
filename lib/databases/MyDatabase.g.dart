@@ -2,494 +2,85 @@
 
 part of 'MyDatabase.dart';
 
-// **************************************************************************
-// MoorGenerator
-// **************************************************************************
-
 // ignore_for_file: type=lint
-class ZhouYi extends DataClass implements Insertable<ZhouYi> {
-  final String binary;
-  final int seq;
-  final String name;
-  final String fullname;
-  final String baguaInner;
-  final String baguaInnerName;
-  final String baguaInnerNickname;
-  final String baguaOuter;
-  final String baguaOuterName;
-  final String baguaOuterNickname;
-  final String xiang;
-  final String tuan;
-  final String gua;
-  ZhouYi(
-      {required this.binary,
-      required this.seq,
-      required this.name,
-      required this.fullname,
-      required this.baguaInner,
-      required this.baguaInnerName,
-      required this.baguaInnerNickname,
-      required this.baguaOuter,
-      required this.baguaOuterName,
-      required this.baguaOuterNickname,
-      required this.xiang,
-      required this.tuan,
-      required this.gua});
-  factory ZhouYi.fromData(Map<String, dynamic> data, GeneratedDatabase db,
-      {String? prefix}) {
-    final effectivePrefix = prefix ?? '';
-    return ZhouYi(
-      binary: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}binary'])!,
-      seq: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}seq'])!,
-      name: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}name'])!,
-      fullname: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}fullname'])!,
-      baguaInner: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}bagua_inner'])!,
-      baguaInnerName: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}bagua_inner_name'])!,
-      baguaInnerNickname: const StringType().mapFromDatabaseResponse(
-          data['${effectivePrefix}bagua_inner_nickname'])!,
-      baguaOuter: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}bagua_outer'])!,
-      baguaOuterName: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}bagua_outer_name'])!,
-      baguaOuterNickname: const StringType().mapFromDatabaseResponse(
-          data['${effectivePrefix}bagua_outer_nickname'])!,
-      xiang: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}xiang'])!,
-      tuan: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}tuan'])!,
-      gua: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}gua'])!,
-    );
-  }
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['binary'] = Variable<String>(binary);
-    map['seq'] = Variable<int>(seq);
-    map['name'] = Variable<String>(name);
-    map['fullname'] = Variable<String>(fullname);
-    map['bagua_inner'] = Variable<String>(baguaInner);
-    map['bagua_inner_name'] = Variable<String>(baguaInnerName);
-    map['bagua_inner_nickname'] = Variable<String>(baguaInnerNickname);
-    map['bagua_outer'] = Variable<String>(baguaOuter);
-    map['bagua_outer_name'] = Variable<String>(baguaOuterName);
-    map['bagua_outer_nickname'] = Variable<String>(baguaOuterNickname);
-    map['xiang'] = Variable<String>(xiang);
-    map['tuan'] = Variable<String>(tuan);
-    map['gua'] = Variable<String>(gua);
-    return map;
-  }
-
-  ZhouYiTableCompanion toCompanion(bool nullToAbsent) {
-    return ZhouYiTableCompanion(
-      binary: Value(binary),
-      seq: Value(seq),
-      name: Value(name),
-      fullname: Value(fullname),
-      baguaInner: Value(baguaInner),
-      baguaInnerName: Value(baguaInnerName),
-      baguaInnerNickname: Value(baguaInnerNickname),
-      baguaOuter: Value(baguaOuter),
-      baguaOuterName: Value(baguaOuterName),
-      baguaOuterNickname: Value(baguaOuterNickname),
-      xiang: Value(xiang),
-      tuan: Value(tuan),
-      gua: Value(gua),
-    );
-  }
-
-  factory ZhouYi.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
-    return ZhouYi(
-      binary: serializer.fromJson<String>(json['binary']),
-      seq: serializer.fromJson<int>(json['seq']),
-      name: serializer.fromJson<String>(json['name']),
-      fullname: serializer.fromJson<String>(json['fullname']),
-      baguaInner: serializer.fromJson<String>(json['baguaInner']),
-      baguaInnerName: serializer.fromJson<String>(json['baguaInnerName']),
-      baguaInnerNickname:
-          serializer.fromJson<String>(json['baguaInnerNickname']),
-      baguaOuter: serializer.fromJson<String>(json['baguaOuter']),
-      baguaOuterName: serializer.fromJson<String>(json['baguaOuterName']),
-      baguaOuterNickname:
-          serializer.fromJson<String>(json['baguaOuterNickname']),
-      xiang: serializer.fromJson<String>(json['xiang']),
-      tuan: serializer.fromJson<String>(json['tuan']),
-      gua: serializer.fromJson<String>(json['gua']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'binary': serializer.toJson<String>(binary),
-      'seq': serializer.toJson<int>(seq),
-      'name': serializer.toJson<String>(name),
-      'fullname': serializer.toJson<String>(fullname),
-      'baguaInner': serializer.toJson<String>(baguaInner),
-      'baguaInnerName': serializer.toJson<String>(baguaInnerName),
-      'baguaInnerNickname': serializer.toJson<String>(baguaInnerNickname),
-      'baguaOuter': serializer.toJson<String>(baguaOuter),
-      'baguaOuterName': serializer.toJson<String>(baguaOuterName),
-      'baguaOuterNickname': serializer.toJson<String>(baguaOuterNickname),
-      'xiang': serializer.toJson<String>(xiang),
-      'tuan': serializer.toJson<String>(tuan),
-      'gua': serializer.toJson<String>(gua),
-    };
-  }
-
-  ZhouYi copyWith(
-          {String? binary,
-          int? seq,
-          String? name,
-          String? fullname,
-          String? baguaInner,
-          String? baguaInnerName,
-          String? baguaInnerNickname,
-          String? baguaOuter,
-          String? baguaOuterName,
-          String? baguaOuterNickname,
-          String? xiang,
-          String? tuan,
-          String? gua}) =>
-      ZhouYi(
-        binary: binary ?? this.binary,
-        seq: seq ?? this.seq,
-        name: name ?? this.name,
-        fullname: fullname ?? this.fullname,
-        baguaInner: baguaInner ?? this.baguaInner,
-        baguaInnerName: baguaInnerName ?? this.baguaInnerName,
-        baguaInnerNickname: baguaInnerNickname ?? this.baguaInnerNickname,
-        baguaOuter: baguaOuter ?? this.baguaOuter,
-        baguaOuterName: baguaOuterName ?? this.baguaOuterName,
-        baguaOuterNickname: baguaOuterNickname ?? this.baguaOuterNickname,
-        xiang: xiang ?? this.xiang,
-        tuan: tuan ?? this.tuan,
-        gua: gua ?? this.gua,
-      );
-  @override
-  String toString() {
-    return (StringBuffer('ZhouYi(')
-          ..write('binary: $binary, ')
-          ..write('seq: $seq, ')
-          ..write('name: $name, ')
-          ..write('fullname: $fullname, ')
-          ..write('baguaInner: $baguaInner, ')
-          ..write('baguaInnerName: $baguaInnerName, ')
-          ..write('baguaInnerNickname: $baguaInnerNickname, ')
-          ..write('baguaOuter: $baguaOuter, ')
-          ..write('baguaOuterName: $baguaOuterName, ')
-          ..write('baguaOuterNickname: $baguaOuterNickname, ')
-          ..write('xiang: $xiang, ')
-          ..write('tuan: $tuan, ')
-          ..write('gua: $gua')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      binary,
-      seq,
-      name,
-      fullname,
-      baguaInner,
-      baguaInnerName,
-      baguaInnerNickname,
-      baguaOuter,
-      baguaOuterName,
-      baguaOuterNickname,
-      xiang,
-      tuan,
-      gua);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is ZhouYi &&
-          other.binary == this.binary &&
-          other.seq == this.seq &&
-          other.name == this.name &&
-          other.fullname == this.fullname &&
-          other.baguaInner == this.baguaInner &&
-          other.baguaInnerName == this.baguaInnerName &&
-          other.baguaInnerNickname == this.baguaInnerNickname &&
-          other.baguaOuter == this.baguaOuter &&
-          other.baguaOuterName == this.baguaOuterName &&
-          other.baguaOuterNickname == this.baguaOuterNickname &&
-          other.xiang == this.xiang &&
-          other.tuan == this.tuan &&
-          other.gua == this.gua);
-}
-
-class ZhouYiTableCompanion extends UpdateCompanion<ZhouYi> {
-  final Value<String> binary;
-  final Value<int> seq;
-  final Value<String> name;
-  final Value<String> fullname;
-  final Value<String> baguaInner;
-  final Value<String> baguaInnerName;
-  final Value<String> baguaInnerNickname;
-  final Value<String> baguaOuter;
-  final Value<String> baguaOuterName;
-  final Value<String> baguaOuterNickname;
-  final Value<String> xiang;
-  final Value<String> tuan;
-  final Value<String> gua;
-  const ZhouYiTableCompanion({
-    this.binary = const Value.absent(),
-    this.seq = const Value.absent(),
-    this.name = const Value.absent(),
-    this.fullname = const Value.absent(),
-    this.baguaInner = const Value.absent(),
-    this.baguaInnerName = const Value.absent(),
-    this.baguaInnerNickname = const Value.absent(),
-    this.baguaOuter = const Value.absent(),
-    this.baguaOuterName = const Value.absent(),
-    this.baguaOuterNickname = const Value.absent(),
-    this.xiang = const Value.absent(),
-    this.tuan = const Value.absent(),
-    this.gua = const Value.absent(),
-  });
-  ZhouYiTableCompanion.insert({
-    required String binary,
-    required int seq,
-    required String name,
-    required String fullname,
-    required String baguaInner,
-    required String baguaInnerName,
-    required String baguaInnerNickname,
-    required String baguaOuter,
-    required String baguaOuterName,
-    required String baguaOuterNickname,
-    required String xiang,
-    required String tuan,
-    required String gua,
-  })  : binary = Value(binary),
-        seq = Value(seq),
-        name = Value(name),
-        fullname = Value(fullname),
-        baguaInner = Value(baguaInner),
-        baguaInnerName = Value(baguaInnerName),
-        baguaInnerNickname = Value(baguaInnerNickname),
-        baguaOuter = Value(baguaOuter),
-        baguaOuterName = Value(baguaOuterName),
-        baguaOuterNickname = Value(baguaOuterNickname),
-        xiang = Value(xiang),
-        tuan = Value(tuan),
-        gua = Value(gua);
-  static Insertable<ZhouYi> custom({
-    Expression<String>? binary,
-    Expression<int>? seq,
-    Expression<String>? name,
-    Expression<String>? fullname,
-    Expression<String>? baguaInner,
-    Expression<String>? baguaInnerName,
-    Expression<String>? baguaInnerNickname,
-    Expression<String>? baguaOuter,
-    Expression<String>? baguaOuterName,
-    Expression<String>? baguaOuterNickname,
-    Expression<String>? xiang,
-    Expression<String>? tuan,
-    Expression<String>? gua,
-  }) {
-    return RawValuesInsertable({
-      if (binary != null) 'binary': binary,
-      if (seq != null) 'seq': seq,
-      if (name != null) 'name': name,
-      if (fullname != null) 'fullname': fullname,
-      if (baguaInner != null) 'bagua_inner': baguaInner,
-      if (baguaInnerName != null) 'bagua_inner_name': baguaInnerName,
-      if (baguaInnerNickname != null)
-        'bagua_inner_nickname': baguaInnerNickname,
-      if (baguaOuter != null) 'bagua_outer': baguaOuter,
-      if (baguaOuterName != null) 'bagua_outer_name': baguaOuterName,
-      if (baguaOuterNickname != null)
-        'bagua_outer_nickname': baguaOuterNickname,
-      if (xiang != null) 'xiang': xiang,
-      if (tuan != null) 'tuan': tuan,
-      if (gua != null) 'gua': gua,
-    });
-  }
-
-  ZhouYiTableCompanion copyWith(
-      {Value<String>? binary,
-      Value<int>? seq,
-      Value<String>? name,
-      Value<String>? fullname,
-      Value<String>? baguaInner,
-      Value<String>? baguaInnerName,
-      Value<String>? baguaInnerNickname,
-      Value<String>? baguaOuter,
-      Value<String>? baguaOuterName,
-      Value<String>? baguaOuterNickname,
-      Value<String>? xiang,
-      Value<String>? tuan,
-      Value<String>? gua}) {
-    return ZhouYiTableCompanion(
-      binary: binary ?? this.binary,
-      seq: seq ?? this.seq,
-      name: name ?? this.name,
-      fullname: fullname ?? this.fullname,
-      baguaInner: baguaInner ?? this.baguaInner,
-      baguaInnerName: baguaInnerName ?? this.baguaInnerName,
-      baguaInnerNickname: baguaInnerNickname ?? this.baguaInnerNickname,
-      baguaOuter: baguaOuter ?? this.baguaOuter,
-      baguaOuterName: baguaOuterName ?? this.baguaOuterName,
-      baguaOuterNickname: baguaOuterNickname ?? this.baguaOuterNickname,
-      xiang: xiang ?? this.xiang,
-      tuan: tuan ?? this.tuan,
-      gua: gua ?? this.gua,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (binary.present) {
-      map['binary'] = Variable<String>(binary.value);
-    }
-    if (seq.present) {
-      map['seq'] = Variable<int>(seq.value);
-    }
-    if (name.present) {
-      map['name'] = Variable<String>(name.value);
-    }
-    if (fullname.present) {
-      map['fullname'] = Variable<String>(fullname.value);
-    }
-    if (baguaInner.present) {
-      map['bagua_inner'] = Variable<String>(baguaInner.value);
-    }
-    if (baguaInnerName.present) {
-      map['bagua_inner_name'] = Variable<String>(baguaInnerName.value);
-    }
-    if (baguaInnerNickname.present) {
-      map['bagua_inner_nickname'] = Variable<String>(baguaInnerNickname.value);
-    }
-    if (baguaOuter.present) {
-      map['bagua_outer'] = Variable<String>(baguaOuter.value);
-    }
-    if (baguaOuterName.present) {
-      map['bagua_outer_name'] = Variable<String>(baguaOuterName.value);
-    }
-    if (baguaOuterNickname.present) {
-      map['bagua_outer_nickname'] = Variable<String>(baguaOuterNickname.value);
-    }
-    if (xiang.present) {
-      map['xiang'] = Variable<String>(xiang.value);
-    }
-    if (tuan.present) {
-      map['tuan'] = Variable<String>(tuan.value);
-    }
-    if (gua.present) {
-      map['gua'] = Variable<String>(gua.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ZhouYiTableCompanion(')
-          ..write('binary: $binary, ')
-          ..write('seq: $seq, ')
-          ..write('name: $name, ')
-          ..write('fullname: $fullname, ')
-          ..write('baguaInner: $baguaInner, ')
-          ..write('baguaInnerName: $baguaInnerName, ')
-          ..write('baguaInnerNickname: $baguaInnerNickname, ')
-          ..write('baguaOuter: $baguaOuter, ')
-          ..write('baguaOuterName: $baguaOuterName, ')
-          ..write('baguaOuterNickname: $baguaOuterNickname, ')
-          ..write('xiang: $xiang, ')
-          ..write('tuan: $tuan, ')
-          ..write('gua: $gua')
-          ..write(')'))
-        .toString();
-  }
-}
-
 class $ZhouYiTableTable extends ZhouYiTable
     with TableInfo<$ZhouYiTableTable, ZhouYi> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $ZhouYiTableTable(this.attachedDatabase, [this._alias]);
-  final VerificationMeta _binaryMeta = const VerificationMeta('binary');
+  static const VerificationMeta _binaryMeta = const VerificationMeta('binary');
   @override
-  late final GeneratedColumn<String?> binary = GeneratedColumn<String?>(
+  late final GeneratedColumn<String> binary = GeneratedColumn<String>(
       'binary', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
-  final VerificationMeta _seqMeta = const VerificationMeta('seq');
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _seqMeta = const VerificationMeta('seq');
   @override
-  late final GeneratedColumn<int?> seq = GeneratedColumn<int?>(
+  late final GeneratedColumn<int> seq = GeneratedColumn<int>(
       'seq', aliasedName, false,
-      type: const IntType(), requiredDuringInsert: true);
-  final VerificationMeta _nameMeta = const VerificationMeta('name');
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
   @override
-  late final GeneratedColumn<String?> name = GeneratedColumn<String?>(
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
       'name', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
-  final VerificationMeta _fullnameMeta = const VerificationMeta('fullname');
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _fullnameMeta =
+      const VerificationMeta('fullname');
   @override
-  late final GeneratedColumn<String?> fullname = GeneratedColumn<String?>(
+  late final GeneratedColumn<String> fullname = GeneratedColumn<String>(
       'fullname', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
-  final VerificationMeta _baguaInnerMeta = const VerificationMeta('baguaInner');
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _baguaInnerMeta =
+      const VerificationMeta('baguaInner');
   @override
-  late final GeneratedColumn<String?> baguaInner = GeneratedColumn<String?>(
+  late final GeneratedColumn<String> baguaInner = GeneratedColumn<String>(
       'bagua_inner', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
-  final VerificationMeta _baguaInnerNameMeta =
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _baguaInnerNameMeta =
       const VerificationMeta('baguaInnerName');
   @override
-  late final GeneratedColumn<String?> baguaInnerName = GeneratedColumn<String?>(
+  late final GeneratedColumn<String> baguaInnerName = GeneratedColumn<String>(
       'bagua_inner_name', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
-  final VerificationMeta _baguaInnerNicknameMeta =
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _baguaInnerNicknameMeta =
       const VerificationMeta('baguaInnerNickname');
   @override
-  late final GeneratedColumn<String?> baguaInnerNickname =
-      GeneratedColumn<String?>('bagua_inner_nickname', aliasedName, false,
-          type: const StringType(), requiredDuringInsert: true);
-  final VerificationMeta _baguaOuterMeta = const VerificationMeta('baguaOuter');
+  late final GeneratedColumn<String> baguaInnerNickname =
+      GeneratedColumn<String>('bagua_inner_nickname', aliasedName, false,
+          type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _baguaOuterMeta =
+      const VerificationMeta('baguaOuter');
   @override
-  late final GeneratedColumn<String?> baguaOuter = GeneratedColumn<String?>(
+  late final GeneratedColumn<String> baguaOuter = GeneratedColumn<String>(
       'bagua_outer', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
-  final VerificationMeta _baguaOuterNameMeta =
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _baguaOuterNameMeta =
       const VerificationMeta('baguaOuterName');
   @override
-  late final GeneratedColumn<String?> baguaOuterName = GeneratedColumn<String?>(
+  late final GeneratedColumn<String> baguaOuterName = GeneratedColumn<String>(
       'bagua_outer_name', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
-  final VerificationMeta _baguaOuterNicknameMeta =
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _baguaOuterNicknameMeta =
       const VerificationMeta('baguaOuterNickname');
   @override
-  late final GeneratedColumn<String?> baguaOuterNickname =
-      GeneratedColumn<String?>('bagua_outer_nickname', aliasedName, false,
-          type: const StringType(), requiredDuringInsert: true);
-  final VerificationMeta _xiangMeta = const VerificationMeta('xiang');
+  late final GeneratedColumn<String> baguaOuterNickname =
+      GeneratedColumn<String>('bagua_outer_nickname', aliasedName, false,
+          type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _xiangMeta = const VerificationMeta('xiang');
   @override
-  late final GeneratedColumn<String?> xiang = GeneratedColumn<String?>(
+  late final GeneratedColumn<String> xiang = GeneratedColumn<String>(
       'xiang', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
-  final VerificationMeta _tuanMeta = const VerificationMeta('tuan');
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _tuanMeta = const VerificationMeta('tuan');
   @override
-  late final GeneratedColumn<String?> tuan = GeneratedColumn<String?>(
+  late final GeneratedColumn<String> tuan = GeneratedColumn<String>(
       'tuan', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
-  final VerificationMeta _guaMeta = const VerificationMeta('gua');
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _guaMeta = const VerificationMeta('gua');
   @override
-  late final GeneratedColumn<String?> gua = GeneratedColumn<String?>(
+  late final GeneratedColumn<String> gua = GeneratedColumn<String>(
       'gua', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
+      type: DriftSqlType.string, requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns => [
         binary,
@@ -507,9 +98,10 @@ class $ZhouYiTableTable extends ZhouYiTable
         gua
       ];
   @override
-  String get aliasedName => _alias ?? 't_zy';
+  String get aliasedName => _alias ?? actualTableName;
   @override
-  String get actualTableName => 't_zy';
+  String get actualTableName => $name;
+  static const String $name = 't_zy';
   @override
   VerificationContext validateIntegrity(Insertable<ZhouYi> instance,
       {bool isInserting = false}) {
@@ -612,13 +204,588 @@ class $ZhouYiTableTable extends ZhouYiTable
   Set<GeneratedColumn> get $primaryKey => {binary};
   @override
   ZhouYi map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return ZhouYi.fromData(data, attachedDatabase,
-        prefix: tablePrefix != null ? '$tablePrefix.' : null);
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ZhouYi(
+      binary: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}binary'])!,
+      seq: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}seq'])!,
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      fullname: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}fullname'])!,
+      baguaInner: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}bagua_inner'])!,
+      baguaInnerName: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}bagua_inner_name'])!,
+      baguaInnerNickname: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}bagua_inner_nickname'])!,
+      baguaOuter: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}bagua_outer'])!,
+      baguaOuterName: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}bagua_outer_name'])!,
+      baguaOuterNickname: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}bagua_outer_nickname'])!,
+      xiang: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}xiang'])!,
+      tuan: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}tuan'])!,
+      gua: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}gua'])!,
+    );
   }
 
   @override
   $ZhouYiTableTable createAlias(String alias) {
     return $ZhouYiTableTable(attachedDatabase, alias);
+  }
+}
+
+class ZhouYi extends DataClass implements Insertable<ZhouYi> {
+  final String binary;
+  final int seq;
+  final String name;
+  final String fullname;
+  final String baguaInner;
+  final String baguaInnerName;
+  final String baguaInnerNickname;
+  final String baguaOuter;
+  final String baguaOuterName;
+  final String baguaOuterNickname;
+  final String xiang;
+  final String tuan;
+  final String gua;
+  const ZhouYi(
+      {required this.binary,
+      required this.seq,
+      required this.name,
+      required this.fullname,
+      required this.baguaInner,
+      required this.baguaInnerName,
+      required this.baguaInnerNickname,
+      required this.baguaOuter,
+      required this.baguaOuterName,
+      required this.baguaOuterNickname,
+      required this.xiang,
+      required this.tuan,
+      required this.gua});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['binary'] = Variable<String>(binary);
+    map['seq'] = Variable<int>(seq);
+    map['name'] = Variable<String>(name);
+    map['fullname'] = Variable<String>(fullname);
+    map['bagua_inner'] = Variable<String>(baguaInner);
+    map['bagua_inner_name'] = Variable<String>(baguaInnerName);
+    map['bagua_inner_nickname'] = Variable<String>(baguaInnerNickname);
+    map['bagua_outer'] = Variable<String>(baguaOuter);
+    map['bagua_outer_name'] = Variable<String>(baguaOuterName);
+    map['bagua_outer_nickname'] = Variable<String>(baguaOuterNickname);
+    map['xiang'] = Variable<String>(xiang);
+    map['tuan'] = Variable<String>(tuan);
+    map['gua'] = Variable<String>(gua);
+    return map;
+  }
+
+  ZhouYiTableCompanion toCompanion(bool nullToAbsent) {
+    return ZhouYiTableCompanion(
+      binary: Value(binary),
+      seq: Value(seq),
+      name: Value(name),
+      fullname: Value(fullname),
+      baguaInner: Value(baguaInner),
+      baguaInnerName: Value(baguaInnerName),
+      baguaInnerNickname: Value(baguaInnerNickname),
+      baguaOuter: Value(baguaOuter),
+      baguaOuterName: Value(baguaOuterName),
+      baguaOuterNickname: Value(baguaOuterNickname),
+      xiang: Value(xiang),
+      tuan: Value(tuan),
+      gua: Value(gua),
+    );
+  }
+
+  factory ZhouYi.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ZhouYi(
+      binary: serializer.fromJson<String>(json['binary']),
+      seq: serializer.fromJson<int>(json['seq']),
+      name: serializer.fromJson<String>(json['name']),
+      fullname: serializer.fromJson<String>(json['fullname']),
+      baguaInner: serializer.fromJson<String>(json['baguaInner']),
+      baguaInnerName: serializer.fromJson<String>(json['baguaInnerName']),
+      baguaInnerNickname:
+          serializer.fromJson<String>(json['baguaInnerNickname']),
+      baguaOuter: serializer.fromJson<String>(json['baguaOuter']),
+      baguaOuterName: serializer.fromJson<String>(json['baguaOuterName']),
+      baguaOuterNickname:
+          serializer.fromJson<String>(json['baguaOuterNickname']),
+      xiang: serializer.fromJson<String>(json['xiang']),
+      tuan: serializer.fromJson<String>(json['tuan']),
+      gua: serializer.fromJson<String>(json['gua']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'binary': serializer.toJson<String>(binary),
+      'seq': serializer.toJson<int>(seq),
+      'name': serializer.toJson<String>(name),
+      'fullname': serializer.toJson<String>(fullname),
+      'baguaInner': serializer.toJson<String>(baguaInner),
+      'baguaInnerName': serializer.toJson<String>(baguaInnerName),
+      'baguaInnerNickname': serializer.toJson<String>(baguaInnerNickname),
+      'baguaOuter': serializer.toJson<String>(baguaOuter),
+      'baguaOuterName': serializer.toJson<String>(baguaOuterName),
+      'baguaOuterNickname': serializer.toJson<String>(baguaOuterNickname),
+      'xiang': serializer.toJson<String>(xiang),
+      'tuan': serializer.toJson<String>(tuan),
+      'gua': serializer.toJson<String>(gua),
+    };
+  }
+
+  ZhouYi copyWith(
+          {String? binary,
+          int? seq,
+          String? name,
+          String? fullname,
+          String? baguaInner,
+          String? baguaInnerName,
+          String? baguaInnerNickname,
+          String? baguaOuter,
+          String? baguaOuterName,
+          String? baguaOuterNickname,
+          String? xiang,
+          String? tuan,
+          String? gua}) =>
+      ZhouYi(
+        binary: binary ?? this.binary,
+        seq: seq ?? this.seq,
+        name: name ?? this.name,
+        fullname: fullname ?? this.fullname,
+        baguaInner: baguaInner ?? this.baguaInner,
+        baguaInnerName: baguaInnerName ?? this.baguaInnerName,
+        baguaInnerNickname: baguaInnerNickname ?? this.baguaInnerNickname,
+        baguaOuter: baguaOuter ?? this.baguaOuter,
+        baguaOuterName: baguaOuterName ?? this.baguaOuterName,
+        baguaOuterNickname: baguaOuterNickname ?? this.baguaOuterNickname,
+        xiang: xiang ?? this.xiang,
+        tuan: tuan ?? this.tuan,
+        gua: gua ?? this.gua,
+      );
+  ZhouYi copyWithCompanion(ZhouYiTableCompanion data) {
+    return ZhouYi(
+      binary: data.binary.present ? data.binary.value : this.binary,
+      seq: data.seq.present ? data.seq.value : this.seq,
+      name: data.name.present ? data.name.value : this.name,
+      fullname: data.fullname.present ? data.fullname.value : this.fullname,
+      baguaInner:
+          data.baguaInner.present ? data.baguaInner.value : this.baguaInner,
+      baguaInnerName: data.baguaInnerName.present
+          ? data.baguaInnerName.value
+          : this.baguaInnerName,
+      baguaInnerNickname: data.baguaInnerNickname.present
+          ? data.baguaInnerNickname.value
+          : this.baguaInnerNickname,
+      baguaOuter:
+          data.baguaOuter.present ? data.baguaOuter.value : this.baguaOuter,
+      baguaOuterName: data.baguaOuterName.present
+          ? data.baguaOuterName.value
+          : this.baguaOuterName,
+      baguaOuterNickname: data.baguaOuterNickname.present
+          ? data.baguaOuterNickname.value
+          : this.baguaOuterNickname,
+      xiang: data.xiang.present ? data.xiang.value : this.xiang,
+      tuan: data.tuan.present ? data.tuan.value : this.tuan,
+      gua: data.gua.present ? data.gua.value : this.gua,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ZhouYi(')
+          ..write('binary: $binary, ')
+          ..write('seq: $seq, ')
+          ..write('name: $name, ')
+          ..write('fullname: $fullname, ')
+          ..write('baguaInner: $baguaInner, ')
+          ..write('baguaInnerName: $baguaInnerName, ')
+          ..write('baguaInnerNickname: $baguaInnerNickname, ')
+          ..write('baguaOuter: $baguaOuter, ')
+          ..write('baguaOuterName: $baguaOuterName, ')
+          ..write('baguaOuterNickname: $baguaOuterNickname, ')
+          ..write('xiang: $xiang, ')
+          ..write('tuan: $tuan, ')
+          ..write('gua: $gua')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      binary,
+      seq,
+      name,
+      fullname,
+      baguaInner,
+      baguaInnerName,
+      baguaInnerNickname,
+      baguaOuter,
+      baguaOuterName,
+      baguaOuterNickname,
+      xiang,
+      tuan,
+      gua);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ZhouYi &&
+          other.binary == this.binary &&
+          other.seq == this.seq &&
+          other.name == this.name &&
+          other.fullname == this.fullname &&
+          other.baguaInner == this.baguaInner &&
+          other.baguaInnerName == this.baguaInnerName &&
+          other.baguaInnerNickname == this.baguaInnerNickname &&
+          other.baguaOuter == this.baguaOuter &&
+          other.baguaOuterName == this.baguaOuterName &&
+          other.baguaOuterNickname == this.baguaOuterNickname &&
+          other.xiang == this.xiang &&
+          other.tuan == this.tuan &&
+          other.gua == this.gua);
+}
+
+class ZhouYiTableCompanion extends UpdateCompanion<ZhouYi> {
+  final Value<String> binary;
+  final Value<int> seq;
+  final Value<String> name;
+  final Value<String> fullname;
+  final Value<String> baguaInner;
+  final Value<String> baguaInnerName;
+  final Value<String> baguaInnerNickname;
+  final Value<String> baguaOuter;
+  final Value<String> baguaOuterName;
+  final Value<String> baguaOuterNickname;
+  final Value<String> xiang;
+  final Value<String> tuan;
+  final Value<String> gua;
+  final Value<int> rowid;
+  const ZhouYiTableCompanion({
+    this.binary = const Value.absent(),
+    this.seq = const Value.absent(),
+    this.name = const Value.absent(),
+    this.fullname = const Value.absent(),
+    this.baguaInner = const Value.absent(),
+    this.baguaInnerName = const Value.absent(),
+    this.baguaInnerNickname = const Value.absent(),
+    this.baguaOuter = const Value.absent(),
+    this.baguaOuterName = const Value.absent(),
+    this.baguaOuterNickname = const Value.absent(),
+    this.xiang = const Value.absent(),
+    this.tuan = const Value.absent(),
+    this.gua = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ZhouYiTableCompanion.insert({
+    required String binary,
+    required int seq,
+    required String name,
+    required String fullname,
+    required String baguaInner,
+    required String baguaInnerName,
+    required String baguaInnerNickname,
+    required String baguaOuter,
+    required String baguaOuterName,
+    required String baguaOuterNickname,
+    required String xiang,
+    required String tuan,
+    required String gua,
+    this.rowid = const Value.absent(),
+  })  : binary = Value(binary),
+        seq = Value(seq),
+        name = Value(name),
+        fullname = Value(fullname),
+        baguaInner = Value(baguaInner),
+        baguaInnerName = Value(baguaInnerName),
+        baguaInnerNickname = Value(baguaInnerNickname),
+        baguaOuter = Value(baguaOuter),
+        baguaOuterName = Value(baguaOuterName),
+        baguaOuterNickname = Value(baguaOuterNickname),
+        xiang = Value(xiang),
+        tuan = Value(tuan),
+        gua = Value(gua);
+  static Insertable<ZhouYi> custom({
+    Expression<String>? binary,
+    Expression<int>? seq,
+    Expression<String>? name,
+    Expression<String>? fullname,
+    Expression<String>? baguaInner,
+    Expression<String>? baguaInnerName,
+    Expression<String>? baguaInnerNickname,
+    Expression<String>? baguaOuter,
+    Expression<String>? baguaOuterName,
+    Expression<String>? baguaOuterNickname,
+    Expression<String>? xiang,
+    Expression<String>? tuan,
+    Expression<String>? gua,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (binary != null) 'binary': binary,
+      if (seq != null) 'seq': seq,
+      if (name != null) 'name': name,
+      if (fullname != null) 'fullname': fullname,
+      if (baguaInner != null) 'bagua_inner': baguaInner,
+      if (baguaInnerName != null) 'bagua_inner_name': baguaInnerName,
+      if (baguaInnerNickname != null)
+        'bagua_inner_nickname': baguaInnerNickname,
+      if (baguaOuter != null) 'bagua_outer': baguaOuter,
+      if (baguaOuterName != null) 'bagua_outer_name': baguaOuterName,
+      if (baguaOuterNickname != null)
+        'bagua_outer_nickname': baguaOuterNickname,
+      if (xiang != null) 'xiang': xiang,
+      if (tuan != null) 'tuan': tuan,
+      if (gua != null) 'gua': gua,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ZhouYiTableCompanion copyWith(
+      {Value<String>? binary,
+      Value<int>? seq,
+      Value<String>? name,
+      Value<String>? fullname,
+      Value<String>? baguaInner,
+      Value<String>? baguaInnerName,
+      Value<String>? baguaInnerNickname,
+      Value<String>? baguaOuter,
+      Value<String>? baguaOuterName,
+      Value<String>? baguaOuterNickname,
+      Value<String>? xiang,
+      Value<String>? tuan,
+      Value<String>? gua,
+      Value<int>? rowid}) {
+    return ZhouYiTableCompanion(
+      binary: binary ?? this.binary,
+      seq: seq ?? this.seq,
+      name: name ?? this.name,
+      fullname: fullname ?? this.fullname,
+      baguaInner: baguaInner ?? this.baguaInner,
+      baguaInnerName: baguaInnerName ?? this.baguaInnerName,
+      baguaInnerNickname: baguaInnerNickname ?? this.baguaInnerNickname,
+      baguaOuter: baguaOuter ?? this.baguaOuter,
+      baguaOuterName: baguaOuterName ?? this.baguaOuterName,
+      baguaOuterNickname: baguaOuterNickname ?? this.baguaOuterNickname,
+      xiang: xiang ?? this.xiang,
+      tuan: tuan ?? this.tuan,
+      gua: gua ?? this.gua,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (binary.present) {
+      map['binary'] = Variable<String>(binary.value);
+    }
+    if (seq.present) {
+      map['seq'] = Variable<int>(seq.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (fullname.present) {
+      map['fullname'] = Variable<String>(fullname.value);
+    }
+    if (baguaInner.present) {
+      map['bagua_inner'] = Variable<String>(baguaInner.value);
+    }
+    if (baguaInnerName.present) {
+      map['bagua_inner_name'] = Variable<String>(baguaInnerName.value);
+    }
+    if (baguaInnerNickname.present) {
+      map['bagua_inner_nickname'] = Variable<String>(baguaInnerNickname.value);
+    }
+    if (baguaOuter.present) {
+      map['bagua_outer'] = Variable<String>(baguaOuter.value);
+    }
+    if (baguaOuterName.present) {
+      map['bagua_outer_name'] = Variable<String>(baguaOuterName.value);
+    }
+    if (baguaOuterNickname.present) {
+      map['bagua_outer_nickname'] = Variable<String>(baguaOuterNickname.value);
+    }
+    if (xiang.present) {
+      map['xiang'] = Variable<String>(xiang.value);
+    }
+    if (tuan.present) {
+      map['tuan'] = Variable<String>(tuan.value);
+    }
+    if (gua.present) {
+      map['gua'] = Variable<String>(gua.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ZhouYiTableCompanion(')
+          ..write('binary: $binary, ')
+          ..write('seq: $seq, ')
+          ..write('name: $name, ')
+          ..write('fullname: $fullname, ')
+          ..write('baguaInner: $baguaInner, ')
+          ..write('baguaInnerName: $baguaInnerName, ')
+          ..write('baguaInnerNickname: $baguaInnerNickname, ')
+          ..write('baguaOuter: $baguaOuter, ')
+          ..write('baguaOuterName: $baguaOuterName, ')
+          ..write('baguaOuterNickname: $baguaOuterNickname, ')
+          ..write('xiang: $xiang, ')
+          ..write('tuan: $tuan, ')
+          ..write('gua: $gua, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ZhouYiGuaZhuTableTable extends ZhouYiGuaZhuTable
+    with TableInfo<$ZhouYiGuaZhuTableTable, ZhouYiGuaZhu> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ZhouYiGuaZhuTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _isSingleMeta =
+      const VerificationMeta('isSingle');
+  @override
+  late final GeneratedColumn<bool> isSingle = GeneratedColumn<bool>(
+      'is_single', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_single" IN (0, 1))'));
+  static const VerificationMeta _guaBinaryMeta =
+      const VerificationMeta('guaBinary');
+  @override
+  late final GeneratedColumn<String> guaBinary = GeneratedColumn<String>(
+      'gua_binary', aliasedName, false,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 6, maxTextLength: 6),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _bookIdMeta = const VerificationMeta('bookId');
+  @override
+  late final GeneratedColumn<int> bookId = GeneratedColumn<int>(
+      'book_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _guaZhuMeta = const VerificationMeta('guaZhu');
+  @override
+  late final GeneratedColumn<String> guaZhu = GeneratedColumn<String>(
+      'gua_zhu', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _xiangZhuMeta =
+      const VerificationMeta('xiangZhu');
+  @override
+  late final GeneratedColumn<String> xiangZhu = GeneratedColumn<String>(
+      'xiang_zhu', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _tuanZhuMeta =
+      const VerificationMeta('tuanZhu');
+  @override
+  late final GeneratedColumn<String> tuanZhu = GeneratedColumn<String>(
+      'tuan_zhu', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, isSingle, guaBinary, bookId, guaZhu, xiangZhu, tuanZhu];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 't_zy_gua_zhu';
+  @override
+  VerificationContext validateIntegrity(Insertable<ZhouYiGuaZhu> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('is_single')) {
+      context.handle(_isSingleMeta,
+          isSingle.isAcceptableOrUnknown(data['is_single']!, _isSingleMeta));
+    } else if (isInserting) {
+      context.missing(_isSingleMeta);
+    }
+    if (data.containsKey('gua_binary')) {
+      context.handle(_guaBinaryMeta,
+          guaBinary.isAcceptableOrUnknown(data['gua_binary']!, _guaBinaryMeta));
+    } else if (isInserting) {
+      context.missing(_guaBinaryMeta);
+    }
+    if (data.containsKey('book_id')) {
+      context.handle(_bookIdMeta,
+          bookId.isAcceptableOrUnknown(data['book_id']!, _bookIdMeta));
+    } else if (isInserting) {
+      context.missing(_bookIdMeta);
+    }
+    if (data.containsKey('gua_zhu')) {
+      context.handle(_guaZhuMeta,
+          guaZhu.isAcceptableOrUnknown(data['gua_zhu']!, _guaZhuMeta));
+    }
+    if (data.containsKey('xiang_zhu')) {
+      context.handle(_xiangZhuMeta,
+          xiangZhu.isAcceptableOrUnknown(data['xiang_zhu']!, _xiangZhuMeta));
+    }
+    if (data.containsKey('tuan_zhu')) {
+      context.handle(_tuanZhuMeta,
+          tuanZhu.isAcceptableOrUnknown(data['tuan_zhu']!, _tuanZhuMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ZhouYiGuaZhu map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ZhouYiGuaZhu(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      isSingle: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_single'])!,
+      guaBinary: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}gua_binary'])!,
+      bookId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}book_id'])!,
+      guaZhu: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}gua_zhu']),
+      xiangZhu: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}xiang_zhu']),
+      tuanZhu: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}tuan_zhu']),
+    );
+  }
+
+  @override
+  $ZhouYiGuaZhuTableTable createAlias(String alias) {
+    return $ZhouYiGuaZhuTableTable(attachedDatabase, alias);
   }
 }
 
@@ -630,7 +797,7 @@ class ZhouYiGuaZhu extends DataClass implements Insertable<ZhouYiGuaZhu> {
   final String? guaZhu;
   final String? xiangZhu;
   final String? tuanZhu;
-  ZhouYiGuaZhu(
+  const ZhouYiGuaZhu(
       {required this.id,
       required this.isSingle,
       required this.guaBinary,
@@ -638,26 +805,6 @@ class ZhouYiGuaZhu extends DataClass implements Insertable<ZhouYiGuaZhu> {
       this.guaZhu,
       this.xiangZhu,
       this.tuanZhu});
-  factory ZhouYiGuaZhu.fromData(Map<String, dynamic> data, GeneratedDatabase db,
-      {String? prefix}) {
-    final effectivePrefix = prefix ?? '';
-    return ZhouYiGuaZhu(
-      id: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
-      isSingle: const BoolType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}is_single'])!,
-      guaBinary: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}gua_binary'])!,
-      bookId: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}book_id'])!,
-      guaZhu: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}gua_zhu']),
-      xiangZhu: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}xiang_zhu']),
-      tuanZhu: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}tuan_zhu']),
-    );
-  }
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -666,13 +813,13 @@ class ZhouYiGuaZhu extends DataClass implements Insertable<ZhouYiGuaZhu> {
     map['gua_binary'] = Variable<String>(guaBinary);
     map['book_id'] = Variable<int>(bookId);
     if (!nullToAbsent || guaZhu != null) {
-      map['gua_zhu'] = Variable<String?>(guaZhu);
+      map['gua_zhu'] = Variable<String>(guaZhu);
     }
     if (!nullToAbsent || xiangZhu != null) {
-      map['xiang_zhu'] = Variable<String?>(xiangZhu);
+      map['xiang_zhu'] = Variable<String>(xiangZhu);
     }
     if (!nullToAbsent || tuanZhu != null) {
-      map['tuan_zhu'] = Variable<String?>(tuanZhu);
+      map['tuan_zhu'] = Variable<String>(tuanZhu);
     }
     return map;
   }
@@ -696,7 +843,7 @@ class ZhouYiGuaZhu extends DataClass implements Insertable<ZhouYiGuaZhu> {
 
   factory ZhouYiGuaZhu.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return ZhouYiGuaZhu(
       id: serializer.fromJson<int>(json['id']),
       isSingle: serializer.fromJson<bool>(json['isSingle']),
@@ -709,7 +856,7 @@ class ZhouYiGuaZhu extends DataClass implements Insertable<ZhouYiGuaZhu> {
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'isSingle': serializer.toJson<bool>(isSingle),
@@ -726,18 +873,30 @@ class ZhouYiGuaZhu extends DataClass implements Insertable<ZhouYiGuaZhu> {
           bool? isSingle,
           String? guaBinary,
           int? bookId,
-          String? guaZhu,
-          String? xiangZhu,
-          String? tuanZhu}) =>
+          Value<String?> guaZhu = const Value.absent(),
+          Value<String?> xiangZhu = const Value.absent(),
+          Value<String?> tuanZhu = const Value.absent()}) =>
       ZhouYiGuaZhu(
         id: id ?? this.id,
         isSingle: isSingle ?? this.isSingle,
         guaBinary: guaBinary ?? this.guaBinary,
         bookId: bookId ?? this.bookId,
-        guaZhu: guaZhu ?? this.guaZhu,
-        xiangZhu: xiangZhu ?? this.xiangZhu,
-        tuanZhu: tuanZhu ?? this.tuanZhu,
+        guaZhu: guaZhu.present ? guaZhu.value : this.guaZhu,
+        xiangZhu: xiangZhu.present ? xiangZhu.value : this.xiangZhu,
+        tuanZhu: tuanZhu.present ? tuanZhu.value : this.tuanZhu,
       );
+  ZhouYiGuaZhu copyWithCompanion(ZhouYiGuaZhuTableCompanion data) {
+    return ZhouYiGuaZhu(
+      id: data.id.present ? data.id.value : this.id,
+      isSingle: data.isSingle.present ? data.isSingle.value : this.isSingle,
+      guaBinary: data.guaBinary.present ? data.guaBinary.value : this.guaBinary,
+      bookId: data.bookId.present ? data.bookId.value : this.bookId,
+      guaZhu: data.guaZhu.present ? data.guaZhu.value : this.guaZhu,
+      xiangZhu: data.xiangZhu.present ? data.xiangZhu.value : this.xiangZhu,
+      tuanZhu: data.tuanZhu.present ? data.tuanZhu.value : this.tuanZhu,
+    );
+  }
+
   @override
   String toString() {
     return (StringBuffer('ZhouYiGuaZhu(')
@@ -801,9 +960,9 @@ class ZhouYiGuaZhuTableCompanion extends UpdateCompanion<ZhouYiGuaZhu> {
     Expression<bool>? isSingle,
     Expression<String>? guaBinary,
     Expression<int>? bookId,
-    Expression<String?>? guaZhu,
-    Expression<String?>? xiangZhu,
-    Expression<String?>? tuanZhu,
+    Expression<String>? guaZhu,
+    Expression<String>? xiangZhu,
+    Expression<String>? tuanZhu,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -851,13 +1010,13 @@ class ZhouYiGuaZhuTableCompanion extends UpdateCompanion<ZhouYiGuaZhu> {
       map['book_id'] = Variable<int>(bookId.value);
     }
     if (guaZhu.present) {
-      map['gua_zhu'] = Variable<String?>(guaZhu.value);
+      map['gua_zhu'] = Variable<String>(guaZhu.value);
     }
     if (xiangZhu.present) {
-      map['xiang_zhu'] = Variable<String?>(xiangZhu.value);
+      map['xiang_zhu'] = Variable<String>(xiangZhu.value);
     }
     if (tuanZhu.present) {
-      map['tuan_zhu'] = Variable<String?>(tuanZhu.value);
+      map['tuan_zhu'] = Variable<String>(tuanZhu.value);
     }
     return map;
   }
@@ -877,74 +1036,56 @@ class ZhouYiGuaZhuTableCompanion extends UpdateCompanion<ZhouYiGuaZhu> {
   }
 }
 
-class $ZhouYiGuaZhuTableTable extends ZhouYiGuaZhuTable
-    with TableInfo<$ZhouYiGuaZhuTableTable, ZhouYiGuaZhu> {
+class $ZhouYiYaoZhuTableTable extends ZhouYiYaoZhuTable
+    with TableInfo<$ZhouYiYaoZhuTableTable, ZhouYiYaoZhu> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $ZhouYiGuaZhuTableTable(this.attachedDatabase, [this._alias]);
-  final VerificationMeta _idMeta = const VerificationMeta('id');
+  $ZhouYiYaoZhuTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
-  late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, false,
-      type: const IntType(),
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
       requiredDuringInsert: false,
-      defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
-  final VerificationMeta _isSingleMeta = const VerificationMeta('isSingle');
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _guaBinaryMeta =
+      const VerificationMeta('guaBinary');
   @override
-  late final GeneratedColumn<bool?> isSingle = GeneratedColumn<bool?>(
-      'is_single', aliasedName, false,
-      type: const BoolType(),
-      requiredDuringInsert: true,
-      defaultConstraints: 'CHECK (is_single IN (0, 1))');
-  final VerificationMeta _guaBinaryMeta = const VerificationMeta('guaBinary');
-  @override
-  late final GeneratedColumn<String?> guaBinary = GeneratedColumn<String?>(
+  late final GeneratedColumn<String> guaBinary = GeneratedColumn<String>(
       'gua_binary', aliasedName, false,
-      additionalChecks:
-          GeneratedColumn.checkTextLength(minTextLength: 6, maxTextLength: 6),
-      type: const StringType(),
-      requiredDuringInsert: true);
-  final VerificationMeta _bookIdMeta = const VerificationMeta('bookId');
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _yaoIdMeta = const VerificationMeta('yaoId');
   @override
-  late final GeneratedColumn<int?> bookId = GeneratedColumn<int?>(
+  late final GeneratedColumn<int> yaoId = GeneratedColumn<int>(
+      'yao_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _bookIdMeta = const VerificationMeta('bookId');
+  @override
+  late final GeneratedColumn<int> bookId = GeneratedColumn<int>(
       'book_id', aliasedName, false,
-      type: const IntType(), requiredDuringInsert: true);
-  final VerificationMeta _guaZhuMeta = const VerificationMeta('guaZhu');
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _yaoZhuMeta = const VerificationMeta('yaoZhu');
   @override
-  late final GeneratedColumn<String?> guaZhu = GeneratedColumn<String?>(
-      'gua_zhu', aliasedName, true,
-      type: const StringType(), requiredDuringInsert: false);
-  final VerificationMeta _xiangZhuMeta = const VerificationMeta('xiangZhu');
+  late final GeneratedColumn<String> yaoZhu = GeneratedColumn<String>(
+      'yao_zhu', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
   @override
-  late final GeneratedColumn<String?> xiangZhu = GeneratedColumn<String?>(
-      'xiang_zhu', aliasedName, true,
-      type: const StringType(), requiredDuringInsert: false);
-  final VerificationMeta _tuanZhuMeta = const VerificationMeta('tuanZhu');
+  List<GeneratedColumn> get $columns => [id, guaBinary, yaoId, bookId, yaoZhu];
   @override
-  late final GeneratedColumn<String?> tuanZhu = GeneratedColumn<String?>(
-      'tuan_zhu', aliasedName, true,
-      type: const StringType(), requiredDuringInsert: false);
+  String get aliasedName => _alias ?? actualTableName;
   @override
-  List<GeneratedColumn> get $columns =>
-      [id, isSingle, guaBinary, bookId, guaZhu, xiangZhu, tuanZhu];
+  String get actualTableName => $name;
+  static const String $name = 't_zy_yao_zhu';
   @override
-  String get aliasedName => _alias ?? 't_zy_gua_zhu';
-  @override
-  String get actualTableName => 't_zy_gua_zhu';
-  @override
-  VerificationContext validateIntegrity(Insertable<ZhouYiGuaZhu> instance,
+  VerificationContext validateIntegrity(Insertable<ZhouYiYaoZhu> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('is_single')) {
-      context.handle(_isSingleMeta,
-          isSingle.isAcceptableOrUnknown(data['is_single']!, _isSingleMeta));
-    } else if (isInserting) {
-      context.missing(_isSingleMeta);
     }
     if (data.containsKey('gua_binary')) {
       context.handle(_guaBinaryMeta,
@@ -952,23 +1093,21 @@ class $ZhouYiGuaZhuTableTable extends ZhouYiGuaZhuTable
     } else if (isInserting) {
       context.missing(_guaBinaryMeta);
     }
+    if (data.containsKey('yao_id')) {
+      context.handle(
+          _yaoIdMeta, yaoId.isAcceptableOrUnknown(data['yao_id']!, _yaoIdMeta));
+    } else if (isInserting) {
+      context.missing(_yaoIdMeta);
+    }
     if (data.containsKey('book_id')) {
       context.handle(_bookIdMeta,
           bookId.isAcceptableOrUnknown(data['book_id']!, _bookIdMeta));
     } else if (isInserting) {
       context.missing(_bookIdMeta);
     }
-    if (data.containsKey('gua_zhu')) {
-      context.handle(_guaZhuMeta,
-          guaZhu.isAcceptableOrUnknown(data['gua_zhu']!, _guaZhuMeta));
-    }
-    if (data.containsKey('xiang_zhu')) {
-      context.handle(_xiangZhuMeta,
-          xiangZhu.isAcceptableOrUnknown(data['xiang_zhu']!, _xiangZhuMeta));
-    }
-    if (data.containsKey('tuan_zhu')) {
-      context.handle(_tuanZhuMeta,
-          tuanZhu.isAcceptableOrUnknown(data['tuan_zhu']!, _tuanZhuMeta));
+    if (data.containsKey('yao_zhu')) {
+      context.handle(_yaoZhuMeta,
+          yaoZhu.isAcceptableOrUnknown(data['yao_zhu']!, _yaoZhuMeta));
     }
     return context;
   }
@@ -976,14 +1115,25 @@ class $ZhouYiGuaZhuTableTable extends ZhouYiGuaZhuTable
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  ZhouYiGuaZhu map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return ZhouYiGuaZhu.fromData(data, attachedDatabase,
-        prefix: tablePrefix != null ? '$tablePrefix.' : null);
+  ZhouYiYaoZhu map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ZhouYiYaoZhu(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      guaBinary: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}gua_binary'])!,
+      yaoId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}yao_id'])!,
+      bookId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}book_id'])!,
+      yaoZhu: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}yao_zhu']),
+    );
   }
 
   @override
-  $ZhouYiGuaZhuTableTable createAlias(String alias) {
-    return $ZhouYiGuaZhuTableTable(attachedDatabase, alias);
+  $ZhouYiYaoZhuTableTable createAlias(String alias) {
+    return $ZhouYiYaoZhuTableTable(attachedDatabase, alias);
   }
 }
 
@@ -993,28 +1143,12 @@ class ZhouYiYaoZhu extends DataClass implements Insertable<ZhouYiYaoZhu> {
   final int yaoId;
   final int bookId;
   final String? yaoZhu;
-  ZhouYiYaoZhu(
+  const ZhouYiYaoZhu(
       {required this.id,
       required this.guaBinary,
       required this.yaoId,
       required this.bookId,
       this.yaoZhu});
-  factory ZhouYiYaoZhu.fromData(Map<String, dynamic> data, GeneratedDatabase db,
-      {String? prefix}) {
-    final effectivePrefix = prefix ?? '';
-    return ZhouYiYaoZhu(
-      id: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
-      guaBinary: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}gua_binary'])!,
-      yaoId: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}yao_id'])!,
-      bookId: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}book_id'])!,
-      yaoZhu: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}yao_zhu']),
-    );
-  }
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -1023,7 +1157,7 @@ class ZhouYiYaoZhu extends DataClass implements Insertable<ZhouYiYaoZhu> {
     map['yao_id'] = Variable<int>(yaoId);
     map['book_id'] = Variable<int>(bookId);
     if (!nullToAbsent || yaoZhu != null) {
-      map['yao_zhu'] = Variable<String?>(yaoZhu);
+      map['yao_zhu'] = Variable<String>(yaoZhu);
     }
     return map;
   }
@@ -1041,7 +1175,7 @@ class ZhouYiYaoZhu extends DataClass implements Insertable<ZhouYiYaoZhu> {
 
   factory ZhouYiYaoZhu.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return ZhouYiYaoZhu(
       id: serializer.fromJson<int>(json['id']),
       guaBinary: serializer.fromJson<String>(json['guaBinary']),
@@ -1052,7 +1186,7 @@ class ZhouYiYaoZhu extends DataClass implements Insertable<ZhouYiYaoZhu> {
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'guaBinary': serializer.toJson<String>(guaBinary),
@@ -1067,14 +1201,24 @@ class ZhouYiYaoZhu extends DataClass implements Insertable<ZhouYiYaoZhu> {
           String? guaBinary,
           int? yaoId,
           int? bookId,
-          String? yaoZhu}) =>
+          Value<String?> yaoZhu = const Value.absent()}) =>
       ZhouYiYaoZhu(
         id: id ?? this.id,
         guaBinary: guaBinary ?? this.guaBinary,
         yaoId: yaoId ?? this.yaoId,
         bookId: bookId ?? this.bookId,
-        yaoZhu: yaoZhu ?? this.yaoZhu,
+        yaoZhu: yaoZhu.present ? yaoZhu.value : this.yaoZhu,
       );
+  ZhouYiYaoZhu copyWithCompanion(ZhouYiYaoZhuTableCompanion data) {
+    return ZhouYiYaoZhu(
+      id: data.id.present ? data.id.value : this.id,
+      guaBinary: data.guaBinary.present ? data.guaBinary.value : this.guaBinary,
+      yaoId: data.yaoId.present ? data.yaoId.value : this.yaoId,
+      bookId: data.bookId.present ? data.bookId.value : this.bookId,
+      yaoZhu: data.yaoZhu.present ? data.yaoZhu.value : this.yaoZhu,
+    );
+  }
+
   @override
   String toString() {
     return (StringBuffer('ZhouYiYaoZhu(')
@@ -1127,7 +1271,7 @@ class ZhouYiYaoZhuTableCompanion extends UpdateCompanion<ZhouYiYaoZhu> {
     Expression<String>? guaBinary,
     Expression<int>? yaoId,
     Expression<int>? bookId,
-    Expression<String?>? yaoZhu,
+    Expression<String>? yaoZhu,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -1169,7 +1313,7 @@ class ZhouYiYaoZhuTableCompanion extends UpdateCompanion<ZhouYiYaoZhu> {
       map['book_id'] = Variable<int>(bookId.value);
     }
     if (yaoZhu.present) {
-      map['yao_zhu'] = Variable<String?>(yaoZhu.value);
+      map['yao_zhu'] = Variable<String>(yaoZhu.value);
     }
     return map;
   }
@@ -1187,47 +1331,74 @@ class ZhouYiYaoZhuTableCompanion extends UpdateCompanion<ZhouYiYaoZhu> {
   }
 }
 
-class $ZhouYiYaoZhuTableTable extends ZhouYiYaoZhuTable
-    with TableInfo<$ZhouYiYaoZhuTableTable, ZhouYiYaoZhu> {
+class $ZhouYiGuaYaoTableTable extends ZhouYiGuaYaoTable
+    with TableInfo<$ZhouYiGuaYaoTableTable, ZhouYiGuaYao> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $ZhouYiYaoZhuTableTable(this.attachedDatabase, [this._alias]);
-  final VerificationMeta _idMeta = const VerificationMeta('id');
+  $ZhouYiGuaYaoTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
-  late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, false,
-      type: const IntType(),
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
       requiredDuringInsert: false,
-      defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
-  final VerificationMeta _guaBinaryMeta = const VerificationMeta('guaBinary');
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _guaBinaryMeta =
+      const VerificationMeta('guaBinary');
   @override
-  late final GeneratedColumn<String?> guaBinary = GeneratedColumn<String?>(
+  late final GeneratedColumn<String> guaBinary = GeneratedColumn<String>(
       'gua_binary', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
-  final VerificationMeta _yaoIdMeta = const VerificationMeta('yaoId');
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 6, maxTextLength: 6),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _seqInGuaMeta =
+      const VerificationMeta('seqInGua');
   @override
-  late final GeneratedColumn<int?> yaoId = GeneratedColumn<int?>(
-      'yao_id', aliasedName, false,
-      type: const IntType(), requiredDuringInsert: true);
-  final VerificationMeta _bookIdMeta = const VerificationMeta('bookId');
+  late final GeneratedColumn<int> seqInGua = GeneratedColumn<int>(
+      'seq_in_gua', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _yaoNameMeta =
+      const VerificationMeta('yaoName');
   @override
-  late final GeneratedColumn<int?> bookId = GeneratedColumn<int?>(
-      'book_id', aliasedName, false,
-      type: const IntType(), requiredDuringInsert: true);
-  final VerificationMeta _yaoZhuMeta = const VerificationMeta('yaoZhu');
+  late final GeneratedColumn<String> yaoName = GeneratedColumn<String>(
+      'yao_name', aliasedName, false,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 2, maxTextLength: 2),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _guaYaoNameMeta =
+      const VerificationMeta('guaYaoName');
   @override
-  late final GeneratedColumn<String?> yaoZhu = GeneratedColumn<String?>(
-      'yao_zhu', aliasedName, true,
-      type: const StringType(), requiredDuringInsert: false);
+  late final GeneratedColumn<String> guaYaoName = GeneratedColumn<String>(
+      'gua_yao_name', aliasedName, false,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 4, maxTextLength: 4),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _xiangMeta = const VerificationMeta('xiang');
   @override
-  List<GeneratedColumn> get $columns => [id, guaBinary, yaoId, bookId, yaoZhu];
+  late final GeneratedColumn<String> xiang = GeneratedColumn<String>(
+      'xiang', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _yaoMeta = const VerificationMeta('yao');
   @override
-  String get aliasedName => _alias ?? 't_zy_yao_zhu';
+  late final GeneratedColumn<String> yao = GeneratedColumn<String>(
+      'yao', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
   @override
-  String get actualTableName => 't_zy_yao_zhu';
+  List<GeneratedColumn> get $columns =>
+      [id, guaBinary, seqInGua, yaoName, guaYaoName, xiang, yao];
   @override
-  VerificationContext validateIntegrity(Insertable<ZhouYiYaoZhu> instance,
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 't_zy_yao';
+  @override
+  VerificationContext validateIntegrity(Insertable<ZhouYiGuaYao> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -1240,21 +1411,37 @@ class $ZhouYiYaoZhuTableTable extends ZhouYiYaoZhuTable
     } else if (isInserting) {
       context.missing(_guaBinaryMeta);
     }
-    if (data.containsKey('yao_id')) {
+    if (data.containsKey('seq_in_gua')) {
+      context.handle(_seqInGuaMeta,
+          seqInGua.isAcceptableOrUnknown(data['seq_in_gua']!, _seqInGuaMeta));
+    } else if (isInserting) {
+      context.missing(_seqInGuaMeta);
+    }
+    if (data.containsKey('yao_name')) {
+      context.handle(_yaoNameMeta,
+          yaoName.isAcceptableOrUnknown(data['yao_name']!, _yaoNameMeta));
+    } else if (isInserting) {
+      context.missing(_yaoNameMeta);
+    }
+    if (data.containsKey('gua_yao_name')) {
       context.handle(
-          _yaoIdMeta, yaoId.isAcceptableOrUnknown(data['yao_id']!, _yaoIdMeta));
+          _guaYaoNameMeta,
+          guaYaoName.isAcceptableOrUnknown(
+              data['gua_yao_name']!, _guaYaoNameMeta));
     } else if (isInserting) {
-      context.missing(_yaoIdMeta);
+      context.missing(_guaYaoNameMeta);
     }
-    if (data.containsKey('book_id')) {
-      context.handle(_bookIdMeta,
-          bookId.isAcceptableOrUnknown(data['book_id']!, _bookIdMeta));
+    if (data.containsKey('xiang')) {
+      context.handle(
+          _xiangMeta, xiang.isAcceptableOrUnknown(data['xiang']!, _xiangMeta));
     } else if (isInserting) {
-      context.missing(_bookIdMeta);
+      context.missing(_xiangMeta);
     }
-    if (data.containsKey('yao_zhu')) {
-      context.handle(_yaoZhuMeta,
-          yaoZhu.isAcceptableOrUnknown(data['yao_zhu']!, _yaoZhuMeta));
+    if (data.containsKey('yao')) {
+      context.handle(
+          _yaoMeta, yao.isAcceptableOrUnknown(data['yao']!, _yaoMeta));
+    } else if (isInserting) {
+      context.missing(_yaoMeta);
     }
     return context;
   }
@@ -1262,14 +1449,29 @@ class $ZhouYiYaoZhuTableTable extends ZhouYiYaoZhuTable
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  ZhouYiYaoZhu map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return ZhouYiYaoZhu.fromData(data, attachedDatabase,
-        prefix: tablePrefix != null ? '$tablePrefix.' : null);
+  ZhouYiGuaYao map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ZhouYiGuaYao(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      guaBinary: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}gua_binary'])!,
+      seqInGua: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}seq_in_gua'])!,
+      yaoName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}yao_name'])!,
+      guaYaoName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}gua_yao_name'])!,
+      xiang: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}xiang'])!,
+      yao: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}yao'])!,
+    );
   }
 
   @override
-  $ZhouYiYaoZhuTableTable createAlias(String alias) {
-    return $ZhouYiYaoZhuTableTable(attachedDatabase, alias);
+  $ZhouYiGuaYaoTableTable createAlias(String alias) {
+    return $ZhouYiGuaYaoTableTable(attachedDatabase, alias);
   }
 }
 
@@ -1281,7 +1483,7 @@ class ZhouYiGuaYao extends DataClass implements Insertable<ZhouYiGuaYao> {
   final String guaYaoName;
   final String xiang;
   final String yao;
-  ZhouYiGuaYao(
+  const ZhouYiGuaYao(
       {required this.id,
       required this.guaBinary,
       required this.seqInGua,
@@ -1289,26 +1491,6 @@ class ZhouYiGuaYao extends DataClass implements Insertable<ZhouYiGuaYao> {
       required this.guaYaoName,
       required this.xiang,
       required this.yao});
-  factory ZhouYiGuaYao.fromData(Map<String, dynamic> data, GeneratedDatabase db,
-      {String? prefix}) {
-    final effectivePrefix = prefix ?? '';
-    return ZhouYiGuaYao(
-      id: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
-      guaBinary: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}gua_binary'])!,
-      seqInGua: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}seq_in_gua'])!,
-      yaoName: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}yao_name'])!,
-      guaYaoName: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}gua_yao_name'])!,
-      xiang: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}xiang'])!,
-      yao: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}yao'])!,
-    );
-  }
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -1336,7 +1518,7 @@ class ZhouYiGuaYao extends DataClass implements Insertable<ZhouYiGuaYao> {
 
   factory ZhouYiGuaYao.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return ZhouYiGuaYao(
       id: serializer.fromJson<int>(json['id']),
       guaBinary: serializer.fromJson<String>(json['guaBinary']),
@@ -1349,7 +1531,7 @@ class ZhouYiGuaYao extends DataClass implements Insertable<ZhouYiGuaYao> {
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'guaBinary': serializer.toJson<String>(guaBinary),
@@ -1378,6 +1560,19 @@ class ZhouYiGuaYao extends DataClass implements Insertable<ZhouYiGuaYao> {
         xiang: xiang ?? this.xiang,
         yao: yao ?? this.yao,
       );
+  ZhouYiGuaYao copyWithCompanion(ZhouYiGuaYaoTableCompanion data) {
+    return ZhouYiGuaYao(
+      id: data.id.present ? data.id.value : this.id,
+      guaBinary: data.guaBinary.present ? data.guaBinary.value : this.guaBinary,
+      seqInGua: data.seqInGua.present ? data.seqInGua.value : this.seqInGua,
+      yaoName: data.yaoName.present ? data.yaoName.value : this.yaoName,
+      guaYaoName:
+          data.guaYaoName.present ? data.guaYaoName.value : this.guaYaoName,
+      xiang: data.xiang.present ? data.xiang.value : this.xiang,
+      yao: data.yao.present ? data.yao.value : this.yao,
+    );
+  }
+
   @override
   String toString() {
     return (StringBuffer('ZhouYiGuaYao(')
@@ -1520,110 +1715,77 @@ class ZhouYiGuaYaoTableCompanion extends UpdateCompanion<ZhouYiGuaYao> {
   }
 }
 
-class $ZhouYiGuaYaoTableTable extends ZhouYiGuaYaoTable
-    with TableInfo<$ZhouYiGuaYaoTableTable, ZhouYiGuaYao> {
+class $ZhouyiZhuBooksTableTable extends ZhouyiZhuBooksTable
+    with TableInfo<$ZhouyiZhuBooksTableTable, ZhouyiZhuBooks> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $ZhouYiGuaYaoTableTable(this.attachedDatabase, [this._alias]);
-  final VerificationMeta _idMeta = const VerificationMeta('id');
+  $ZhouyiZhuBooksTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
-  late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, false,
-      type: const IntType(),
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
       requiredDuringInsert: false,
-      defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
-  final VerificationMeta _guaBinaryMeta = const VerificationMeta('guaBinary');
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _booknameMeta =
+      const VerificationMeta('bookname');
   @override
-  late final GeneratedColumn<String?> guaBinary = GeneratedColumn<String?>(
-      'gua_binary', aliasedName, false,
-      additionalChecks:
-          GeneratedColumn.checkTextLength(minTextLength: 6, maxTextLength: 6),
-      type: const StringType(),
+  late final GeneratedColumn<String> bookname = GeneratedColumn<String>(
+      'bookname', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 16),
+      type: DriftSqlType.string,
       requiredDuringInsert: true);
-  final VerificationMeta _seqInGuaMeta = const VerificationMeta('seqInGua');
+  static const VerificationMeta _bookauthMeta =
+      const VerificationMeta('bookauth');
   @override
-  late final GeneratedColumn<int?> seqInGua = GeneratedColumn<int?>(
-      'seq_in_gua', aliasedName, false,
-      type: const IntType(), requiredDuringInsert: true);
-  final VerificationMeta _yaoNameMeta = const VerificationMeta('yaoName');
-  @override
-  late final GeneratedColumn<String?> yaoName = GeneratedColumn<String?>(
-      'yao_name', aliasedName, false,
-      additionalChecks:
-          GeneratedColumn.checkTextLength(minTextLength: 2, maxTextLength: 2),
-      type: const StringType(),
+  late final GeneratedColumn<String> bookauth = GeneratedColumn<String>(
+      'bookauth', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 16),
+      type: DriftSqlType.string,
       requiredDuringInsert: true);
-  final VerificationMeta _guaYaoNameMeta = const VerificationMeta('guaYaoName');
+  static const VerificationMeta _bookageMeta =
+      const VerificationMeta('bookage');
   @override
-  late final GeneratedColumn<String?> guaYaoName = GeneratedColumn<String?>(
-      'gua_yao_name', aliasedName, false,
-      additionalChecks:
-          GeneratedColumn.checkTextLength(minTextLength: 4, maxTextLength: 4),
-      type: const StringType(),
+  late final GeneratedColumn<String> bookage = GeneratedColumn<String>(
+      'bookage', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 16),
+      type: DriftSqlType.string,
       requiredDuringInsert: true);
-  final VerificationMeta _xiangMeta = const VerificationMeta('xiang');
   @override
-  late final GeneratedColumn<String?> xiang = GeneratedColumn<String?>(
-      'xiang', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
-  final VerificationMeta _yaoMeta = const VerificationMeta('yao');
+  List<GeneratedColumn> get $columns => [id, bookname, bookauth, bookage];
   @override
-  late final GeneratedColumn<String?> yao = GeneratedColumn<String?>(
-      'yao', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
+  String get aliasedName => _alias ?? actualTableName;
   @override
-  List<GeneratedColumn> get $columns =>
-      [id, guaBinary, seqInGua, yaoName, guaYaoName, xiang, yao];
+  String get actualTableName => $name;
+  static const String $name = 't_zy_zhu_book';
   @override
-  String get aliasedName => _alias ?? 't_zy_yao';
-  @override
-  String get actualTableName => 't_zy_yao';
-  @override
-  VerificationContext validateIntegrity(Insertable<ZhouYiGuaYao> instance,
+  VerificationContext validateIntegrity(Insertable<ZhouyiZhuBooks> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    if (data.containsKey('gua_binary')) {
-      context.handle(_guaBinaryMeta,
-          guaBinary.isAcceptableOrUnknown(data['gua_binary']!, _guaBinaryMeta));
+    if (data.containsKey('bookname')) {
+      context.handle(_booknameMeta,
+          bookname.isAcceptableOrUnknown(data['bookname']!, _booknameMeta));
     } else if (isInserting) {
-      context.missing(_guaBinaryMeta);
+      context.missing(_booknameMeta);
     }
-    if (data.containsKey('seq_in_gua')) {
-      context.handle(_seqInGuaMeta,
-          seqInGua.isAcceptableOrUnknown(data['seq_in_gua']!, _seqInGuaMeta));
+    if (data.containsKey('bookauth')) {
+      context.handle(_bookauthMeta,
+          bookauth.isAcceptableOrUnknown(data['bookauth']!, _bookauthMeta));
     } else if (isInserting) {
-      context.missing(_seqInGuaMeta);
+      context.missing(_bookauthMeta);
     }
-    if (data.containsKey('yao_name')) {
-      context.handle(_yaoNameMeta,
-          yaoName.isAcceptableOrUnknown(data['yao_name']!, _yaoNameMeta));
+    if (data.containsKey('bookage')) {
+      context.handle(_bookageMeta,
+          bookage.isAcceptableOrUnknown(data['bookage']!, _bookageMeta));
     } else if (isInserting) {
-      context.missing(_yaoNameMeta);
-    }
-    if (data.containsKey('gua_yao_name')) {
-      context.handle(
-          _guaYaoNameMeta,
-          guaYaoName.isAcceptableOrUnknown(
-              data['gua_yao_name']!, _guaYaoNameMeta));
-    } else if (isInserting) {
-      context.missing(_guaYaoNameMeta);
-    }
-    if (data.containsKey('xiang')) {
-      context.handle(
-          _xiangMeta, xiang.isAcceptableOrUnknown(data['xiang']!, _xiangMeta));
-    } else if (isInserting) {
-      context.missing(_xiangMeta);
-    }
-    if (data.containsKey('yao')) {
-      context.handle(
-          _yaoMeta, yao.isAcceptableOrUnknown(data['yao']!, _yaoMeta));
-    } else if (isInserting) {
-      context.missing(_yaoMeta);
+      context.missing(_bookageMeta);
     }
     return context;
   }
@@ -1631,14 +1793,23 @@ class $ZhouYiGuaYaoTableTable extends ZhouYiGuaYaoTable
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  ZhouYiGuaYao map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return ZhouYiGuaYao.fromData(data, attachedDatabase,
-        prefix: tablePrefix != null ? '$tablePrefix.' : null);
+  ZhouyiZhuBooks map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ZhouyiZhuBooks(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      bookname: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}bookname'])!,
+      bookauth: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}bookauth'])!,
+      bookage: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}bookage'])!,
+    );
   }
 
   @override
-  $ZhouYiGuaYaoTableTable createAlias(String alias) {
-    return $ZhouYiGuaYaoTableTable(attachedDatabase, alias);
+  $ZhouyiZhuBooksTableTable createAlias(String alias) {
+    return $ZhouyiZhuBooksTableTable(attachedDatabase, alias);
   }
 }
 
@@ -1647,26 +1818,11 @@ class ZhouyiZhuBooks extends DataClass implements Insertable<ZhouyiZhuBooks> {
   final String bookname;
   final String bookauth;
   final String bookage;
-  ZhouyiZhuBooks(
+  const ZhouyiZhuBooks(
       {required this.id,
       required this.bookname,
       required this.bookauth,
       required this.bookage});
-  factory ZhouyiZhuBooks.fromData(
-      Map<String, dynamic> data, GeneratedDatabase db,
-      {String? prefix}) {
-    final effectivePrefix = prefix ?? '';
-    return ZhouyiZhuBooks(
-      id: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
-      bookname: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}bookname'])!,
-      bookauth: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}bookauth'])!,
-      bookage: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}bookage'])!,
-    );
-  }
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -1688,7 +1844,7 @@ class ZhouyiZhuBooks extends DataClass implements Insertable<ZhouyiZhuBooks> {
 
   factory ZhouyiZhuBooks.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return ZhouyiZhuBooks(
       id: serializer.fromJson<int>(json['id']),
       bookname: serializer.fromJson<String>(json['bookname']),
@@ -1698,7 +1854,7 @@ class ZhouyiZhuBooks extends DataClass implements Insertable<ZhouyiZhuBooks> {
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'bookname': serializer.toJson<String>(bookname),
@@ -1715,6 +1871,15 @@ class ZhouyiZhuBooks extends DataClass implements Insertable<ZhouyiZhuBooks> {
         bookauth: bookauth ?? this.bookauth,
         bookage: bookage ?? this.bookage,
       );
+  ZhouyiZhuBooks copyWithCompanion(ZhouyiZhuBooksTableCompanion data) {
+    return ZhouyiZhuBooks(
+      id: data.id.present ? data.id.value : this.id,
+      bookname: data.bookname.present ? data.bookname.value : this.bookname,
+      bookauth: data.bookauth.present ? data.bookauth.value : this.bookauth,
+      bookage: data.bookage.present ? data.bookage.value : this.bookage,
+    );
+  }
+
   @override
   String toString() {
     return (StringBuffer('ZhouyiZhuBooks(')
@@ -1814,71 +1979,97 @@ class ZhouyiZhuBooksTableCompanion extends UpdateCompanion<ZhouyiZhuBooks> {
   }
 }
 
-class $ZhouyiZhuBooksTableTable extends ZhouyiZhuBooksTable
-    with TableInfo<$ZhouyiZhuBooksTableTable, ZhouyiZhuBooks> {
+class $JiaoShiYiLinTableTable extends JiaoShiYiLinTable
+    with TableInfo<$JiaoShiYiLinTableTable, JiaoShiYiLin> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $ZhouyiZhuBooksTableTable(this.attachedDatabase, [this._alias]);
-  final VerificationMeta _idMeta = const VerificationMeta('id');
+  $JiaoShiYiLinTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
-  late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
       'id', aliasedName, false,
-      type: const IntType(),
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
       requiredDuringInsert: false,
-      defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
-  final VerificationMeta _booknameMeta = const VerificationMeta('bookname');
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _guaBinaryMeta =
+      const VerificationMeta('guaBinary');
   @override
-  late final GeneratedColumn<String?> bookname = GeneratedColumn<String?>(
-      'bookname', aliasedName, false,
-      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 16),
-      type: const StringType(),
-      requiredDuringInsert: true);
-  final VerificationMeta _bookauthMeta = const VerificationMeta('bookauth');
+  late final GeneratedColumn<String> guaBinary = GeneratedColumn<String>(
+      'gua_binary', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _zhiSeqMeta = const VerificationMeta('zhiSeq');
   @override
-  late final GeneratedColumn<String?> bookauth = GeneratedColumn<String?>(
-      'bookauth', aliasedName, false,
-      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 16),
-      type: const StringType(),
-      requiredDuringInsert: true);
-  final VerificationMeta _bookageMeta = const VerificationMeta('bookage');
+  late final GeneratedColumn<int> zhiSeq = GeneratedColumn<int>(
+      'zhi_seq', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _zhiNameMeta =
+      const VerificationMeta('zhiName');
   @override
-  late final GeneratedColumn<String?> bookage = GeneratedColumn<String?>(
-      'bookage', aliasedName, false,
-      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 16),
-      type: const StringType(),
-      requiredDuringInsert: true);
+  late final GeneratedColumn<String> zhiName = GeneratedColumn<String>(
+      'zhi_name', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _zhiBinaryMeta =
+      const VerificationMeta('zhiBinary');
   @override
-  List<GeneratedColumn> get $columns => [id, bookname, bookauth, bookage];
+  late final GeneratedColumn<String> zhiBinary = GeneratedColumn<String>(
+      'zhi_binary', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _zhiContentMeta =
+      const VerificationMeta('zhiContent');
   @override
-  String get aliasedName => _alias ?? 't_zy_zhu_book';
+  late final GeneratedColumn<String> zhiContent = GeneratedColumn<String>(
+      'zhi_content', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
   @override
-  String get actualTableName => 't_zy_zhu_book';
+  List<GeneratedColumn> get $columns =>
+      [id, guaBinary, zhiSeq, zhiName, zhiBinary, zhiContent];
   @override
-  VerificationContext validateIntegrity(Insertable<ZhouyiZhuBooks> instance,
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 't_zy_jiao_lin';
+  @override
+  VerificationContext validateIntegrity(Insertable<JiaoShiYiLin> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    if (data.containsKey('bookname')) {
-      context.handle(_booknameMeta,
-          bookname.isAcceptableOrUnknown(data['bookname']!, _booknameMeta));
+    if (data.containsKey('gua_binary')) {
+      context.handle(_guaBinaryMeta,
+          guaBinary.isAcceptableOrUnknown(data['gua_binary']!, _guaBinaryMeta));
     } else if (isInserting) {
-      context.missing(_booknameMeta);
+      context.missing(_guaBinaryMeta);
     }
-    if (data.containsKey('bookauth')) {
-      context.handle(_bookauthMeta,
-          bookauth.isAcceptableOrUnknown(data['bookauth']!, _bookauthMeta));
+    if (data.containsKey('zhi_seq')) {
+      context.handle(_zhiSeqMeta,
+          zhiSeq.isAcceptableOrUnknown(data['zhi_seq']!, _zhiSeqMeta));
     } else if (isInserting) {
-      context.missing(_bookauthMeta);
+      context.missing(_zhiSeqMeta);
     }
-    if (data.containsKey('bookage')) {
-      context.handle(_bookageMeta,
-          bookage.isAcceptableOrUnknown(data['bookage']!, _bookageMeta));
+    if (data.containsKey('zhi_name')) {
+      context.handle(_zhiNameMeta,
+          zhiName.isAcceptableOrUnknown(data['zhi_name']!, _zhiNameMeta));
     } else if (isInserting) {
-      context.missing(_bookageMeta);
+      context.missing(_zhiNameMeta);
+    }
+    if (data.containsKey('zhi_binary')) {
+      context.handle(_zhiBinaryMeta,
+          zhiBinary.isAcceptableOrUnknown(data['zhi_binary']!, _zhiBinaryMeta));
+    } else if (isInserting) {
+      context.missing(_zhiBinaryMeta);
+    }
+    if (data.containsKey('zhi_content')) {
+      context.handle(
+          _zhiContentMeta,
+          zhiContent.isAcceptableOrUnknown(
+              data['zhi_content']!, _zhiContentMeta));
+    } else if (isInserting) {
+      context.missing(_zhiContentMeta);
     }
     return context;
   }
@@ -1886,14 +2077,27 @@ class $ZhouyiZhuBooksTableTable extends ZhouyiZhuBooksTable
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  ZhouyiZhuBooks map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return ZhouyiZhuBooks.fromData(data, attachedDatabase,
-        prefix: tablePrefix != null ? '$tablePrefix.' : null);
+  JiaoShiYiLin map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return JiaoShiYiLin(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      guaBinary: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}gua_binary'])!,
+      zhiSeq: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}zhi_seq'])!,
+      zhiName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}zhi_name'])!,
+      zhiBinary: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}zhi_binary'])!,
+      zhiContent: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}zhi_content'])!,
+    );
   }
 
   @override
-  $ZhouyiZhuBooksTableTable createAlias(String alias) {
-    return $ZhouyiZhuBooksTableTable(attachedDatabase, alias);
+  $JiaoShiYiLinTableTable createAlias(String alias) {
+    return $JiaoShiYiLinTableTable(attachedDatabase, alias);
   }
 }
 
@@ -1904,31 +2108,13 @@ class JiaoShiYiLin extends DataClass implements Insertable<JiaoShiYiLin> {
   final String zhiName;
   final String zhiBinary;
   final String zhiContent;
-  JiaoShiYiLin(
+  const JiaoShiYiLin(
       {required this.id,
       required this.guaBinary,
       required this.zhiSeq,
       required this.zhiName,
       required this.zhiBinary,
       required this.zhiContent});
-  factory JiaoShiYiLin.fromData(Map<String, dynamic> data, GeneratedDatabase db,
-      {String? prefix}) {
-    final effectivePrefix = prefix ?? '';
-    return JiaoShiYiLin(
-      id: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
-      guaBinary: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}gua_binary'])!,
-      zhiSeq: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}zhi_seq'])!,
-      zhiName: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}zhi_name'])!,
-      zhiBinary: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}zhi_binary'])!,
-      zhiContent: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}zhi_content'])!,
-    );
-  }
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -1954,7 +2140,7 @@ class JiaoShiYiLin extends DataClass implements Insertable<JiaoShiYiLin> {
 
   factory JiaoShiYiLin.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return JiaoShiYiLin(
       id: serializer.fromJson<int>(json['id']),
       guaBinary: serializer.fromJson<String>(json['guaBinary']),
@@ -1966,7 +2152,7 @@ class JiaoShiYiLin extends DataClass implements Insertable<JiaoShiYiLin> {
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= moorRuntimeOptions.defaultSerializer;
+    serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'guaBinary': serializer.toJson<String>(guaBinary),
@@ -1992,6 +2178,18 @@ class JiaoShiYiLin extends DataClass implements Insertable<JiaoShiYiLin> {
         zhiBinary: zhiBinary ?? this.zhiBinary,
         zhiContent: zhiContent ?? this.zhiContent,
       );
+  JiaoShiYiLin copyWithCompanion(JiaoShiYiLinTableCompanion data) {
+    return JiaoShiYiLin(
+      id: data.id.present ? data.id.value : this.id,
+      guaBinary: data.guaBinary.present ? data.guaBinary.value : this.guaBinary,
+      zhiSeq: data.zhiSeq.present ? data.zhiSeq.value : this.zhiSeq,
+      zhiName: data.zhiName.present ? data.zhiName.value : this.zhiName,
+      zhiBinary: data.zhiBinary.present ? data.zhiBinary.value : this.zhiBinary,
+      zhiContent:
+          data.zhiContent.present ? data.zhiContent.value : this.zhiContent,
+    );
+  }
+
   @override
   String toString() {
     return (StringBuffer('JiaoShiYiLin(')
@@ -2120,110 +2318,9 @@ class JiaoShiYiLinTableCompanion extends UpdateCompanion<JiaoShiYiLin> {
   }
 }
 
-class $JiaoShiYiLinTableTable extends JiaoShiYiLinTable
-    with TableInfo<$JiaoShiYiLinTableTable, JiaoShiYiLin> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $JiaoShiYiLinTableTable(this.attachedDatabase, [this._alias]);
-  final VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
-      'id', aliasedName, false,
-      type: const IntType(),
-      requiredDuringInsert: false,
-      defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
-  final VerificationMeta _guaBinaryMeta = const VerificationMeta('guaBinary');
-  @override
-  late final GeneratedColumn<String?> guaBinary = GeneratedColumn<String?>(
-      'gua_binary', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
-  final VerificationMeta _zhiSeqMeta = const VerificationMeta('zhiSeq');
-  @override
-  late final GeneratedColumn<int?> zhiSeq = GeneratedColumn<int?>(
-      'zhi_seq', aliasedName, false,
-      type: const IntType(), requiredDuringInsert: true);
-  final VerificationMeta _zhiNameMeta = const VerificationMeta('zhiName');
-  @override
-  late final GeneratedColumn<String?> zhiName = GeneratedColumn<String?>(
-      'zhi_name', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
-  final VerificationMeta _zhiBinaryMeta = const VerificationMeta('zhiBinary');
-  @override
-  late final GeneratedColumn<String?> zhiBinary = GeneratedColumn<String?>(
-      'zhi_binary', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
-  final VerificationMeta _zhiContentMeta = const VerificationMeta('zhiContent');
-  @override
-  late final GeneratedColumn<String?> zhiContent = GeneratedColumn<String?>(
-      'zhi_content', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
-  @override
-  List<GeneratedColumn> get $columns =>
-      [id, guaBinary, zhiSeq, zhiName, zhiBinary, zhiContent];
-  @override
-  String get aliasedName => _alias ?? 't_zy_jiao_lin';
-  @override
-  String get actualTableName => 't_zy_jiao_lin';
-  @override
-  VerificationContext validateIntegrity(Insertable<JiaoShiYiLin> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('gua_binary')) {
-      context.handle(_guaBinaryMeta,
-          guaBinary.isAcceptableOrUnknown(data['gua_binary']!, _guaBinaryMeta));
-    } else if (isInserting) {
-      context.missing(_guaBinaryMeta);
-    }
-    if (data.containsKey('zhi_seq')) {
-      context.handle(_zhiSeqMeta,
-          zhiSeq.isAcceptableOrUnknown(data['zhi_seq']!, _zhiSeqMeta));
-    } else if (isInserting) {
-      context.missing(_zhiSeqMeta);
-    }
-    if (data.containsKey('zhi_name')) {
-      context.handle(_zhiNameMeta,
-          zhiName.isAcceptableOrUnknown(data['zhi_name']!, _zhiNameMeta));
-    } else if (isInserting) {
-      context.missing(_zhiNameMeta);
-    }
-    if (data.containsKey('zhi_binary')) {
-      context.handle(_zhiBinaryMeta,
-          zhiBinary.isAcceptableOrUnknown(data['zhi_binary']!, _zhiBinaryMeta));
-    } else if (isInserting) {
-      context.missing(_zhiBinaryMeta);
-    }
-    if (data.containsKey('zhi_content')) {
-      context.handle(
-          _zhiContentMeta,
-          zhiContent.isAcceptableOrUnknown(
-              data['zhi_content']!, _zhiContentMeta));
-    } else if (isInserting) {
-      context.missing(_zhiContentMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  JiaoShiYiLin map(Map<String, dynamic> data, {String? tablePrefix}) {
-    return JiaoShiYiLin.fromData(data, attachedDatabase,
-        prefix: tablePrefix != null ? '$tablePrefix.' : null);
-  }
-
-  @override
-  $JiaoShiYiLinTableTable createAlias(String alias) {
-    return $JiaoShiYiLinTableTable(attachedDatabase, alias);
-  }
-}
-
 abstract class _$MyDatabase extends GeneratedDatabase {
-  _$MyDatabase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
+  _$MyDatabase(QueryExecutor e) : super(e);
+  $MyDatabaseManager get managers => $MyDatabaseManager(this);
   late final $ZhouYiTableTable zhouYiTable = $ZhouYiTableTable(this);
   late final $ZhouYiGuaZhuTableTable zhouYiGuaZhuTable =
       $ZhouYiGuaZhuTableTable(this);
@@ -2236,7 +2333,8 @@ abstract class _$MyDatabase extends GeneratedDatabase {
   late final $JiaoShiYiLinTableTable jiaoShiYiLinTable =
       $JiaoShiYiLinTableTable(this);
   @override
-  Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
+  Iterable<TableInfo<Table, Object?>> get allTables =>
+      allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [
         zhouYiTable,
@@ -2246,4 +2344,1223 @@ abstract class _$MyDatabase extends GeneratedDatabase {
         zhouyiZhuBooksTable,
         jiaoShiYiLinTable
       ];
+}
+
+typedef $$ZhouYiTableTableCreateCompanionBuilder = ZhouYiTableCompanion
+    Function({
+  required String binary,
+  required int seq,
+  required String name,
+  required String fullname,
+  required String baguaInner,
+  required String baguaInnerName,
+  required String baguaInnerNickname,
+  required String baguaOuter,
+  required String baguaOuterName,
+  required String baguaOuterNickname,
+  required String xiang,
+  required String tuan,
+  required String gua,
+  Value<int> rowid,
+});
+typedef $$ZhouYiTableTableUpdateCompanionBuilder = ZhouYiTableCompanion
+    Function({
+  Value<String> binary,
+  Value<int> seq,
+  Value<String> name,
+  Value<String> fullname,
+  Value<String> baguaInner,
+  Value<String> baguaInnerName,
+  Value<String> baguaInnerNickname,
+  Value<String> baguaOuter,
+  Value<String> baguaOuterName,
+  Value<String> baguaOuterNickname,
+  Value<String> xiang,
+  Value<String> tuan,
+  Value<String> gua,
+  Value<int> rowid,
+});
+
+class $$ZhouYiTableTableFilterComposer
+    extends Composer<_$MyDatabase, $ZhouYiTableTable> {
+  $$ZhouYiTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get binary => $composableBuilder(
+      column: $table.binary, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get seq => $composableBuilder(
+      column: $table.seq, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get fullname => $composableBuilder(
+      column: $table.fullname, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get baguaInner => $composableBuilder(
+      column: $table.baguaInner, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get baguaInnerName => $composableBuilder(
+      column: $table.baguaInnerName,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get baguaInnerNickname => $composableBuilder(
+      column: $table.baguaInnerNickname,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get baguaOuter => $composableBuilder(
+      column: $table.baguaOuter, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get baguaOuterName => $composableBuilder(
+      column: $table.baguaOuterName,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get baguaOuterNickname => $composableBuilder(
+      column: $table.baguaOuterNickname,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get xiang => $composableBuilder(
+      column: $table.xiang, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get tuan => $composableBuilder(
+      column: $table.tuan, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get gua => $composableBuilder(
+      column: $table.gua, builder: (column) => ColumnFilters(column));
+}
+
+class $$ZhouYiTableTableOrderingComposer
+    extends Composer<_$MyDatabase, $ZhouYiTableTable> {
+  $$ZhouYiTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get binary => $composableBuilder(
+      column: $table.binary, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get seq => $composableBuilder(
+      column: $table.seq, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get fullname => $composableBuilder(
+      column: $table.fullname, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get baguaInner => $composableBuilder(
+      column: $table.baguaInner, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get baguaInnerName => $composableBuilder(
+      column: $table.baguaInnerName,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get baguaInnerNickname => $composableBuilder(
+      column: $table.baguaInnerNickname,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get baguaOuter => $composableBuilder(
+      column: $table.baguaOuter, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get baguaOuterName => $composableBuilder(
+      column: $table.baguaOuterName,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get baguaOuterNickname => $composableBuilder(
+      column: $table.baguaOuterNickname,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get xiang => $composableBuilder(
+      column: $table.xiang, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get tuan => $composableBuilder(
+      column: $table.tuan, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get gua => $composableBuilder(
+      column: $table.gua, builder: (column) => ColumnOrderings(column));
+}
+
+class $$ZhouYiTableTableAnnotationComposer
+    extends Composer<_$MyDatabase, $ZhouYiTableTable> {
+  $$ZhouYiTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get binary =>
+      $composableBuilder(column: $table.binary, builder: (column) => column);
+
+  GeneratedColumn<int> get seq =>
+      $composableBuilder(column: $table.seq, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get fullname =>
+      $composableBuilder(column: $table.fullname, builder: (column) => column);
+
+  GeneratedColumn<String> get baguaInner => $composableBuilder(
+      column: $table.baguaInner, builder: (column) => column);
+
+  GeneratedColumn<String> get baguaInnerName => $composableBuilder(
+      column: $table.baguaInnerName, builder: (column) => column);
+
+  GeneratedColumn<String> get baguaInnerNickname => $composableBuilder(
+      column: $table.baguaInnerNickname, builder: (column) => column);
+
+  GeneratedColumn<String> get baguaOuter => $composableBuilder(
+      column: $table.baguaOuter, builder: (column) => column);
+
+  GeneratedColumn<String> get baguaOuterName => $composableBuilder(
+      column: $table.baguaOuterName, builder: (column) => column);
+
+  GeneratedColumn<String> get baguaOuterNickname => $composableBuilder(
+      column: $table.baguaOuterNickname, builder: (column) => column);
+
+  GeneratedColumn<String> get xiang =>
+      $composableBuilder(column: $table.xiang, builder: (column) => column);
+
+  GeneratedColumn<String> get tuan =>
+      $composableBuilder(column: $table.tuan, builder: (column) => column);
+
+  GeneratedColumn<String> get gua =>
+      $composableBuilder(column: $table.gua, builder: (column) => column);
+}
+
+class $$ZhouYiTableTableTableManager extends RootTableManager<
+    _$MyDatabase,
+    $ZhouYiTableTable,
+    ZhouYi,
+    $$ZhouYiTableTableFilterComposer,
+    $$ZhouYiTableTableOrderingComposer,
+    $$ZhouYiTableTableAnnotationComposer,
+    $$ZhouYiTableTableCreateCompanionBuilder,
+    $$ZhouYiTableTableUpdateCompanionBuilder,
+    (ZhouYi, BaseReferences<_$MyDatabase, $ZhouYiTableTable, ZhouYi>),
+    ZhouYi,
+    PrefetchHooks Function()> {
+  $$ZhouYiTableTableTableManager(_$MyDatabase db, $ZhouYiTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ZhouYiTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ZhouYiTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ZhouYiTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> binary = const Value.absent(),
+            Value<int> seq = const Value.absent(),
+            Value<String> name = const Value.absent(),
+            Value<String> fullname = const Value.absent(),
+            Value<String> baguaInner = const Value.absent(),
+            Value<String> baguaInnerName = const Value.absent(),
+            Value<String> baguaInnerNickname = const Value.absent(),
+            Value<String> baguaOuter = const Value.absent(),
+            Value<String> baguaOuterName = const Value.absent(),
+            Value<String> baguaOuterNickname = const Value.absent(),
+            Value<String> xiang = const Value.absent(),
+            Value<String> tuan = const Value.absent(),
+            Value<String> gua = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              ZhouYiTableCompanion(
+            binary: binary,
+            seq: seq,
+            name: name,
+            fullname: fullname,
+            baguaInner: baguaInner,
+            baguaInnerName: baguaInnerName,
+            baguaInnerNickname: baguaInnerNickname,
+            baguaOuter: baguaOuter,
+            baguaOuterName: baguaOuterName,
+            baguaOuterNickname: baguaOuterNickname,
+            xiang: xiang,
+            tuan: tuan,
+            gua: gua,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String binary,
+            required int seq,
+            required String name,
+            required String fullname,
+            required String baguaInner,
+            required String baguaInnerName,
+            required String baguaInnerNickname,
+            required String baguaOuter,
+            required String baguaOuterName,
+            required String baguaOuterNickname,
+            required String xiang,
+            required String tuan,
+            required String gua,
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              ZhouYiTableCompanion.insert(
+            binary: binary,
+            seq: seq,
+            name: name,
+            fullname: fullname,
+            baguaInner: baguaInner,
+            baguaInnerName: baguaInnerName,
+            baguaInnerNickname: baguaInnerNickname,
+            baguaOuter: baguaOuter,
+            baguaOuterName: baguaOuterName,
+            baguaOuterNickname: baguaOuterNickname,
+            xiang: xiang,
+            tuan: tuan,
+            gua: gua,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$ZhouYiTableTableProcessedTableManager = ProcessedTableManager<
+    _$MyDatabase,
+    $ZhouYiTableTable,
+    ZhouYi,
+    $$ZhouYiTableTableFilterComposer,
+    $$ZhouYiTableTableOrderingComposer,
+    $$ZhouYiTableTableAnnotationComposer,
+    $$ZhouYiTableTableCreateCompanionBuilder,
+    $$ZhouYiTableTableUpdateCompanionBuilder,
+    (ZhouYi, BaseReferences<_$MyDatabase, $ZhouYiTableTable, ZhouYi>),
+    ZhouYi,
+    PrefetchHooks Function()>;
+typedef $$ZhouYiGuaZhuTableTableCreateCompanionBuilder
+    = ZhouYiGuaZhuTableCompanion Function({
+  Value<int> id,
+  required bool isSingle,
+  required String guaBinary,
+  required int bookId,
+  Value<String?> guaZhu,
+  Value<String?> xiangZhu,
+  Value<String?> tuanZhu,
+});
+typedef $$ZhouYiGuaZhuTableTableUpdateCompanionBuilder
+    = ZhouYiGuaZhuTableCompanion Function({
+  Value<int> id,
+  Value<bool> isSingle,
+  Value<String> guaBinary,
+  Value<int> bookId,
+  Value<String?> guaZhu,
+  Value<String?> xiangZhu,
+  Value<String?> tuanZhu,
+});
+
+class $$ZhouYiGuaZhuTableTableFilterComposer
+    extends Composer<_$MyDatabase, $ZhouYiGuaZhuTableTable> {
+  $$ZhouYiGuaZhuTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get isSingle => $composableBuilder(
+      column: $table.isSingle, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get guaBinary => $composableBuilder(
+      column: $table.guaBinary, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get bookId => $composableBuilder(
+      column: $table.bookId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get guaZhu => $composableBuilder(
+      column: $table.guaZhu, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get xiangZhu => $composableBuilder(
+      column: $table.xiangZhu, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get tuanZhu => $composableBuilder(
+      column: $table.tuanZhu, builder: (column) => ColumnFilters(column));
+}
+
+class $$ZhouYiGuaZhuTableTableOrderingComposer
+    extends Composer<_$MyDatabase, $ZhouYiGuaZhuTableTable> {
+  $$ZhouYiGuaZhuTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get isSingle => $composableBuilder(
+      column: $table.isSingle, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get guaBinary => $composableBuilder(
+      column: $table.guaBinary, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get bookId => $composableBuilder(
+      column: $table.bookId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get guaZhu => $composableBuilder(
+      column: $table.guaZhu, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get xiangZhu => $composableBuilder(
+      column: $table.xiangZhu, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get tuanZhu => $composableBuilder(
+      column: $table.tuanZhu, builder: (column) => ColumnOrderings(column));
+}
+
+class $$ZhouYiGuaZhuTableTableAnnotationComposer
+    extends Composer<_$MyDatabase, $ZhouYiGuaZhuTableTable> {
+  $$ZhouYiGuaZhuTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<bool> get isSingle =>
+      $composableBuilder(column: $table.isSingle, builder: (column) => column);
+
+  GeneratedColumn<String> get guaBinary =>
+      $composableBuilder(column: $table.guaBinary, builder: (column) => column);
+
+  GeneratedColumn<int> get bookId =>
+      $composableBuilder(column: $table.bookId, builder: (column) => column);
+
+  GeneratedColumn<String> get guaZhu =>
+      $composableBuilder(column: $table.guaZhu, builder: (column) => column);
+
+  GeneratedColumn<String> get xiangZhu =>
+      $composableBuilder(column: $table.xiangZhu, builder: (column) => column);
+
+  GeneratedColumn<String> get tuanZhu =>
+      $composableBuilder(column: $table.tuanZhu, builder: (column) => column);
+}
+
+class $$ZhouYiGuaZhuTableTableTableManager extends RootTableManager<
+    _$MyDatabase,
+    $ZhouYiGuaZhuTableTable,
+    ZhouYiGuaZhu,
+    $$ZhouYiGuaZhuTableTableFilterComposer,
+    $$ZhouYiGuaZhuTableTableOrderingComposer,
+    $$ZhouYiGuaZhuTableTableAnnotationComposer,
+    $$ZhouYiGuaZhuTableTableCreateCompanionBuilder,
+    $$ZhouYiGuaZhuTableTableUpdateCompanionBuilder,
+    (
+      ZhouYiGuaZhu,
+      BaseReferences<_$MyDatabase, $ZhouYiGuaZhuTableTable, ZhouYiGuaZhu>
+    ),
+    ZhouYiGuaZhu,
+    PrefetchHooks Function()> {
+  $$ZhouYiGuaZhuTableTableTableManager(
+      _$MyDatabase db, $ZhouYiGuaZhuTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ZhouYiGuaZhuTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ZhouYiGuaZhuTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ZhouYiGuaZhuTableTableAnnotationComposer(
+                  $db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<bool> isSingle = const Value.absent(),
+            Value<String> guaBinary = const Value.absent(),
+            Value<int> bookId = const Value.absent(),
+            Value<String?> guaZhu = const Value.absent(),
+            Value<String?> xiangZhu = const Value.absent(),
+            Value<String?> tuanZhu = const Value.absent(),
+          }) =>
+              ZhouYiGuaZhuTableCompanion(
+            id: id,
+            isSingle: isSingle,
+            guaBinary: guaBinary,
+            bookId: bookId,
+            guaZhu: guaZhu,
+            xiangZhu: xiangZhu,
+            tuanZhu: tuanZhu,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required bool isSingle,
+            required String guaBinary,
+            required int bookId,
+            Value<String?> guaZhu = const Value.absent(),
+            Value<String?> xiangZhu = const Value.absent(),
+            Value<String?> tuanZhu = const Value.absent(),
+          }) =>
+              ZhouYiGuaZhuTableCompanion.insert(
+            id: id,
+            isSingle: isSingle,
+            guaBinary: guaBinary,
+            bookId: bookId,
+            guaZhu: guaZhu,
+            xiangZhu: xiangZhu,
+            tuanZhu: tuanZhu,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$ZhouYiGuaZhuTableTableProcessedTableManager = ProcessedTableManager<
+    _$MyDatabase,
+    $ZhouYiGuaZhuTableTable,
+    ZhouYiGuaZhu,
+    $$ZhouYiGuaZhuTableTableFilterComposer,
+    $$ZhouYiGuaZhuTableTableOrderingComposer,
+    $$ZhouYiGuaZhuTableTableAnnotationComposer,
+    $$ZhouYiGuaZhuTableTableCreateCompanionBuilder,
+    $$ZhouYiGuaZhuTableTableUpdateCompanionBuilder,
+    (
+      ZhouYiGuaZhu,
+      BaseReferences<_$MyDatabase, $ZhouYiGuaZhuTableTable, ZhouYiGuaZhu>
+    ),
+    ZhouYiGuaZhu,
+    PrefetchHooks Function()>;
+typedef $$ZhouYiYaoZhuTableTableCreateCompanionBuilder
+    = ZhouYiYaoZhuTableCompanion Function({
+  Value<int> id,
+  required String guaBinary,
+  required int yaoId,
+  required int bookId,
+  Value<String?> yaoZhu,
+});
+typedef $$ZhouYiYaoZhuTableTableUpdateCompanionBuilder
+    = ZhouYiYaoZhuTableCompanion Function({
+  Value<int> id,
+  Value<String> guaBinary,
+  Value<int> yaoId,
+  Value<int> bookId,
+  Value<String?> yaoZhu,
+});
+
+class $$ZhouYiYaoZhuTableTableFilterComposer
+    extends Composer<_$MyDatabase, $ZhouYiYaoZhuTableTable> {
+  $$ZhouYiYaoZhuTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get guaBinary => $composableBuilder(
+      column: $table.guaBinary, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get yaoId => $composableBuilder(
+      column: $table.yaoId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get bookId => $composableBuilder(
+      column: $table.bookId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get yaoZhu => $composableBuilder(
+      column: $table.yaoZhu, builder: (column) => ColumnFilters(column));
+}
+
+class $$ZhouYiYaoZhuTableTableOrderingComposer
+    extends Composer<_$MyDatabase, $ZhouYiYaoZhuTableTable> {
+  $$ZhouYiYaoZhuTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get guaBinary => $composableBuilder(
+      column: $table.guaBinary, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get yaoId => $composableBuilder(
+      column: $table.yaoId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get bookId => $composableBuilder(
+      column: $table.bookId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get yaoZhu => $composableBuilder(
+      column: $table.yaoZhu, builder: (column) => ColumnOrderings(column));
+}
+
+class $$ZhouYiYaoZhuTableTableAnnotationComposer
+    extends Composer<_$MyDatabase, $ZhouYiYaoZhuTableTable> {
+  $$ZhouYiYaoZhuTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get guaBinary =>
+      $composableBuilder(column: $table.guaBinary, builder: (column) => column);
+
+  GeneratedColumn<int> get yaoId =>
+      $composableBuilder(column: $table.yaoId, builder: (column) => column);
+
+  GeneratedColumn<int> get bookId =>
+      $composableBuilder(column: $table.bookId, builder: (column) => column);
+
+  GeneratedColumn<String> get yaoZhu =>
+      $composableBuilder(column: $table.yaoZhu, builder: (column) => column);
+}
+
+class $$ZhouYiYaoZhuTableTableTableManager extends RootTableManager<
+    _$MyDatabase,
+    $ZhouYiYaoZhuTableTable,
+    ZhouYiYaoZhu,
+    $$ZhouYiYaoZhuTableTableFilterComposer,
+    $$ZhouYiYaoZhuTableTableOrderingComposer,
+    $$ZhouYiYaoZhuTableTableAnnotationComposer,
+    $$ZhouYiYaoZhuTableTableCreateCompanionBuilder,
+    $$ZhouYiYaoZhuTableTableUpdateCompanionBuilder,
+    (
+      ZhouYiYaoZhu,
+      BaseReferences<_$MyDatabase, $ZhouYiYaoZhuTableTable, ZhouYiYaoZhu>
+    ),
+    ZhouYiYaoZhu,
+    PrefetchHooks Function()> {
+  $$ZhouYiYaoZhuTableTableTableManager(
+      _$MyDatabase db, $ZhouYiYaoZhuTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ZhouYiYaoZhuTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ZhouYiYaoZhuTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ZhouYiYaoZhuTableTableAnnotationComposer(
+                  $db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<String> guaBinary = const Value.absent(),
+            Value<int> yaoId = const Value.absent(),
+            Value<int> bookId = const Value.absent(),
+            Value<String?> yaoZhu = const Value.absent(),
+          }) =>
+              ZhouYiYaoZhuTableCompanion(
+            id: id,
+            guaBinary: guaBinary,
+            yaoId: yaoId,
+            bookId: bookId,
+            yaoZhu: yaoZhu,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required String guaBinary,
+            required int yaoId,
+            required int bookId,
+            Value<String?> yaoZhu = const Value.absent(),
+          }) =>
+              ZhouYiYaoZhuTableCompanion.insert(
+            id: id,
+            guaBinary: guaBinary,
+            yaoId: yaoId,
+            bookId: bookId,
+            yaoZhu: yaoZhu,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$ZhouYiYaoZhuTableTableProcessedTableManager = ProcessedTableManager<
+    _$MyDatabase,
+    $ZhouYiYaoZhuTableTable,
+    ZhouYiYaoZhu,
+    $$ZhouYiYaoZhuTableTableFilterComposer,
+    $$ZhouYiYaoZhuTableTableOrderingComposer,
+    $$ZhouYiYaoZhuTableTableAnnotationComposer,
+    $$ZhouYiYaoZhuTableTableCreateCompanionBuilder,
+    $$ZhouYiYaoZhuTableTableUpdateCompanionBuilder,
+    (
+      ZhouYiYaoZhu,
+      BaseReferences<_$MyDatabase, $ZhouYiYaoZhuTableTable, ZhouYiYaoZhu>
+    ),
+    ZhouYiYaoZhu,
+    PrefetchHooks Function()>;
+typedef $$ZhouYiGuaYaoTableTableCreateCompanionBuilder
+    = ZhouYiGuaYaoTableCompanion Function({
+  Value<int> id,
+  required String guaBinary,
+  required int seqInGua,
+  required String yaoName,
+  required String guaYaoName,
+  required String xiang,
+  required String yao,
+});
+typedef $$ZhouYiGuaYaoTableTableUpdateCompanionBuilder
+    = ZhouYiGuaYaoTableCompanion Function({
+  Value<int> id,
+  Value<String> guaBinary,
+  Value<int> seqInGua,
+  Value<String> yaoName,
+  Value<String> guaYaoName,
+  Value<String> xiang,
+  Value<String> yao,
+});
+
+class $$ZhouYiGuaYaoTableTableFilterComposer
+    extends Composer<_$MyDatabase, $ZhouYiGuaYaoTableTable> {
+  $$ZhouYiGuaYaoTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get guaBinary => $composableBuilder(
+      column: $table.guaBinary, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get seqInGua => $composableBuilder(
+      column: $table.seqInGua, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get yaoName => $composableBuilder(
+      column: $table.yaoName, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get guaYaoName => $composableBuilder(
+      column: $table.guaYaoName, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get xiang => $composableBuilder(
+      column: $table.xiang, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get yao => $composableBuilder(
+      column: $table.yao, builder: (column) => ColumnFilters(column));
+}
+
+class $$ZhouYiGuaYaoTableTableOrderingComposer
+    extends Composer<_$MyDatabase, $ZhouYiGuaYaoTableTable> {
+  $$ZhouYiGuaYaoTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get guaBinary => $composableBuilder(
+      column: $table.guaBinary, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get seqInGua => $composableBuilder(
+      column: $table.seqInGua, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get yaoName => $composableBuilder(
+      column: $table.yaoName, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get guaYaoName => $composableBuilder(
+      column: $table.guaYaoName, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get xiang => $composableBuilder(
+      column: $table.xiang, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get yao => $composableBuilder(
+      column: $table.yao, builder: (column) => ColumnOrderings(column));
+}
+
+class $$ZhouYiGuaYaoTableTableAnnotationComposer
+    extends Composer<_$MyDatabase, $ZhouYiGuaYaoTableTable> {
+  $$ZhouYiGuaYaoTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get guaBinary =>
+      $composableBuilder(column: $table.guaBinary, builder: (column) => column);
+
+  GeneratedColumn<int> get seqInGua =>
+      $composableBuilder(column: $table.seqInGua, builder: (column) => column);
+
+  GeneratedColumn<String> get yaoName =>
+      $composableBuilder(column: $table.yaoName, builder: (column) => column);
+
+  GeneratedColumn<String> get guaYaoName => $composableBuilder(
+      column: $table.guaYaoName, builder: (column) => column);
+
+  GeneratedColumn<String> get xiang =>
+      $composableBuilder(column: $table.xiang, builder: (column) => column);
+
+  GeneratedColumn<String> get yao =>
+      $composableBuilder(column: $table.yao, builder: (column) => column);
+}
+
+class $$ZhouYiGuaYaoTableTableTableManager extends RootTableManager<
+    _$MyDatabase,
+    $ZhouYiGuaYaoTableTable,
+    ZhouYiGuaYao,
+    $$ZhouYiGuaYaoTableTableFilterComposer,
+    $$ZhouYiGuaYaoTableTableOrderingComposer,
+    $$ZhouYiGuaYaoTableTableAnnotationComposer,
+    $$ZhouYiGuaYaoTableTableCreateCompanionBuilder,
+    $$ZhouYiGuaYaoTableTableUpdateCompanionBuilder,
+    (
+      ZhouYiGuaYao,
+      BaseReferences<_$MyDatabase, $ZhouYiGuaYaoTableTable, ZhouYiGuaYao>
+    ),
+    ZhouYiGuaYao,
+    PrefetchHooks Function()> {
+  $$ZhouYiGuaYaoTableTableTableManager(
+      _$MyDatabase db, $ZhouYiGuaYaoTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ZhouYiGuaYaoTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ZhouYiGuaYaoTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ZhouYiGuaYaoTableTableAnnotationComposer(
+                  $db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<String> guaBinary = const Value.absent(),
+            Value<int> seqInGua = const Value.absent(),
+            Value<String> yaoName = const Value.absent(),
+            Value<String> guaYaoName = const Value.absent(),
+            Value<String> xiang = const Value.absent(),
+            Value<String> yao = const Value.absent(),
+          }) =>
+              ZhouYiGuaYaoTableCompanion(
+            id: id,
+            guaBinary: guaBinary,
+            seqInGua: seqInGua,
+            yaoName: yaoName,
+            guaYaoName: guaYaoName,
+            xiang: xiang,
+            yao: yao,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required String guaBinary,
+            required int seqInGua,
+            required String yaoName,
+            required String guaYaoName,
+            required String xiang,
+            required String yao,
+          }) =>
+              ZhouYiGuaYaoTableCompanion.insert(
+            id: id,
+            guaBinary: guaBinary,
+            seqInGua: seqInGua,
+            yaoName: yaoName,
+            guaYaoName: guaYaoName,
+            xiang: xiang,
+            yao: yao,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$ZhouYiGuaYaoTableTableProcessedTableManager = ProcessedTableManager<
+    _$MyDatabase,
+    $ZhouYiGuaYaoTableTable,
+    ZhouYiGuaYao,
+    $$ZhouYiGuaYaoTableTableFilterComposer,
+    $$ZhouYiGuaYaoTableTableOrderingComposer,
+    $$ZhouYiGuaYaoTableTableAnnotationComposer,
+    $$ZhouYiGuaYaoTableTableCreateCompanionBuilder,
+    $$ZhouYiGuaYaoTableTableUpdateCompanionBuilder,
+    (
+      ZhouYiGuaYao,
+      BaseReferences<_$MyDatabase, $ZhouYiGuaYaoTableTable, ZhouYiGuaYao>
+    ),
+    ZhouYiGuaYao,
+    PrefetchHooks Function()>;
+typedef $$ZhouyiZhuBooksTableTableCreateCompanionBuilder
+    = ZhouyiZhuBooksTableCompanion Function({
+  Value<int> id,
+  required String bookname,
+  required String bookauth,
+  required String bookage,
+});
+typedef $$ZhouyiZhuBooksTableTableUpdateCompanionBuilder
+    = ZhouyiZhuBooksTableCompanion Function({
+  Value<int> id,
+  Value<String> bookname,
+  Value<String> bookauth,
+  Value<String> bookage,
+});
+
+class $$ZhouyiZhuBooksTableTableFilterComposer
+    extends Composer<_$MyDatabase, $ZhouyiZhuBooksTableTable> {
+  $$ZhouyiZhuBooksTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get bookname => $composableBuilder(
+      column: $table.bookname, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get bookauth => $composableBuilder(
+      column: $table.bookauth, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get bookage => $composableBuilder(
+      column: $table.bookage, builder: (column) => ColumnFilters(column));
+}
+
+class $$ZhouyiZhuBooksTableTableOrderingComposer
+    extends Composer<_$MyDatabase, $ZhouyiZhuBooksTableTable> {
+  $$ZhouyiZhuBooksTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get bookname => $composableBuilder(
+      column: $table.bookname, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get bookauth => $composableBuilder(
+      column: $table.bookauth, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get bookage => $composableBuilder(
+      column: $table.bookage, builder: (column) => ColumnOrderings(column));
+}
+
+class $$ZhouyiZhuBooksTableTableAnnotationComposer
+    extends Composer<_$MyDatabase, $ZhouyiZhuBooksTableTable> {
+  $$ZhouyiZhuBooksTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get bookname =>
+      $composableBuilder(column: $table.bookname, builder: (column) => column);
+
+  GeneratedColumn<String> get bookauth =>
+      $composableBuilder(column: $table.bookauth, builder: (column) => column);
+
+  GeneratedColumn<String> get bookage =>
+      $composableBuilder(column: $table.bookage, builder: (column) => column);
+}
+
+class $$ZhouyiZhuBooksTableTableTableManager extends RootTableManager<
+    _$MyDatabase,
+    $ZhouyiZhuBooksTableTable,
+    ZhouyiZhuBooks,
+    $$ZhouyiZhuBooksTableTableFilterComposer,
+    $$ZhouyiZhuBooksTableTableOrderingComposer,
+    $$ZhouyiZhuBooksTableTableAnnotationComposer,
+    $$ZhouyiZhuBooksTableTableCreateCompanionBuilder,
+    $$ZhouyiZhuBooksTableTableUpdateCompanionBuilder,
+    (
+      ZhouyiZhuBooks,
+      BaseReferences<_$MyDatabase, $ZhouyiZhuBooksTableTable, ZhouyiZhuBooks>
+    ),
+    ZhouyiZhuBooks,
+    PrefetchHooks Function()> {
+  $$ZhouyiZhuBooksTableTableTableManager(
+      _$MyDatabase db, $ZhouyiZhuBooksTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ZhouyiZhuBooksTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ZhouyiZhuBooksTableTableOrderingComposer(
+                  $db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ZhouyiZhuBooksTableTableAnnotationComposer(
+                  $db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<String> bookname = const Value.absent(),
+            Value<String> bookauth = const Value.absent(),
+            Value<String> bookage = const Value.absent(),
+          }) =>
+              ZhouyiZhuBooksTableCompanion(
+            id: id,
+            bookname: bookname,
+            bookauth: bookauth,
+            bookage: bookage,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required String bookname,
+            required String bookauth,
+            required String bookage,
+          }) =>
+              ZhouyiZhuBooksTableCompanion.insert(
+            id: id,
+            bookname: bookname,
+            bookauth: bookauth,
+            bookage: bookage,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$ZhouyiZhuBooksTableTableProcessedTableManager = ProcessedTableManager<
+    _$MyDatabase,
+    $ZhouyiZhuBooksTableTable,
+    ZhouyiZhuBooks,
+    $$ZhouyiZhuBooksTableTableFilterComposer,
+    $$ZhouyiZhuBooksTableTableOrderingComposer,
+    $$ZhouyiZhuBooksTableTableAnnotationComposer,
+    $$ZhouyiZhuBooksTableTableCreateCompanionBuilder,
+    $$ZhouyiZhuBooksTableTableUpdateCompanionBuilder,
+    (
+      ZhouyiZhuBooks,
+      BaseReferences<_$MyDatabase, $ZhouyiZhuBooksTableTable, ZhouyiZhuBooks>
+    ),
+    ZhouyiZhuBooks,
+    PrefetchHooks Function()>;
+typedef $$JiaoShiYiLinTableTableCreateCompanionBuilder
+    = JiaoShiYiLinTableCompanion Function({
+  Value<int> id,
+  required String guaBinary,
+  required int zhiSeq,
+  required String zhiName,
+  required String zhiBinary,
+  required String zhiContent,
+});
+typedef $$JiaoShiYiLinTableTableUpdateCompanionBuilder
+    = JiaoShiYiLinTableCompanion Function({
+  Value<int> id,
+  Value<String> guaBinary,
+  Value<int> zhiSeq,
+  Value<String> zhiName,
+  Value<String> zhiBinary,
+  Value<String> zhiContent,
+});
+
+class $$JiaoShiYiLinTableTableFilterComposer
+    extends Composer<_$MyDatabase, $JiaoShiYiLinTableTable> {
+  $$JiaoShiYiLinTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get guaBinary => $composableBuilder(
+      column: $table.guaBinary, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get zhiSeq => $composableBuilder(
+      column: $table.zhiSeq, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get zhiName => $composableBuilder(
+      column: $table.zhiName, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get zhiBinary => $composableBuilder(
+      column: $table.zhiBinary, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get zhiContent => $composableBuilder(
+      column: $table.zhiContent, builder: (column) => ColumnFilters(column));
+}
+
+class $$JiaoShiYiLinTableTableOrderingComposer
+    extends Composer<_$MyDatabase, $JiaoShiYiLinTableTable> {
+  $$JiaoShiYiLinTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get guaBinary => $composableBuilder(
+      column: $table.guaBinary, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get zhiSeq => $composableBuilder(
+      column: $table.zhiSeq, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get zhiName => $composableBuilder(
+      column: $table.zhiName, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get zhiBinary => $composableBuilder(
+      column: $table.zhiBinary, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get zhiContent => $composableBuilder(
+      column: $table.zhiContent, builder: (column) => ColumnOrderings(column));
+}
+
+class $$JiaoShiYiLinTableTableAnnotationComposer
+    extends Composer<_$MyDatabase, $JiaoShiYiLinTableTable> {
+  $$JiaoShiYiLinTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get guaBinary =>
+      $composableBuilder(column: $table.guaBinary, builder: (column) => column);
+
+  GeneratedColumn<int> get zhiSeq =>
+      $composableBuilder(column: $table.zhiSeq, builder: (column) => column);
+
+  GeneratedColumn<String> get zhiName =>
+      $composableBuilder(column: $table.zhiName, builder: (column) => column);
+
+  GeneratedColumn<String> get zhiBinary =>
+      $composableBuilder(column: $table.zhiBinary, builder: (column) => column);
+
+  GeneratedColumn<String> get zhiContent => $composableBuilder(
+      column: $table.zhiContent, builder: (column) => column);
+}
+
+class $$JiaoShiYiLinTableTableTableManager extends RootTableManager<
+    _$MyDatabase,
+    $JiaoShiYiLinTableTable,
+    JiaoShiYiLin,
+    $$JiaoShiYiLinTableTableFilterComposer,
+    $$JiaoShiYiLinTableTableOrderingComposer,
+    $$JiaoShiYiLinTableTableAnnotationComposer,
+    $$JiaoShiYiLinTableTableCreateCompanionBuilder,
+    $$JiaoShiYiLinTableTableUpdateCompanionBuilder,
+    (
+      JiaoShiYiLin,
+      BaseReferences<_$MyDatabase, $JiaoShiYiLinTableTable, JiaoShiYiLin>
+    ),
+    JiaoShiYiLin,
+    PrefetchHooks Function()> {
+  $$JiaoShiYiLinTableTableTableManager(
+      _$MyDatabase db, $JiaoShiYiLinTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$JiaoShiYiLinTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$JiaoShiYiLinTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$JiaoShiYiLinTableTableAnnotationComposer(
+                  $db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<String> guaBinary = const Value.absent(),
+            Value<int> zhiSeq = const Value.absent(),
+            Value<String> zhiName = const Value.absent(),
+            Value<String> zhiBinary = const Value.absent(),
+            Value<String> zhiContent = const Value.absent(),
+          }) =>
+              JiaoShiYiLinTableCompanion(
+            id: id,
+            guaBinary: guaBinary,
+            zhiSeq: zhiSeq,
+            zhiName: zhiName,
+            zhiBinary: zhiBinary,
+            zhiContent: zhiContent,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required String guaBinary,
+            required int zhiSeq,
+            required String zhiName,
+            required String zhiBinary,
+            required String zhiContent,
+          }) =>
+              JiaoShiYiLinTableCompanion.insert(
+            id: id,
+            guaBinary: guaBinary,
+            zhiSeq: zhiSeq,
+            zhiName: zhiName,
+            zhiBinary: zhiBinary,
+            zhiContent: zhiContent,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$JiaoShiYiLinTableTableProcessedTableManager = ProcessedTableManager<
+    _$MyDatabase,
+    $JiaoShiYiLinTableTable,
+    JiaoShiYiLin,
+    $$JiaoShiYiLinTableTableFilterComposer,
+    $$JiaoShiYiLinTableTableOrderingComposer,
+    $$JiaoShiYiLinTableTableAnnotationComposer,
+    $$JiaoShiYiLinTableTableCreateCompanionBuilder,
+    $$JiaoShiYiLinTableTableUpdateCompanionBuilder,
+    (
+      JiaoShiYiLin,
+      BaseReferences<_$MyDatabase, $JiaoShiYiLinTableTable, JiaoShiYiLin>
+    ),
+    JiaoShiYiLin,
+    PrefetchHooks Function()>;
+
+class $MyDatabaseManager {
+  final _$MyDatabase _db;
+  $MyDatabaseManager(this._db);
+  $$ZhouYiTableTableTableManager get zhouYiTable =>
+      $$ZhouYiTableTableTableManager(_db, _db.zhouYiTable);
+  $$ZhouYiGuaZhuTableTableTableManager get zhouYiGuaZhuTable =>
+      $$ZhouYiGuaZhuTableTableTableManager(_db, _db.zhouYiGuaZhuTable);
+  $$ZhouYiYaoZhuTableTableTableManager get zhouYiYaoZhuTable =>
+      $$ZhouYiYaoZhuTableTableTableManager(_db, _db.zhouYiYaoZhuTable);
+  $$ZhouYiGuaYaoTableTableTableManager get zhouYiGuaYaoTable =>
+      $$ZhouYiGuaYaoTableTableTableManager(_db, _db.zhouYiGuaYaoTable);
+  $$ZhouyiZhuBooksTableTableTableManager get zhouyiZhuBooksTable =>
+      $$ZhouyiZhuBooksTableTableTableManager(_db, _db.zhouyiZhuBooksTable);
+  $$JiaoShiYiLinTableTableTableManager get jiaoShiYiLinTable =>
+      $$JiaoShiYiLinTableTableTableManager(_db, _db.jiaoShiYiLinTable);
 }

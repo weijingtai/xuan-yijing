@@ -1,4 +1,4 @@
-import 'package:moor/moor.dart';
+import 'package:drift/drift.dart';
 import 'package:my_flutter/models/ZhouYiTable.dart';
 import 'package:my_flutter/models/ZhouYiZhuBooksTable.dart';
 
@@ -12,8 +12,8 @@ class ZhouYiGuaZhuTable extends Table {
   TextColumn get xiangZhu => text().nullable()();
   TextColumn get tuanZhu => text().nullable()();
 
-  @override
-  Set<Column> get primaryKey => {id};
+  // @override
+  // Set<Column> get primaryKey => {id};
 
   @override
   String get tableName => 't_zy_gua_zhu';
