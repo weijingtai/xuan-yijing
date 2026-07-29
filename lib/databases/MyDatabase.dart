@@ -49,20 +49,23 @@ class MyDatabase extends _$MyDatabase {
       native: DriftNativeOptions(
         databaseDirectory: () async {
           final dbFolder = await getApplicationDocumentsDirectory();
-          final file = File(p.join(dbFolder.path, 'db.sqlite3'));
+          // Drift automatically appends .sqlite to `name` ('db' -> 'db.sqlite')
+          final file = File(p.join(dbFolder.path, 'db.sqlite'));
+          print("[MyDatabase] Native database file path: ${file.path}");
 
           try {
-            if (!file.existsSync() || file.lengthSync() == 0) {
-              print("[MyDatabase] Copying initial db.sqlite3 from assets...");
+            if (!file.existsSync() || file.lengthSync() < 1000000) {
+              print("[MyDatabase] Copying initial db.sqlite3 from assets to ${file.path}...");
               final dbData = await rootBundle.load("assets/db/db.sqlite3");
               final List<int> bytes = dbData.buffer.asUint8List(
                 dbData.offsetInBytes,
                 dbData.lengthInBytes,
               );
+              await file.parent.create(recursive: true);
               await file.writeAsBytes(bytes, flush: true);
               print("[MyDatabase] Asset database copied successfully (${bytes.length} bytes)");
             } else {
-              print("[MyDatabase] Existing db.sqlite3 found (${file.lengthSync()} bytes)");
+              print("[MyDatabase] Existing database verified (${file.lengthSync()} bytes)");
             }
           } catch (err, st) {
             print("[MyDatabase] Error copying asset database: $err\n$st");
@@ -91,6 +94,9 @@ class MyDatabase extends _$MyDatabase {
     try {
       final res = await select(zhouYiTable).get();
       print("[MyDatabase] listAllZhouYi() success, count: ${res.length}");
+      if (res.isNotEmpty) {
+        print("[MyDatabase] First item sample: binary=${res.first.binary}, name=${res.first.name}, fullname=${res.first.fullname}");
+      }
       return res;
     } catch (e, st) {
       print("[MyDatabase] listAllZhouYi() error: $e\n$st");

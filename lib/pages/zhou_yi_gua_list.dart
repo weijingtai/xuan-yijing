@@ -67,6 +67,7 @@ class _ZhouYiGuaListPageState extends State<ZhouYiGuaListPage> {
                 print("[ZhouYiGuaListPage] FutureBuilder connectionState: ${data.connectionState}, hasData: ${data.hasData}, hasError: ${data.hasError}");
                 if (data.hasData) {
                   _zhouYiAllGuaList = data.data!;
+                  print("[ZhouYiGuaListPage] total ${_zhouYiAllGuaList.length} gua loaded into _zhouYiAllGuaList");
                   logger.i("total ${_zhouYiAllGuaList.length} gua loaded");
                   return buildBodyByModelList(data.data!);
                 }
@@ -207,13 +208,13 @@ class _ZhouYiGuaListPageState extends State<ZhouYiGuaListPage> {
         config: <Breakpoint, SlotLayoutConfig>{
           Breakpoints.small: SlotLayout.from(
               key: const Key('Body2 Small'),
-              builder: (_) => buildOnlyLeftPart()),
+              builder: (_) => buildOnlyLeftPart(allGua)),
           Breakpoints.medium: SlotLayout.from(
               key: const Key('Body2 Medium'),
-              builder: (_) => buildOnlyLeftPart()),
+              builder: (_) => buildOnlyLeftPart(allGua)),
           Breakpoints.large: SlotLayout.from(
               key: const Key('Body2 Large'),
-              builder: (_) => guaListWithModel()),
+              builder: (_) => guaListWithModel(allGua)),
         },
       ),
       secondaryBody: SlotLayout(
@@ -355,10 +356,10 @@ class _ZhouYiGuaListPageState extends State<ZhouYiGuaListPage> {
     );
   }
 
-  Widget buildOnlyLeftPart() {
+  Widget buildOnlyLeftPart([List<ZhouYi>? allGua]) {
     return Stack(
       children: [
-        guaListWithModel(),
+        guaListWithModel(allGua),
         ValueListenableBuilder(
             valueListenable: _largeRightSideZhouYiNotifier,
             builder: (ctx, zhouYi, child) {
@@ -424,9 +425,11 @@ class _ZhouYiGuaListPageState extends State<ZhouYiGuaListPage> {
     );
   }
 
-  Widget guaListWithModel() {
+  Widget guaListWithModel([List<ZhouYi>? allGua]) {
+    final list = allGua ?? _zhouYiAllGuaList;
+    print("[ZhouYiGuaListPage] guaListWithModel rendering ${list.length} items");
     return ListView(
-        children: _zhouYiAllGuaList
+        children: list
             .map((e) => Card(
                   child: InkWell(
                     onDoubleTap: () {
