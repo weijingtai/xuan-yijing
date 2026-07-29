@@ -25,9 +25,16 @@ class _ZhouYiGuaListPageState extends State<ZhouYiGuaListPage> {
   final Logger logger = Logger();
 
   List<ZhouYi> _zhouYiAllGuaList = [];
+  late Future<List<ZhouYi>> _listAllZhouYiFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _listAllZhouYiFuture = Get.find<MyDatabase>().listAllZhouYi();
+  }
+
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _largeRightSideZhouYiNotifier.dispose();
   }
@@ -38,9 +45,6 @@ class _ZhouYiGuaListPageState extends State<ZhouYiGuaListPage> {
     List<String> top = ben.sublist(1, 4);
     List<String> bottom = ben.sublist(2, 5);
     List<String> res = top..addAll(bottom);
-    // MyDatabase().listAllZhouYi().then((allGua){
-    //   logger.i("total ${allGua.length} gua loaded");
-    // });
 
     return Scaffold(
       appBar: AppBar(
@@ -58,16 +62,18 @@ class _ZhouYiGuaListPageState extends State<ZhouYiGuaListPage> {
             return Future.value(true);
           },
           child: FutureBuilder<List<ZhouYi>>(
-              future: Get.find<MyDatabase>().listAllZhouYi(),
+              future: _listAllZhouYiFuture,
               builder: (ctx, data) {
+                print("[ZhouYiGuaListPage] FutureBuilder connectionState: ${data.connectionState}, hasData: ${data.hasData}, hasError: ${data.hasError}");
                 if (data.hasData) {
                   _zhouYiAllGuaList = data.data!;
                   logger.i("total ${_zhouYiAllGuaList.length} gua loaded");
                   return buildBodyByModelList(data.data!);
                 }
                 if (data.hasError) {
-                  return const Center(
-                    child: Text("Error"),
+                  print("[ZhouYiGuaListPage] FutureBuilder error: ${data.error}");
+                  return Center(
+                    child: Text("Error: ${data.error}"),
                   );
                 }
                 return const Center(

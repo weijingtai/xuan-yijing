@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:drift/native.dart';
-import 'package:flutter/services.dart';
 import 'package:drift/drift.dart';
+import 'package:drift_flutter/drift_flutter.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:sqlite3/sqlite3.dart';
-import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
+import 'package:path/path.dart' as p;
 
 import '../models/JiaoShiYiLin.dart';
 import '../models/ZhouYiGuaYaoTable.dart';
@@ -19,17 +19,62 @@ part 'MyDatabase.g.dart';
 @DriftDatabase(tables: [ZhouYiTable, ZhouYiGuaZhuTable, ZhouYiYaoZhuTable, ZhouYiGuaYaoTable, ZhouyiZhuBooksTable, JiaoShiYiLinTable])
 class MyDatabase extends _$MyDatabase {
 
-
-
   //创建数据库实例，开启数据库连接
-  MyDatabase() : super(_openConnection());
+  MyDatabase([QueryExecutor? e])
+      : super(
+          e ?? (kIsWeb ? _openWebDatabase() : _openNativeDatabase()),
+        );
 
+  static QueryExecutor _openWebDatabase() {
+    print("[MyDatabase] Opening Web Database...");
+    return driftDatabase(
+      name: 'db',
+      web: DriftWebOptions(
+        sqlite3Wasm: Uri.parse('https://sqlite.org/2023/sqlite3.wasm'),
+        driftWorker: Uri.parse('drift_worker.js'),
+        onResult: (result) {
+          print("[MyDatabase] Web Drift implementation: ${result.chosenImplementation}");
+          if (result.missingFeatures.isNotEmpty) {
+            print('[MyDatabase] Missing browser features: ${result.missingFeatures}');
+          }
+        },
+      ),
+    );
+  }
 
+  static QueryExecutor _openNativeDatabase() {
+    print("[MyDatabase] Opening Native Database...");
+    return driftDatabase(
+      name: 'db',
+      native: DriftNativeOptions(
+        databaseDirectory: () async {
+          final dbFolder = await getApplicationDocumentsDirectory();
+          final file = File(p.join(dbFolder.path, 'db.sqlite3'));
+
+          try {
+            if (!file.existsSync() || file.lengthSync() == 0) {
+              print("[MyDatabase] Copying initial db.sqlite3 from assets...");
+              final dbData = await rootBundle.load("assets/db/db.sqlite3");
+              final List<int> bytes = dbData.buffer.asUint8List(
+                dbData.offsetInBytes,
+                dbData.lengthInBytes,
+              );
+              await file.writeAsBytes(bytes, flush: true);
+              print("[MyDatabase] Asset database copied successfully (${bytes.length} bytes)");
+            } else {
+              print("[MyDatabase] Existing db.sqlite3 found (${file.lengthSync()} bytes)");
+            }
+          } catch (err, st) {
+            print("[MyDatabase] Error copying asset database: $err\n$st");
+          }
+          return dbFolder;
+        },
+      ),
+    );
+  }
 
   //数据库版本控制
   @override  int get schemaVersion => 1;
-
-
 
   //升级配置
   @override  MigrationStrategy get migration => MigrationStrategy(
@@ -37,10 +82,21 @@ class MyDatabase extends _$MyDatabase {
       onUpgrade: (migrator, from, to) async {
         },
       beforeOpen: (details) async {
+        print("[MyDatabase] Database beforeOpen called, wasCreated: ${details.wasCreated}, version: ${details.versionBefore} -> ${details.versionNow}");
         await customStatement('PRAGMA foreign_keys = ON');
       });
 
-  Future<List<ZhouYi>> listAllZhouYi() => select(zhouYiTable).get();
+  Future<List<ZhouYi>> listAllZhouYi() async {
+    print("[MyDatabase] listAllZhouYi() started...");
+    try {
+      final res = await select(zhouYiTable).get();
+      print("[MyDatabase] listAllZhouYi() success, count: ${res.length}");
+      return res;
+    } catch (e, st) {
+      print("[MyDatabase] listAllZhouYi() error: $e\n$st");
+      rethrow;
+    }
+  }
   Future<ZhouYi> getZhouYiByBinary(String guaBinary) =>  (select(zhouYiTable)..where((tbl) => tbl.binary.equals(guaBinary))).getSingle();
 
   Future<List<ZhouYiGuaZhu>> findAllGuaZhu(String guaBinary) => (select(zhouYiGuaZhuTable)..where((tbl) => tbl.guaBinary.equals(guaBinary))).get();
@@ -53,55 +109,3 @@ class MyDatabase extends _$MyDatabase {
   Future<List<ZhouYiGuaYao>> findAllGuaYao(String guaBinary) => (select(zhouYiGuaYaoTable)..where((tbl) => tbl.guaBinary.equals(guaBinary))).get();
 }
 
-
-
-
-// 开启数据库连接
-LazyDatabase _openConnection() {
-    shouldCopy().then((value) {
-    if (value){
-      copyFile();
-    }
-  });
-  // the LazyDatabase util lets us find the right location for the file async.
-  return LazyDatabase(() async {
-    // put the database file, called db.sqlite here, into the documents folder
-    // for your app.
-    final dbFolder = await getApplicationDocumentsDirectory();
-    final File file = File("${dbFolder.path}/db.sqlite3");
-    // file = File(p.join(dbFolder.path, 'db.sqlite'));
-
-    // Also work around limitations on old Android versions
-    if (Platform.isAndroid) {
-      await applyWorkaroundToOpenSqlite3OnOldAndroidVersions();
-    }
-
-    // Make sqlite3 pick a more suitable location for temporary files - the
-    // one from the system may be inaccessible due to sandboxing.
-    final cachebase = (await getTemporaryDirectory()).path;
-    // We can't access /tmp on Android, which sqlite3 would try by default.
-    // Explicitly tell it about the correct temporary directory.
-    sqlite3.tempDirectory = cachebase;
-
-    return NativeDatabase.createInBackground(file);
-  });
-}
-Future<bool> shouldCopy() async {
-  var dbFolder = await getApplicationDocumentsDirectory();
-  File file = File("${dbFolder.path}/db.sqlite3");
-  if (!file.existsSync()){
-    return true;
-  }
-  return false;
-}
-Future<void> copyFile() async {
-  var dbFolder = await getApplicationDocumentsDirectory();
-  File file = File("${dbFolder.path}/db.sqlite3");
-  if (file.existsSync()){
-    file.deleteSync();
-  }
-  // 当前数据库文件不存在，从assets中拷贝
-  var dbData = await rootBundle.load("assets/db/db.sqlite3");
-  List<int> bytes = dbData.buffer.asUint8List(dbData.offsetInBytes, dbData.lengthInBytes);
-  file.writeAsBytes(bytes);
-}
