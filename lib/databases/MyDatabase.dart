@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:drift/drift.dart';
@@ -30,7 +31,7 @@ class MyDatabase extends _$MyDatabase {
     return driftDatabase(
       name: 'db',
       web: DriftWebOptions(
-        sqlite3Wasm: Uri.parse('https://sqlite.org/2023/sqlite3.wasm'),
+        sqlite3Wasm: Uri.parse('sqlite3.wasm'),
         driftWorker: Uri.parse('drift_worker.js'),
         onResult: (result) {
           print("[MyDatabase] Web Drift implementation: ${result.chosenImplementation}");
@@ -80,14 +81,90 @@ class MyDatabase extends _$MyDatabase {
   @override  int get schemaVersion => 1;
 
   //升级配置
-  @override  MigrationStrategy get migration => MigrationStrategy(
-
-      onUpgrade: (migrator, from, to) async {
+  @override
+  MigrationStrategy get migration => MigrationStrategy(
+        onCreate: (migrator) async {
+          print("[MyDatabase] onCreate triggered, creating all tables...");
+          await migrator.createAll();
         },
-      beforeOpen: (details) async {
-        print("[MyDatabase] Database beforeOpen called, wasCreated: ${details.wasCreated}, version: ${details.versionBefore} -> ${details.versionNow}");
-        await customStatement('PRAGMA foreign_keys = ON');
-      });
+        onUpgrade: (migrator, from, to) async {},
+        beforeOpen: (details) async {
+          print("[MyDatabase] Database beforeOpen called, wasCreated: ${details.wasCreated}, version: ${details.versionBefore} -> ${details.versionNow}");
+          await customStatement('PRAGMA foreign_keys = ON');
+
+          if (kIsWeb) {
+            final countSelect = await customSelect('SELECT COUNT(*) as c FROM t_zy').getSingle();
+            final count = countSelect.read<int>('c');
+            print("[MyDatabase] Web platform detected. Current t_zy count: $count, wasCreated: ${details.wasCreated}");
+
+            if (count == 0) {
+              print("[MyDatabase] Web t_zy table is empty. Seeding data from assets...");
+              try {
+                final jsonStr = await rootBundle.loadString("resources/db/all_gua_v1.json");
+                final indexStr = await rootBundle.loadString("resources/db/gua_fullname_binary_index.json");
+                final List<dynamic> list = jsonDecode(jsonStr);
+                final Map<String, dynamic> binaryIndexMap = jsonDecode(indexStr);
+
+                print("[MyDatabase] Loaded ${list.length} items from resources/db/all_gua_v1.json for Web seeding");
+                
+                final entries = <ZhouYiTableCompanion>[];
+                int autoSeq = 1;
+                for (final item in list) {
+                  final map = item as Map<String, dynamic>;
+                  
+                  String extractString(dynamic val) {
+                    if (val == null) return '';
+                    if (val is String) return val;
+                    if (val is Map) return val['content']?.toString() ?? val.toString();
+                    return val.toString();
+                  }
+
+                  final name = extractString(map['name']);
+                  String binary = extractString(map['binary']);
+                  if (binary.isEmpty) {
+                    final fullNameKey = map['fullname'] ?? map['name'];
+                    if (fullNameKey != null && binaryIndexMap.containsKey(fullNameKey)) {
+                      binary = binaryIndexMap[fullNameKey].toString();
+                    } else {
+                      for (final entry in binaryIndexMap.entries) {
+                        if (entry.key.contains(name)) {
+                          binary = entry.value.toString();
+                          break;
+                        }
+                      }
+                    }
+                  }
+                  if (binary.isEmpty) continue;
+
+                  entries.add(ZhouYiTableCompanion.insert(
+                    binary: binary,
+                    seq: map['seq'] is int ? map['seq'] : (int.tryParse(map['seq']?.toString() ?? '') ?? autoSeq),
+                    name: name,
+                    fullname: extractString(map['fullname'] ?? name),
+                    baguaInner: extractString(map['bagua_inner'] ?? map['baguaInner']),
+                    baguaInnerName: extractString(map['bagua_inner_name'] ?? map['baguaInnerName']),
+                    baguaInnerNickname: extractString(map['bagua_inner_nickname'] ?? map['baguaInnerNickname']),
+                    baguaOuter: extractString(map['bagua_outer'] ?? map['baguaOuter']),
+                    baguaOuterName: extractString(map['bagua_outer_name'] ?? map['baguaOuterName']),
+                    baguaOuterNickname: extractString(map['bagua_outer_nickname'] ?? map['baguaOuterNickname']),
+                    xiang: extractString(map['xiang']),
+                    tuan: extractString(map['tuan']),
+                    gua: extractString(map['gua'] ?? map['content']),
+                  ));
+                  autoSeq++;
+                }
+
+                await batch((batch) {
+                  batch.insertAllOnConflictUpdate(zhouYiTable, entries);
+                });
+                print("[MyDatabase] Successfully seeded ${entries.length} ZhouYi items into Web database");
+              } catch (err, st) {
+                print("[MyDatabase] Error seeding Web database: $err\n$st");
+              }
+            }
+          }
+        },
+      );
 
   Future<List<ZhouYi>> listAllZhouYi() async {
     print("[MyDatabase] listAllZhouYi() started...");
