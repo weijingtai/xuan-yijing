@@ -103,13 +103,13 @@ class _ZhouYiGuaListPageState extends State<ZhouYiGuaListPage> {
   @deprecated
   Future<List<Map<String, dynamic>>> loadsAllGua() async {
     List<dynamic> allLoads = await Future.wait([
-      DefaultAssetBundle.of(context).loadString("resources/db/all_gua_v1.json"),
+      DefaultAssetBundle.of(context).loadString("packages/yijing/resources/db/all_gua_v1.json"),
       DefaultAssetBundle.of(context)
-          .loadString("resources/db/gua_fullname_binary_index.json"),
+          .loadString("packages/yijing/resources/db/gua_fullname_binary_index.json"),
       DefaultAssetBundle.of(context)
-          .loadString("resources/db/gua_shortname_binary_index.json"),
+          .loadString("packages/yijing/resources/db/gua_shortname_binary_index.json"),
       DefaultAssetBundle.of(context)
-          .loadString("resources/db/gua_binary_fullname_index.json")
+          .loadString("packages/yijing/resources/db/gua_binary_fullname_index.json")
     ]);
     allGua = (jsonDecode(allLoads[0]) as List)
         .map((e) => e as Map<String, dynamic>)

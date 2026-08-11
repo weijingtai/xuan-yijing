@@ -1180,9 +1180,9 @@ class _ZhouYiGuaDetailsPageState extends State<ZhouYiGuaDetailsPage>
     return FutureBuilder(
       future: Future.wait([
         DefaultAssetBundle.of(context)
-            .loadString("resources/db/eight_gong_gua_info.json"),
+            .loadString("packages/yijing/resources/db/eight_gong_gua_info.json"),
         DefaultAssetBundle.of(context)
-            .loadString("resources/db/gua_fullname_binary_index.json"),
+            .loadString("packages/yijing/resources/db/gua_fullname_binary_index.json"),
       ]),
       builder: (ctx, snap) {
         if (snap.hasData) {
@@ -1282,9 +1282,9 @@ class _ZhouYiGuaDetailsPageState extends State<ZhouYiGuaDetailsPage>
     return FutureBuilder(
       future: Future.wait([
         DefaultAssetBundle.of(context)
-            .loadString("resources/db/ba_gong_sixteen_change_info.json"),
+            .loadString("packages/yijing/resources/db/ba_gong_sixteen_change_info.json"),
         DefaultAssetBundle.of(context)
-            .loadString("resources/db/gua_fullname_binary_index.json"),
+            .loadString("packages/yijing/resources/db/gua_fullname_binary_index.json"),
       ]),
       builder: (ctx, snap) {
         if (snap.hasData) {

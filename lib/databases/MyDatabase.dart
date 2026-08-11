@@ -57,7 +57,8 @@ class MyDatabase extends _$MyDatabase {
           try {
             if (!file.existsSync() || file.lengthSync() < 1000000) {
               print("[MyDatabase] Copying initial db.sqlite3 from assets to ${file.path}...");
-              final dbData = await rootBundle.load("assets/db/db.sqlite3");
+              final dbData =
+                  await rootBundle.load('packages/yijing/assets/db/db.sqlite3');
               final List<int> bytes = dbData.buffer.asUint8List(
                 dbData.offsetInBytes,
                 dbData.lengthInBytes,
@@ -100,8 +101,10 @@ class MyDatabase extends _$MyDatabase {
             if (count == 0) {
               print("[MyDatabase] Web t_zy table is empty. Seeding data from assets...");
               try {
-                final jsonStr = await rootBundle.loadString("resources/db/all_gua_v1.json");
-                final indexStr = await rootBundle.loadString("resources/db/gua_fullname_binary_index.json");
+                final jsonStr = await rootBundle
+                    .loadString('packages/yijing/resources/db/all_gua_v1.json');
+                final indexStr = await rootBundle.loadString(
+                    'packages/yijing/resources/db/gua_fullname_binary_index.json');
                 final List<dynamic> list = jsonDecode(jsonStr);
                 final Map<String, dynamic> binaryIndexMap = jsonDecode(indexStr);
 
