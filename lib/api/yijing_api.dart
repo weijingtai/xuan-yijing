@@ -20,6 +20,8 @@ class YijingApi {
 
     _database = MyDatabase();
     _repository = YijingRepository(_database);
+    // 预热数据库连接与缓存，触发 beforeOpen 异步建表/数据填充
+    await _repository.getAllGua();
     _initialized = true;
   }
 
